@@ -1,6 +1,6 @@
 # Ignore LaTeX generated files
 # as copied from https://github.com/github/gitignore/blob/master/LaTeX.gitignore
-################################
+
 *.acn
 *.acr
 *.alg
@@ -25,6 +25,7 @@
 *.nav
 *.nlo
 *.out
+*.pdf
 *.pdfsync
 *.ps
 *.snm
