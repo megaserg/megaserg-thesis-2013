@@ -14,9 +14,15 @@
 
 \subsection{Задача инкрементальной компиляции}
 
-Рассмотрим $\sigma' = (\sigma \setminus \rho) \cup \alpha$, где $\rho, \alpha \subset \Sigma$. Тогда
-$$gen^d(\sigma') \overset{def}{=} \bigcup\limits_{s \in \sigma'} gen_{d(\sigma', s)}(s) = \bigcup\limits_{s \in (\sigma \setminus \rho) \cup \alpha} gen_{d((\sigma \setminus \rho) \cup \alpha, s)}(s).$$
-Требуется выразить эту функцию через $gen^d(\sigma)$.
+\newcommand{\Deltasigma}{\Delta_\alpha^\rho\sigma}
+Рассмотрим $\Deltasigma = (\sigma \setminus \rho) \cup \alpha$, где $\rho, \alpha \subset \Sigma$, при этом $\rho \subseteq \sigma$, $\rho \cap \alpha = \varnothing$. Тогда
+$$gen^d(\Deltasigma) \overset{def}{=} \bigcup\limits_{s \in \Deltasigma} gen_{d(\Deltasigma, s)}(s) = \bigcup\limits_{s \in (\sigma \setminus \rho) \cup \alpha} gen_{d((\sigma \setminus \rho) \cup \alpha, s)}(s).$$
+Требуется выразить эту функцию через $gen^d(\sigma)$.\\
+Пусть
+$$P = \{s \in \sigma \mid s \in \rho \vee d(\sigma, s) \cap \rho \neq \varnothing \},$$
+$$A = \{s \mid s \in \alpha \vee d(\Deltasigma, s) \cap \alpha \neq \varnothing \vee d(\sigma, s) \cap \rho \neq \varnothing \} \setminus \rho,$$
+тогда
+$$gen^d(\Deltasigma) = gen^d(\sigma) \setminus \bigcup\limits_{s \in P} gen_{d(\sigma, s)}(s) \cup \bigcup\limits_{s \in A} gen_{d(\Deltasigma, s)}(s)$$
 
 \subsection{Задача переиспользования порождений других входов}
 
@@ -61,7 +67,7 @@ TODO: случай несуществующего файла.
 
 Пусть $V = \{v_1, \dots, v_n\}$~--- набор файлов в состоянии некоторого репозитория (основного или локальной копии) в некоторый момент времени, где каждое $v_i$ является парой $(path_i, cont_i)$, которая означает, что в файле по пути $path_i$ в этом репозитории в этот момент времени записано содержимое $cont_i \in SRC$. Пусть мы умеем считать зависимости для файлов; тогда можно построить набор зависимостей $E(V) = \{e_1, \dots, e_m\}$, где каждое $e_j$ является тройкой $(\textit{type}_j, \textit{src}_j, \textit{dst}_j)$, которая означает, что файл $\textit{src}_j$ зависит от файла $\textit{dst}_j$, при этом тип зависимости $\textit{type}_j$.\\
 
-Тогда рассмотрим $\Sigma = V, \Omega = CF \cup ERR$. $\forall \sigma \subseteq V$, $\forall s \in V$ можем задать функцию $gen_\sigma(s) = \textit{compile}(\sigma, s) \subset CF \cup ERR$~--- результат компиляции файла $s$ при условии, что рядом в SOURCEPATH лежат файлы $\sigma$. Можем определить функцию $d(V,s) \subseteq V$~--- набор файлов из $V$, необходимый для безошибочной компиляции файла $s$ и при этом достаточный в том смысле, что от добавления в него других файлов результат компиляции не меняется. (TODO: верно ли, что при фиксированных $V$ и $s \in V$ $\forall \sigma \subseteq V$ либо $\textit{compile}(\sigma, s) \subset ERR$, либо $\textit{compile}(\sigma, s) = FILES_s \subset CF$, то есть для любого контекста компиляция выдаёт либо один и тот же результат, либо ошибку?) Эта функция может быть определена как транзитивное замыкание функции $dependencies$, возвращающей непосредственные зависимости и определяемой как $dependencies(V,s) \defeq \{v \big| \exists e_j \in E(V): src_j = s, dst_j = v\}$. (TODO: зависимости надо считать с учётом контекста?)
+Тогда рассмотрим $\Sigma = V, \Omega = CF \cup ERR$. $\forall \sigma \subseteq V$, $\forall s \in V$ можем задать функцию $gen_\sigma(s) = \textit{compile}(\sigma, s) \subset CF \cup ERR$~--- результат компиляции файла $s$ при условии, что рядом в SOURCEPATH лежат файлы $\sigma$. Можем определить функцию $d(V,s) \subseteq V$~--- набор файлов из $V$, необходимый для безошибочной компиляции файла $s$ и при этом достаточный в том смысле, что от добавления в него других файлов результат компиляции не меняется. (TODO: верно ли, что при фиксированных $V$ и $s \in V$ $\forall \sigma \subseteq V$ либо $\textit{compile}(\sigma, s) \subset ERR$, либо $\textit{compile}(\sigma, s) = FILES_s \subset CF$, то есть для любого контекста компиляция выдаёт либо один и тот же результат, либо ошибку?) Эта функция может быть определена как транзитивное замыкание функции $dependencies$, возвращающей непосредственные зависимости и определяемой как $dependencies(V,s) \defeq \{v \mid \exists e_j \in E(V): src_j = s, dst_j = v\}$. (TODO: зависимости надо считать с учётом контекста?)
 
 \subsubsection{Локальный кэш на timestamp}
 
