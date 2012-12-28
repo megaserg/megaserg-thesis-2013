@@ -12,17 +12,7 @@
 Пусть для каждого набора $\sigma \subset \Sigma$, входа $s \in \sigma$ задана функция $d(\sigma, s) \subseteq \sigma$~--- некоторый необходимый и достаточный контекст для входа $s$. TODO: что если таких несколько?\\
 Тогда $gen^d(\sigma) \defeq \bigcup\limits_{s \in \sigma} gen_{d(\sigma, s)}(s)$.
 
-\subsection{Задача инкрементальной компиляции}
-
-\newcommand{\Deltasigma}{\Delta_\alpha^\rho\sigma}
-Рассмотрим $\Deltasigma = (\sigma \setminus \rho) \cup \alpha$, где $\rho, \alpha \subset \Sigma$, при этом $\rho \subseteq \sigma$, $\rho \cap \alpha = \varnothing$. Тогда
-$$gen^d(\Deltasigma) \overset{def}{=} \bigcup\limits_{s \in \Deltasigma} gen_{d(\Deltasigma, s)}(s) = \bigcup\limits_{s \in (\sigma \setminus \rho) \cup \alpha} gen_{d((\sigma \setminus \rho) \cup \alpha, s)}(s).$$
-Требуется выразить эту функцию через $gen^d(\sigma)$.\\
-Пусть
-$$P = \{s \in \sigma \mid s \in \rho \vee d(\sigma, s) \cap \rho \neq \varnothing \},$$
-$$A = \{s \mid s \in \alpha \vee d(\Deltasigma, s) \cap \alpha \neq \varnothing \vee d(\sigma, s) \cap \rho \neq \varnothing \} \setminus \rho,$$
-тогда
-$$gen^d(\Deltasigma) = gen^d(\sigma) \setminus \bigcup\limits_{s \in P} gen_{d(\sigma, s)}(s) \cup \bigcup\limits_{s \in A} gen_{d(\Deltasigma, s)}(s)$$
+\input{incremental_compilation_problem.tex}
 
 \subsection{Задача переиспользования порождений других входов}
 

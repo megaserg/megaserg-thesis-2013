@@ -1,0 +1,64 @@
+\input{preamble.tex}
+
+\begin{document}
+
+\input{incremental_compilation_problem.tex}
+
+\hrulefill
+
+Я пытался проверить гипотезу, доказывая, что левая часть последнего утверждения входит в правую и наоборот. В одну сторону всё хорошо доказывается, а в обратную есть следующая проблема.
+
+Рассмотрим элементы $s \in \sigma \setminus P$, у которых $d(\Deltasigma, s) \cap \alpha \neq \varnothing$ (то есть эти элементы не менялись, у них нет зависимостей в $\rho$, но есть зависимости в $\alpha$). В контексте $\sigma$ они не должны были компилироваться из-за отсутствующих зависимостей (то есть вычисление $d(\sigma, s)$ для них некорректно~--- нет такого подмножества $\sigma$, которое являлось бы необходимым контекстом), а в новом контексте $\Deltasigma$ их ``неудовлетворённые'' зависимости, лежащие в $\alpha$, удовлетворяются.
+
+В текущей формулировке гипотезы те порождения, которые получились после неудачной компиляции таких элементов в контексте $\sigma$, никак не исключаются из множества $gen^d(\sigma)$, как это делается с $s \in P$. Поэтому в правой части эти порождения присутствуют, а в левой, понятно,~--- нет.
+
+Это, видимо, решается пополнением $P$:
+$$P = \rho \cup \{ s \in \sigma \mid d(\sigma, s) \cap \rho \neq \varnothing \vee d(\Deltasigma, s) \cap \alpha \neq \varnothing \}$$
+Заодно можно в похожей форме переписать $A$:
+$$A = \alpha \cup \{ s \in \Deltasigma \mid d(\sigma, s) \cap \rho \neq \varnothing \vee d(\Deltasigma, s) \cap \alpha \neq \varnothing \} \setminus \rho$$
+Тогда, в самом деле, гипотеза верна с некоторыми допущениями:\\
+\indent a) для произвольных $\sigma$, $x$ верно, что $(\exists s: x \in gen(\sigma, s))$ $\Rightarrow$ $\forall t \neq s$ $x \notin gen(\sigma, t)$ (в одном и том же контексте порождение может принадлежать результату генерации для не более чем одного входа)\\
+\indent b) $\forall s \in \{s \in \sigma \setminus \rho \mid d(\sigma, s) \cap \rho = \varnothing \wedge d(\Deltasigma, s) \cap \alpha = \varnothing \}$ $gen_{d(\sigma, s)} (s) = gen_{d(\Deltasigma, s)} (s)$ (если ни сам вход, ни его зависимости не лежали в изменяющейся части, результат генерации не меняется).\\
+
+\textbf{Доказательство:}\\
+Пусть некоторый $x \in gen^d(\Deltasigma)$. Это означает, что $\exists s_x \in (\sigma \setminus \rho) \cup \alpha$: $x \in gen_{d(\Deltasigma, s_x)} (s_x)$.\\
+Нужно доказать, что $x$ принадлежит правой части, то есть:
+$$
+\left[
+\begin{aligned}
+	&\left\{
+	\begin{aligned}
+		\exists a \in \sigma&: x \in gen_{d(\sigma, a)} (a) &(1)\\
+		\forall b \in P&: x \notin gen_{d(\sigma, b)} (b) &(2)\\
+		% TODO: make normal enumeration here
+	\end{aligned}
+	\right.\\
+	&\exists c \in A: x \in gen_{d(\Deltasigma, c)} (c)\\
+\end{aligned}
+\right.
+$$
+
+На самом деле систему можно переписать:
+
+$$
+\left[
+\begin{aligned}
+	&\exists a \in \sigma \setminus P: &x \in gen_{d(\sigma, a)} (a)\\
+	&\exists c \in A: &x \in gen_{d(\Deltasigma, c)} (c)\\
+\end{aligned}
+\right.
+$$
+
+В силу первого допущения верность первого утверждения обеспечит верность для (1) и (2).\\
+Рассмотрим два случая:\\
+\indent a) $s_x \in \alpha$. Тогда предъявим $c = s_x$; $c \in \alpha \subseteq A$ и, действительно, $x \in gen_{d(\Deltasigma, c)} (c)$.\\
+\indent b) $s_x \in \sigma \setminus \rho$. Тогда если $d(\sigma, s_x) \cap \rho \neq \varnothing$ или $d(\Deltasigma, s_x) \cap \alpha \neq \varnothing$, то опять предъявим $c = s_x \in A$. В противном случае воспользуемся вторым допущением и предъявим $a = s_x$.\\
+
+Обратно: пусть некоторый $x$ принадлежит правой части. Нужно доказать, что $x$ принадлежит левой части, то есть $\exists s_x \in \Deltasigma$: $x \in gen_{d(\Deltasigma, s_x)} (s_x)$.\\
+Рассмотрим два случая:\\
+\indent a) $\exists c \in A: x \in gen_{d(\Deltasigma, c)} (c)$. Ясно, что $A \subseteq \Deltasigma$. Тогда предъявим $s_x = c \in \Deltasigma$. Действительно, $x \in gen_{d(\Deltasigma, s_x)} (s_x)$.\\
+\indent b) $\forall c \in A: x \notin gen_{d(\Deltasigma, c)} (c)$, но $\exists a \in \sigma \setminus P: x \in gen_{d(\sigma, a)} (a)$. Ясно, что и $\sigma \setminus P \subseteq \Deltasigma$. Тогда предъявим $s_x = a \in \Deltasigma$. Действительно, по второму допущению $gen_{d(\sigma, a)} (a) = gen_{d(\Deltasigma, s_x)} (s_x)$ и $x \in gen_{d(\Deltasigma, s_x)} (s_x)$.\\
+
+Конец.
+
+\end{document}

@@ -1,0 +1,11 @@
+\subsection{Задача инкрементальной компиляции}
+
+\newcommand{\Deltasigma}{\Delta_\alpha^\rho\sigma}
+Рассмотрим $\Deltasigma = (\sigma \setminus \rho) \cup \alpha$, где $\rho, \alpha \subset \Sigma$, при этом $\rho \subseteq \sigma$, $\sigma \cap \alpha = \varnothing$. Тогда
+$$gen^d(\Deltasigma) \overset{def}{=} \bigcup\limits_{s \in \Deltasigma} gen_{d(\Deltasigma, s)}(s) = \bigcup\limits_{s \in (\sigma \setminus \rho) \cup \alpha} gen_{d((\sigma \setminus \rho) \cup \alpha, s)}(s).$$
+Требуется выразить эту функцию через $gen^d(\sigma)$.\\
+Гипотеза: пусть
+$$P = \{s \in \sigma \mid s \in \rho \vee d(\sigma, s) \cap \rho \neq \varnothing \},$$
+$$A = \{s \mid s \in \alpha \vee d(\Deltasigma, s) \cap \alpha \neq \varnothing \} \cup (P \setminus \rho),$$
+тогда
+$$gen^d(\Deltasigma) = gen^d(\sigma) \setminus \bigcup\limits_{s \in P} gen_{d(\sigma, s)}(s) \cup \bigcup\limits_{s \in A} gen_{d(\Deltasigma, s)}(s)$$
