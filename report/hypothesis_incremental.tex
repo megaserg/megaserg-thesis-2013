@@ -4,6 +4,12 @@
 
 \input{incremental_compilation_problem.tex}
 
+Гипотеза: пусть
+$$P = \{s \in \sigma \mid s \in \rho \vee d(\sigma, s) \cap \rho \neq \varnothing \},$$
+$$A = \{s \mid s \in \alpha \vee d(\Deltasigma, s) \cap \alpha \neq \varnothing \} \cup (P \setminus \rho),$$
+тогда
+$$gen^d(\Deltasigma) = gen^d(\sigma) \setminus \bigcup\limits_{s \in P} gen_{d(\sigma, s)}(s) \cup \bigcup\limits_{s \in A} gen_{d(\Deltasigma, s)}(s)$$
+
 \hrulefill
 
 Я пытался проверить гипотезу, доказывая, что левая часть последнего утверждения входит в правую и наоборот. В одну сторону всё хорошо доказывается, а в обратную есть следующая проблема.

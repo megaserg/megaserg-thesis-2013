@@ -4,19 +4,28 @@
 
 \input{incremental_compilation_problem.tex}
 
+$$P = \{s \in \sigma \mid s \in \rho \vee d(\sigma, s) \cap \rho \neq \varnothing \},$$
+$$A = \{s \mid s \in \alpha \vee d(\Deltasigma, s) \cap \alpha \neq \varnothing \} \cup (P \setminus \rho).$$
+
 Сделаем несколько допущений-аксиом:\\
 \indent a) для произвольных $\sigma$, $x$ верно, что $(\exists s: x \in gen_\sigma(s))$ $\Rightarrow$ $\forall t \neq s$ $x \notin gen_\sigma(t)$ (в одном и том же контексте порождение может принадлежать результату генерации для не более чем одного входа)\\
 \indent b) $\forall s \in \{s \in \sigma \setminus \rho \mid d(\sigma, s) \cap \rho = \varnothing \wedge d(\Deltasigma, s) \cap \alpha = \varnothing \}$ $gen_{d(\sigma, s)} (s) = gen_{d(\Deltasigma, s)} (s)$ (если ни сам вход, ни его зависимости не лежали в изменяющейся части, результат генерации не меняется)\\
 \indent c) $d(\sigma, s)$ не определено, если для $s$ невозможно найти подмножество $\sigma$, являющееся необходимым и достаточным контекстом (из-за отсутствующих в контексте или дублирующих друг друга зависимостей); в таком случае $gen_{d(\sigma, s)}(s) = \varnothing$\\
-\indent d) если $d(\sigma, s)$ определено, то $\forall \tau$ таких, что $\sigma \cap \tau = \varnothing$, $d(\sigma \cup \tau, s)$ либо равно $d(\sigma, s)$, либо не определено.
+\indent d) если $d(\sigma, s)$ определено, то $\forall \tau$ таких, что $\sigma \cap \tau = \varnothing$, $d(\sigma \cup \tau, s)$ либо равно $d(\sigma, s)$, либо не определено.\\
 
-Гипотеза 2: пусть
-$$\forall s \in \sigma \; d(\sigma, s) \; \text{определено},$$ 
-тогда
-$$\forall s \in \sigma \! \setminus \! P \; d(\Deltasigma, s) \cap \alpha = \varnothing$$
+\textbf{Лемма} (довольно очевидная). Если $d(\sigma, s)$ определено, то $\forall \sigma' \subseteq \sigma$ $d(\sigma', s)$ либо равно $d(\sigma, s)$, либо не определено.\\
+\textbf{Доказательство:}\\
+Рассмотрим $\sigma' \subseteq \sigma$. Пусть $\tau = \sigma \setminus \sigma'$, тогда $\sigma' \cup \tau = \sigma$. По четвёртому допущению, если $d(\sigma', s)$ определено, то $d(\sigma, s)$ либо равно $d(\sigma', s)$, либо не определено. Это эквивалентно следующему: если $d(\sigma, s)$ и $d(\sigma', s)$ определены, то они равны. Это эквивалентно следующему: если $d(\sigma, s)$ определено, то $d(\sigma', s)$ либо равно $d(\sigma, s)$, либо не определено. Конец.\\
+
+Таким образом, четвёртое допущение означает, что контекст, передаваемый функции $d$ для вычисления необходимого и достаточного контекста, можно сужать и расширять без изменения результата до тех пор, пока функция $d$ определена. Или: если при фиксированном $s$ функция $d$ определена для некоторого контекста и его подмножества (надмножества), то значения функции на этих контекстах равны.
 
 \hrulefill
 
-Конец.
+Видимо, требуется ещё одно допущение (e), а именно: если $d(\sigma \cup \tau, s)$ определено и $d(\sigma \cup \tau, s) \cap \tau = \varnothing$, то $d(\sigma, s)$ определено (и по четвёртому допущению равно $d(\sigma \cup \tau, s)$).\\
+
+\textbf{Гипотеза 2}. Пусть $\forall s \in \sigma$ $d(\sigma, s)$ определено, тогда $\forall s \in \sigma \setminus P$ верно, что если $d(\Deltasigma, s)$ определено, то $d(\Deltasigma, s) \cap \alpha = \varnothing$.
+
+\textbf{Доказательство:}\\
+Рассмотрим произвольное $s \in \sigma \setminus P$. Для него определено $d(\sigma, s)$. Так как $s \notin P$, то $d(\sigma, s) \cap \rho = \varnothing$ и по пятому допущению $d(\sigma \setminus \rho, s)$ определено (и по четвёртому допущению равно $d(\sigma, s)$). Далее, рассмотрим $d(\Deltasigma, s) = d((\sigma\setminus\rho)\cup\alpha, s)$. Поскольку и $d(\sigma \setminus \rho, s)$, и $d((\sigma\setminus\rho)\cup\alpha, s)$ определены, то по четвёртому допущению они равны. Таким образом, $d(\Deltasigma, s) = d(\sigma, s) \subseteq \sigma \cap \alpha = \varnothing$. Конец.
 
 \end{document}
