@@ -1,0 +1,22 @@
+\input{preamble.tex}
+
+\begin{document}
+
+\input{incremental_compilation_problem.tex}
+
+Сделаем несколько допущений-аксиом:\\
+\indent a) для произвольных $\sigma$, $x$ верно, что $(\exists s: x \in gen_\sigma(s))$ $\Rightarrow$ $\forall t \neq s$ $x \notin gen_\sigma(t)$ (в одном и том же контексте порождение может принадлежать результату генерации для не более чем одного входа)\\
+\indent b) $\forall s \in \{s \in \sigma \setminus \rho \mid d(\sigma, s) \cap \rho = \varnothing \wedge d(\Deltasigma, s) \cap \alpha = \varnothing \}$ $gen_{d(\sigma, s)} (s) = gen_{d(\Deltasigma, s)} (s)$ (если ни сам вход, ни его зависимости не лежали в изменяющейся части, результат генерации не меняется)\\
+\indent c) $d(\sigma, s)$ не определено, если для $s$ невозможно найти подмножество $\sigma$, являющееся необходимым и достаточным контекстом (из-за отсутствующих в контексте или дублирующих друг друга зависимостей); в таком случае $gen_{d(\sigma, s)}(s) = \varnothing$\\
+\indent d) если $d(\sigma, s)$ определено, то $\forall \tau$ таких, что $\sigma \cap \tau = \varnothing$, $d(\sigma \cup \tau, s)$ либо равно $d(\sigma, s)$, либо не определено.
+
+Гипотеза 2: пусть
+$$\forall s \in \sigma \; d(\sigma, s) \; \text{определено},$$ 
+тогда
+$$\forall s \in \sigma \! \setminus \! P \; d(\Deltasigma, s) \cap \alpha = \varnothing$$
+
+\hrulefill
+
+Конец.
+
+\end{document}

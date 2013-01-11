@@ -17,7 +17,7 @@ $$P = \rho \cup \{ s \in \sigma \mid d(\sigma, s) \cap \rho \neq \varnothing \ve
 Заодно можно в похожей форме переписать $A$:
 $$A = \alpha \cup \{ s \in \Deltasigma \mid d(\sigma, s) \cap \rho \neq \varnothing \vee d(\Deltasigma, s) \cap \alpha \neq \varnothing \} \setminus \rho$$
 Тогда, в самом деле, гипотеза верна с некоторыми допущениями:\\
-\indent a) для произвольных $\sigma$, $x$ верно, что $(\exists s: x \in gen(\sigma, s))$ $\Rightarrow$ $\forall t \neq s$ $x \notin gen(\sigma, t)$ (в одном и том же контексте порождение может принадлежать результату генерации для не более чем одного входа)\\
+\indent a) для произвольных $\sigma$, $x$ верно, что $(\exists s: x \in gen_\sigma(s))$ $\Rightarrow$ $\forall t \neq s$ $x \notin gen_\sigma(t)$ (в одном и том же контексте порождение может принадлежать результату генерации для не более чем одного входа)\\
 \indent b) $\forall s \in \{s \in \sigma \setminus \rho \mid d(\sigma, s) \cap \rho = \varnothing \wedge d(\Deltasigma, s) \cap \alpha = \varnothing \}$ $gen_{d(\sigma, s)} (s) = gen_{d(\Deltasigma, s)} (s)$ (если ни сам вход, ни его зависимости не лежали в изменяющейся части, результат генерации не меняется).\\
 
 \textbf{Доказательство:}\\
