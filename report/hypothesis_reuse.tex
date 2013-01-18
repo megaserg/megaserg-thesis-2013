@@ -1,0 +1,16 @@
+\input{preamble.tex}
+
+\begin{document}
+
+\input{reuse_outputs_problem.tex}\\
+
+Гипотеза: пусть
+
+$$\rho_i = \sigma_i \setminus \sigma^*,$$
+$$\alpha_i = \sigma^* \setminus \sigma_i,$$
+$$P_i = \{s \in \sigma_i \mid s \in \rho_i \vee d(\sigma_i, s) \cap \rho_i \neq \varnothing \},$$
+$$A_i = \{s \mid s \in \alpha_i \vee d(\sigma^*, s) \cap \alpha_i \neq \varnothing \} \cup (P_i \setminus \rho_i),$$
+тогда
+$$gen^d(\sigma^*) = \left( \bigcup\limits_{i = 1}^n \left( gen^d(\sigma_i) \setminus \bigcup\limits_{s \in P_i} gen_{d(\sigma_i, s)}(s)\right) \right) \cup \bigcup\limits_{s \in \bigcap\limits_{i = 1}^n A_i} gen_{d(\sigma^*, s)}(s)$$
+
+\end{document}

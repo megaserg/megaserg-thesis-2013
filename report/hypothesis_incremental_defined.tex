@@ -23,7 +23,7 @@ $$A = \{s \mid s \in \alpha \vee d(\Deltasigma, s) \cap \alpha \neq \varnothing 
 
 Видимо, требуется ещё одно допущение (e), а именно: если $d(\sigma \cup \tau, s)$ определено и $d(\sigma \cup \tau, s) \cap \tau = \varnothing$, то $d(\sigma, s)$ определено (и по четвёртому допущению равно $d(\sigma \cup \tau, s)$).\\
 
-\textbf{Гипотеза 2}. Пусть $\forall s \in \sigma$ $d(\sigma, s)$ определено, тогда $\forall s \in \sigma \setminus P$ верно, что если $d(\Deltasigma, s)$ определено, то $d(\Deltasigma, s) \cap \alpha = \varnothing$.
+\textbf{Предположение}. Пусть $\forall s \in \sigma$ $d(\sigma, s)$ определено, тогда $\forall s \in \sigma \setminus P$ верно, что если $d(\Deltasigma, s)$ определено, то $d(\Deltasigma, s) \cap \alpha = \varnothing$.
 
 \textbf{Доказательство:}\\
 Рассмотрим произвольное $s \in \sigma \setminus P$. Для него определено $d(\sigma, s)$. Так как $s \notin P$, то $d(\sigma, s) \cap \rho = \varnothing$ и по пятому допущению $d(\sigma \setminus \rho, s)$ определено (и по четвёртому допущению равно $d(\sigma, s)$). Далее, рассмотрим $d(\Deltasigma, s) = d((\sigma\setminus\rho)\cup\alpha, s)$. Поскольку и $d(\sigma \setminus \rho, s)$, и $d((\sigma\setminus\rho)\cup\alpha, s)$ определены, то по четвёртому допущению они равны. Таким образом, $d(\Deltasigma, s) = d(\sigma, s) \subseteq \sigma \cap \alpha = \varnothing$. Конец.
