@@ -4,13 +4,71 @@
 
 \input{reuse_outputs_problem.tex}\\
 
-Гипотеза: пусть
+Пусть
 
-$$\rho_i = \sigma_i \setminus \sigma^*,$$
-$$\alpha_i = \sigma^* \setminus \sigma_i,$$
+$$\sigma_i' = \sigma_i \cap \sigma^*,$$
+$$\rho_i = \sigma_i \setminus \sigma^* = \sigma_i \setminus \sigma_i',$$
+$$\alpha_i = \sigma^* \setminus \sigma_i = \sigma^* \setminus \sigma_i',$$
 $$P_i = \{s \in \sigma_i \mid s \in \rho_i \vee d(\sigma_i, s) \cap \rho_i \neq \varnothing \},$$
-$$A_i = \{s \mid s \in \alpha_i \vee d(\sigma^*, s) \cap \alpha_i \neq \varnothing \} \cup (P_i \setminus \rho_i),$$
-тогда
-$$gen^d(\sigma^*) = \left( \bigcup\limits_{i = 1}^n \left( gen^d(\sigma_i) \setminus \bigcup\limits_{s \in P_i} gen_{d(\sigma_i, s)}(s)\right) \right) \cup \bigcup\limits_{s \in \bigcap\limits_{i = 1}^n A_i} gen_{d(\sigma^*, s)}(s)$$
 
+\begin{comment}
+$$A_i = \{s \mid s \in \alpha_i \vee d(\sigma^*, s) \cap \alpha_i \neq \varnothing \} \cup (P_i \setminus \rho_i),$$
+
+	тогда
+	$$gen^d(\sigma^*) = \left( \bigcup\limits_{i = 1}^n \left( gen^d(\sigma_i) \setminus \bigcup\limits_{s \in P_i} gen_{d(\sigma_i, s)}(s)\right) \right) \cup \bigcup\limits_{s \in \bigcap\limits_{i = 1}^n A_i} gen_{d(\sigma^*, s)}(s)$$
+\end{comment}
+
+\hrulefill
+
+\begin{comment}
+	\textbf{Доказательство:}\\
+
+	Пусть некоторый $x \in gen^d(\sigma^*)$. Это означает, что $\exists s_x \in \sigma^*$: $x \in gen_{d(\sigma^*, s_x)} (s_x)$.\\
+	Нужно доказать, что $x$ принадлежит правой части, то есть:
+	$$
+	\left[
+	\begin{aligned}
+		&\exists a \in \sigma_i \setminus P_i: &x \in gen_{d(\sigma_i, a)} (a)\\
+		&\exists b: \forall i \; b \in A_i, &x \in gen_{d(\sigma^*, b)} (b)\\
+	\end{aligned}
+	\right.
+	$$
+
+	Рассмотрим два случая:
+	a) $\exists i : s_x \in \sigma_i \setminus P_i, $
+\end{comment}
+
+Введём обозначения: $gen_i(s) = gen_{d(\sigma_i, s)}(s)$, $gen^*(s) = gen_{d(\sigma^*, s)}(s)$.\\
+Рассмотрим различные случаи для $s \in \sigma_i'$ и действия, которые необходимо произвести с $gen^d(\sigma_i)$, чтобы получить $gen^d(\sigma^*)$: \\
+
+\begin{tabular}{ | p{3.5cm} || p{3.5cm} | p{3.5cm} | p{3.5cm} |}
+	\hline
+	Действие & $d(\sigma_i, s) \cap \rho_i \neq \varnothing$ & $d(\sigma_i, s) \cap \rho_i = \varnothing$ & $d(\sigma_i, s)$ не опр. \\ \hline
+	& & & \\[-1.1em] \hline
+	$d(\sigma^*, s) \cap \alpha_i \neq \varnothing$ & вычесть $gen_i(s)$, добавить $gen^*(s)$ & не бывает по предположению & добавить $gen^*(s)$ \\ \hline
+	$d(\sigma^*, s) \cap \alpha_i = \varnothing$ & не бывает по предположению & взять $gen_i(s)$ & добавить $gen^*(s)$ \\ \hline
+	$d(\sigma^*, s)$ не опр. & вычесть $gen_i(s)$ & вычесть $gen_i(s)$ & ничего не делать \\
+	\hline
+\end{tabular} \\\\
+
+Введём ещё $Q_i = \{s \mid d(\sigma_i, s) \cap \rho_i = \varnothing$ \& $d(\sigma^*, s) \cap \alpha_i = \varnothing\}$ (центральная ячейка). На самом деле $Q_i = \sigma_i \setminus P_i \setminus \{s \mid d(\sigma^*, s) \text{ не опр.}\} \setminus \{s \mid d(\sigma_i, s) \text{ не опр.}\}$.
+
+Тогда рассмотрим произвольное $i$ и произвольное $s \in \sigma^*$. Либо $s \in \alpha_i$, либо $s \in \sigma_i'$. Во втором случае либо $s \in Q_i$, и тогда по допущению b) $gen^*(s) =  gen_i(s)$; либо нет, и тогда мы не можем использовать $gen_i(s)$.
+
+Теперь рассмотрим произвольное $s \in \sigma^*$. Либо $\exists i_s$ : $s \in Q_i$, либо $\forall i \in [1:n]$ : $s \in \alpha_i \cup (\sigma_i' \setminus Q_i) = \alpha_i \cup \{s | d(\sigma_i, s) \cap \rho_i \neq \varnothing \vee d(\sigma_i, s) \text{ не опр.} \vee d(\sigma^*, s) \cap \alpha_i \neq \varnothing \vee d(\sigma^*, s) \text{ не опр.} \}$.
+
+Во втором случае~--- если принадлежит всем, то принадлежит и пересечению:
+$$s \in \bigcap\limits_{i = 1}^n \alpha_i \cup (\sigma_i' \setminus Q_i),$$
+и тогда 
+$$gen^*(s) \in \bigcup\limits_{t \in \bigcap\limits_{i = 1}^n \alpha_i \cup (\sigma_i' \setminus Q_i)} gen^*(t).$$
+Для $s$ таких, что $d(\sigma^*, s)$ не определено, $gen^*(s) = \varnothing$ независимо от $i$, поэтому можно исключить их из рассмотрения. Тогда получается, что пересекать достаточно только множества $A_i$, где
+$$A_i = \alpha_i \cup \{s \in \sigma_i' \mid (d(\sigma_i, s) \cap \rho_i \neq \varnothing \;\&\; d(\sigma^*, s) \cap \alpha_i \neq \varnothing) \vee (d(\sigma_i, s) \text{ не опр.} \;\&\; d(\sigma^*, s) \text{ опред.})\}.$$
+
+Но ничего не изменится (см. таблицу), если в качестве $A_i$ рассматривать
+$$A_i = \alpha_i \cup \{s \in \sigma_i\setminus\rho_i \mid d(\sigma_i, s) \cap \rho_i \neq \varnothing \vee d(\sigma_i, s) \text{ не опр.}\}$$
+или
+$$A_i = \alpha_i \cup \{s \in \sigma_i\setminus\rho_i \mid d(\sigma^*, s) \cap \alpha_i \neq \varnothing \vee d(\sigma_i, s) \text{ не опр.}\}$$
+
+Отсюда гипотеза:
+$$gen^d(\sigma^*) = \left( \bigcup\limits_{i = 1}^n \bigcup\limits_{s \in Q_i} gen_{d(\sigma_i, s)}(s) \right) \cup \bigcup\limits_{s \in \bigcap\limits_{i = 1}^n A_i} gen_{d(\sigma^*, s)}(s)$$
 \end{document}
