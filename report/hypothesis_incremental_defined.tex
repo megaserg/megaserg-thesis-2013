@@ -4,28 +4,86 @@
 
 \input{incremental_compilation_problem.tex}
 
+\hrulefill
+
+Введём:
 $$P = \{s \in \sigma \mid s \in \rho \vee d(\sigma, s) \cap \rho \neq \varnothing \},$$
-$$A = \{s \mid s \in \alpha \vee d(\Deltasigma, s) \cap \alpha \neq \varnothing \} \cup (P \setminus \rho).$$
+$$A = \{s \mid s \in \alpha \vee d(\Deltasigma, s) \cap \alpha \neq \varnothing \} \cup (P \setminus \rho),$$
 
 Сделаем несколько допущений-аксиом:\\
-\indent a) для произвольных $\sigma$, $x$ верно, что $(\exists s: x \in gen_\sigma(s))$ $\Rightarrow$ $\forall t \neq s$ $x \notin gen_\sigma(t)$ (в одном и том же контексте порождение может принадлежать результату генерации для не более чем одного входа)\\
-\indent b) $\forall s \in \{s \in \sigma \setminus \rho \mid d(\sigma, s) \cap \rho = \varnothing \wedge d(\Deltasigma, s) \cap \alpha = \varnothing \}$ $gen_{d(\sigma, s)} (s) = gen_{d(\Deltasigma, s)} (s)$ (если ни сам вход, ни его зависимости не лежали в изменяющейся части, результат генерации не меняется)\\
-\indent c) $d(\sigma, s)$ не определено, если для $s$ невозможно найти подмножество $\sigma$, являющееся необходимым и достаточным контекстом (из-за отсутствующих в контексте или дублирующих друг друга зависимостей); в таком случае $gen_{d(\sigma, s)}(s) = \varnothing$\\
-\indent d) если $d(\sigma, s)$ определено, то $\forall \tau$ таких, что $\sigma \cap \tau = \varnothing$, $d(\sigma \cup \tau, s)$ либо равно $d(\sigma, s)$, либо не определено.\\
+\indent \textbf{a)} для произвольных $\sigma$, $x$ верно, что $(\exists s: x \in gen_\sigma(s))$ $\Rightarrow$ $\forall t \neq s$ $x \notin gen_\sigma(t)$ (в одном и том же контексте порождение может принадлежать результату генерации для не более чем одного входа).\\
+\indent \textbf{b)} $\forall s \in \{s \in \sigma \setminus \rho \mid d(\sigma, s) \cap \rho = \varnothing \wedge d(\Deltasigma, s) \cap \alpha = \varnothing \}$ $gen_{d(\sigma, s)} (s) = gen_{d(\Deltasigma, s)} (s)$ (если ни сам вход, ни его зависимости не лежали в изменяющейся части, результат генерации не меняется).\\
+\indent \textbf{c)} $d(\sigma, s)$ не определено, если для $s$ невозможно найти подмножество $\sigma$, являющееся необходимым и достаточным контекстом (из-за отсутствующих в контексте или дублирующих друг друга зависимостей); в таком случае $gen_{d(\sigma, s)}(s) = \varnothing$.\\
+\indent \textbf{d)} если $d(\sigma, s)$ определено, то $\forall \tau$ таких, что $\sigma \cap \tau = \varnothing$, $d(\sigma \cup \tau, s)$ либо равно $d(\sigma, s)$, либо не определено.\\
 
-\textbf{Лемма} (довольно очевидная). Если $d(\sigma, s)$ определено, то $\forall \sigma' \subseteq \sigma$ $d(\sigma', s)$ либо равно $d(\sigma, s)$, либо не определено.\\
-\textbf{Доказательство:}\\
-Рассмотрим $\sigma' \subseteq \sigma$. Пусть $\tau = \sigma \setminus \sigma'$, тогда $\sigma' \cup \tau = \sigma$. По четвёртому допущению, если $d(\sigma', s)$ определено, то $d(\sigma, s)$ либо равно $d(\sigma', s)$, либо не определено. Это эквивалентно следующему: если $d(\sigma, s)$ и $d(\sigma', s)$ определены, то они равны. Это эквивалентно следующему: если $d(\sigma, s)$ определено, то $d(\sigma', s)$ либо равно $d(\sigma, s)$, либо не определено. Конец.\\
+\textbf{Следствие} из допущения (d): если $d(\sigma, s)$ определено, то $\forall \sigma' \subseteq \sigma$ $d(\sigma', s)$ либо равно $d(\sigma, s)$, либо не определено.
 
-Таким образом, четвёртое допущение означает, что контекст, передаваемый функции $d$ для вычисления необходимого и достаточного контекста, можно сужать и расширять без изменения результата до тех пор, пока функция $d$ определена. Или: если при фиксированном $s$ функция $d$ определена для некоторого контекста и его подмножества (надмножества), то значения функции на этих контекстах равны.
+\textbf{Доказательство}: Рассмотрим $\sigma' \subseteq \sigma$. Пусть $\tau = \sigma \setminus \sigma'$, тогда $\sigma' \cup \tau = \sigma$. По допущению (d), если $d(\sigma', s)$ определено, то $d(\sigma, s)$ либо равно $d(\sigma', s)$, либо не определено. Это эквивалентно следующему: если $d(\sigma, s)$ и $d(\sigma', s)$ определены, то они равны. Это эквивалентно следующему: если $d(\sigma, s)$ определено, то $d(\sigma', s)$ либо равно $d(\sigma, s)$, либо не определено. Конец.\\
+
+Таким образом, допущение (d) означает, что контекст, передаваемый функции $d$ для вычисления необходимого и достаточного контекста, можно сужать и расширять без изменения результата до тех пор, пока функция $d$ определена. Или: если при фиксированном $s$ функция $d$ определена для некоторого контекста и его подмножества (надмножества), то значения функции на этих контекстах равны. Мы также считаем, что если ``хороший'' контекст (на котором $d$ определена) при расширении становится ``плохим'', то этот ``плохой'' нельзя расширить так, чтобы он стал ``хорошим''.\\
+
+\indent \textbf{e)} если $d(\sigma \cup \tau, s)$ определено и $d(\sigma \cup \tau, s) \cap \tau = \varnothing$, то $d(\sigma, s)$ определено (и по допущению (d) равно $d(\sigma \cup \tau, s)$).\\
+
+\textbf{Замечание}: допущение (e) эквивалентно следующему: если $d(\gamma, s)$ определено, то $d(d(\gamma, s), s)$ определено и равно $d(\gamma, s)$.
+
+\textbf{Доказательство}: В одну сторону: зафиксируем $s$. Пусть для произвольных $\sigma$, $\tau$ верно, что из того факта, что $d(\sigma \cup \tau, s)$ определено и не пересекается с $\tau$, следует определённость $d(\sigma, s)$. Тогда рассмотрим произвольное $\gamma$ и положим $\sigma = d(\gamma, s)$, $\tau = \gamma \setminus d(\gamma, s)$. Тогда по посылке из определённости $d(\gamma, s)$ следует определённость $d(\sigma, s) = d(d(\gamma, s), s)$, притом они равны.\\
+Обратно: зафиксируем $s$. Пусть для произвольного $\gamma$ верно, что если $d(\gamma, s)$ определено, то $d(d(\gamma, s), s)$ определено и равно $d(\gamma, s)$. Тогда рассмотрим произвольные $\sigma$, $\tau$ и положим $\gamma = \sigma \cup \tau$. Предположим, что определено $d(\sigma \cup \tau, s) = d(\gamma, s)$ и $d(\sigma \cup \tau, s) \cap \tau = \varnothing$. Тогда по посылке $d(\gamma, s) = d(d(\gamma, s), s) = d(d(\sigma \cup \tau, s), s)$. Получается, что $d(\cdot, s)$ определена для множества $d(\sigma \cup \tau, s)$, которое не пересекается с $\tau$ и потому является подмножеством $\sigma$; и для множества $\sigma \cup \tau$, которое является надмножеством $\sigma$. Тогда и $d(\sigma, s)$ определено.
+Конец.\\
+
+Если рассмотреть функцию от $\sigma$ $d_s(\sigma) = d(\sigma, s)$, то по замечанию получится $d_s(d_s(\sigma)) = d_s(\sigma)$, то есть функция зависимости для фиксированного входа $s$ идемпотентна, а необходимый и достаточный контекст является её наименьшей по включению неподвижной точкой.\\
+
+\textbf{Предположение}: пусть $s \in \sigma \setminus P$. Тогда если $d(\sigma, s)$ определено и $d(\Deltasigma, s)$ определено, то $d(\Deltasigma, s) \cap \alpha = \varnothing$.
+
+\textbf{Доказательство}: Рассмотрим произвольное $s \in \sigma \setminus P$. Для него определено $d(\sigma, s)$. Так как $s \notin P$, то $d(\sigma, s) \cap \rho = \varnothing$ и по допущению (e) $d(\sigma \setminus \rho, s)$ определено (и по допущению (d) равно $d(\sigma, s)$). Далее, рассмотрим $d(\Deltasigma, s) = d((\sigma\setminus\rho)\cup\alpha, s)$. Поскольку и $d(\sigma \setminus \rho, s)$, и $d((\sigma\setminus\rho)\cup\alpha, s)$ определены, то по допущению (d) они равны. Таким образом, $d(\Deltasigma, s) = d(\sigma, s) \subseteq \sigma \cap \alpha = \varnothing$. Конец.
 
 \hrulefill
 
-Видимо, требуется ещё одно допущение (e), а именно: если $d(\sigma \cup \tau, s)$ определено и $d(\sigma \cup \tau, s) \cap \tau = \varnothing$, то $d(\sigma, s)$ определено (и по четвёртому допущению равно $d(\sigma \cup \tau, s)$).\\
-
-\textbf{Предположение}. Пусть $\forall s \in \sigma$ $d(\sigma, s)$ определено, тогда $\forall s \in \sigma \setminus P$ верно, что если $d(\Deltasigma, s)$ определено, то $d(\Deltasigma, s) \cap \alpha = \varnothing$.
+\textbf{Гипотеза}: пусть
+$$P = \{s \in \sigma \mid s \in \rho \vee d(\sigma, s) \cap \rho \neq \varnothing \},$$
+$$A = \{s \mid s \in \alpha \vee d(\Deltasigma, s) \cap \alpha \neq \varnothing \} \cup (P \setminus \rho),$$
+тогда
+$$gen^d(\Deltasigma) = gen^d(\sigma) \setminus \bigcup\limits_{s \in P} gen_{d(\sigma, s)}(s) \cup \bigcup\limits_{s \in A} gen_{d(\Deltasigma, s)}(s)$$
+(считается, что $d(\Deltasigma, s)$ определено $\forall s \in \Deltasigma$)
 
 \textbf{Доказательство:}\\
-Рассмотрим произвольное $s \in \sigma \setminus P$. Для него определено $d(\sigma, s)$. Так как $s \notin P$, то $d(\sigma, s) \cap \rho = \varnothing$ и по пятому допущению $d(\sigma \setminus \rho, s)$ определено (и по четвёртому допущению равно $d(\sigma, s)$). Далее, рассмотрим $d(\Deltasigma, s) = d((\sigma\setminus\rho)\cup\alpha, s)$. Поскольку и $d(\sigma \setminus \rho, s)$, и $d((\sigma\setminus\rho)\cup\alpha, s)$ определены, то по четвёртому допущению они равны. Таким образом, $d(\Deltasigma, s) = d(\sigma, s) \subseteq \sigma \cap \alpha = \varnothing$. Конец.
+Пусть некоторый $x \in gen^d(\Deltasigma)$. Это означает, что $\exists s_x \in (\sigma \setminus \rho) \cup \alpha$: $x \in gen_{d(\Deltasigma, s_x)} (s_x)$.\\
+Нужно доказать, что $x$ принадлежит правой части, то есть:
+$$
+\left[
+\begin{aligned}
+	&\left\{
+	\begin{aligned}
+		\exists a \in \sigma&: x \in gen_{d(\sigma, a)} (a) &(1)\\
+		\forall b \in P&: x \notin gen_{d(\sigma, b)} (b) &(2)\\
+		% TODO: make normal enumeration here
+	\end{aligned}
+	\right.\\
+	&\exists c \in A: x \in gen_{d(\Deltasigma, c)} (c)\\
+\end{aligned}
+\right.
+$$
+
+На самом деле систему можно переписать:
+
+$$
+\left[
+\begin{aligned}
+	&\exists a \in \sigma \setminus P: &x \in gen_{d(\sigma, a)} (a)\\
+	&\exists c \in A: &x \in gen_{d(\Deltasigma, c)} (c)\\
+\end{aligned}
+\right.
+$$
+
+В силу допущения (a) верность первого утверждения обеспечит верность для (1) и (2).\\
+Рассмотрим два случая:\\
+\indent a) $s_x \in \alpha$. Тогда предъявим $c = s_x$; $c \in \alpha \subseteq A$ и, действительно, $x \in gen_{d(\Deltasigma, c)} (c)$.\\
+\indent b) $s_x \in \sigma \setminus \rho$. Тогда если $d(\sigma, s_x) \cap \rho \neq \varnothing$ или $d(\Deltasigma, s_x) \cap \alpha \neq \varnothing$, то опять предъявим $c = s_x \in A$. В противном случае воспользуемся допущением (b) и предъявим $a = s_x$.\\
+
+Обратно: пусть некоторый $x$ принадлежит правой части. Нужно доказать, что $x$ принадлежит левой части, то есть $\exists s_x \in \Deltasigma$: $x \in gen_{d(\Deltasigma, s_x)} (s_x)$.\\
+Рассмотрим два случая:\\
+\indent a) $\exists c \in A: x \in gen_{d(\Deltasigma, c)} (c)$. Ясно, что $A \subseteq \Deltasigma$. Тогда предъявим $s_x = c \in \Deltasigma$. Действительно, $x \in gen_{d(\Deltasigma, s_x)} (s_x)$.\\
+\indent b) $\forall c \in A: x \notin gen_{d(\Deltasigma, c)} (c)$, но $\exists a \in \sigma \setminus P: x \in gen_{d(\sigma, a)} (a)$. Ясно, что $\sigma \setminus P \subseteq \Deltasigma$. Тогда предъявим $s_x = a \in \Deltasigma$. По предположению: поскольку $d(\sigma, s_x)$ определено (что следует из непустоты $gen_{d(\sigma, a)}$) и $d(\Deltasigma, s_x)$ определено (что следует из условия гипотезы), то $d(\Deltasigma, s_x) \cap \alpha = \varnothing$. Тогда можно воспользоваться допущением (b) и получить $gen_{d(\sigma, a)} (a) = gen_{d(\Deltasigma, s_x)} (s_x)$ и $x \in gen_{d(\Deltasigma, s_x)} (s_x)$.\\
+
+Конец. TODO: проверить на проблемы с неопределённостью
 
 \end{document}

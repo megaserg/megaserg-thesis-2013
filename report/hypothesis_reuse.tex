@@ -39,7 +39,7 @@ $$A_i = \{s \mid s \in \alpha_i \vee d(\sigma^*, s) \cap \alpha_i \neq \varnothi
 \end{comment}
 
 Введём обозначения: $gen_i(s) = gen_{d(\sigma_i, s)}(s)$, $gen^*(s) = gen_{d(\sigma^*, s)}(s)$.\\
-Рассмотрим различные случаи для $s \in \sigma_i'$ и действия, которые необходимо произвести с $gen^d(\sigma_i)$, чтобы получить $gen^d(\sigma^*)$: \\
+Рассмотрим различные случаи для $s \in \sigma_i'$ и действия, которые необходимо произвести с набором порождений $gen^d(\sigma_i)$, чтобы получить $gen^d(\sigma^*)$: \\
 
 \begin{tabular}{ | p{3.5cm} || p{3.5cm} | p{3.5cm} | p{3.5cm} |}
 	\hline
@@ -51,16 +51,16 @@ $$A_i = \{s \mid s \in \alpha_i \vee d(\sigma^*, s) \cap \alpha_i \neq \varnothi
 	\hline
 \end{tabular} \\\\
 
-Введём ещё $Q_i = \{s \mid d(\sigma_i, s) \cap \rho_i = \varnothing$ \& $d(\sigma^*, s) \cap \alpha_i = \varnothing\}$ (центральная ячейка). На самом деле $Q_i = \sigma_i \setminus P_i \setminus \{s \mid d(\sigma^*, s) \text{ не опр.}\} \setminus \{s \mid d(\sigma_i, s) \text{ не опр.}\}$.
+Введём ещё $Q_i = \{s \mid d(\sigma_i, s) \cap \rho_i = \varnothing$ \& $d(\sigma^*, s) \cap \alpha_i = \varnothing\}$ (центральная ячейка). На самом деле (см. таблицу) $Q_i = \sigma_i \setminus P_i \setminus \{s \mid d(\sigma^*, s) \text{ не опр.}\} \setminus \{s \mid d(\sigma_i, s) \text{ не опр.}\}$.
 
-Тогда рассмотрим произвольное $i$ и произвольное $s \in \sigma^*$. Либо $s \in \alpha_i$, либо $s \in \sigma_i'$. Во втором случае либо $s \in Q_i$, и тогда по допущению b) $gen^*(s) =  gen_i(s)$; либо нет, и тогда мы не можем использовать $gen_i(s)$.
+Тогда рассмотрим произвольное $i$ и произвольное $s \in \sigma^*$. Либо $s \in \alpha_i$, либо $s \in \sigma_i'$. Во втором случае либо $s \in Q_i$, и тогда по допущению (b) $gen^*(s) =  gen_i(s)$; либо нет, и тогда мы не можем использовать $gen_i(s)$.
 
 Теперь рассмотрим произвольное $s \in \sigma^*$. Либо $\exists i_s$ : $s \in Q_i$, либо $\forall i \in [1:n]$ : $s \in \alpha_i \cup (\sigma_i' \setminus Q_i) = \alpha_i \cup \{s | d(\sigma_i, s) \cap \rho_i \neq \varnothing \vee d(\sigma_i, s) \text{ не опр.} \vee d(\sigma^*, s) \cap \alpha_i \neq \varnothing \vee d(\sigma^*, s) \text{ не опр.} \}$.
 
 Во втором случае~--- если принадлежит всем, то принадлежит и пересечению:
 $$s \in \bigcap\limits_{i = 1}^n \alpha_i \cup (\sigma_i' \setminus Q_i),$$
 и тогда 
-$$gen^*(s) \in \bigcup\limits_{t \in \bigcap\limits_{i = 1}^n \alpha_i \cup (\sigma_i' \setminus Q_i)} gen^*(t).$$
+$$gen^*(s) \subseteq \bigcup\limits_{t \in \bigcap\limits_{i = 1}^n \alpha_i \cup (\sigma_i' \setminus Q_i)} gen^*(t).$$
 Для $s$ таких, что $d(\sigma^*, s)$ не определено, $gen^*(s) = \varnothing$ независимо от $i$, поэтому можно исключить их из рассмотрения. Тогда получается, что пересекать достаточно только множества $A_i$, где
 $$A_i = \alpha_i \cup \{s \in \sigma_i' \mid (d(\sigma_i, s) \cap \rho_i \neq \varnothing \;\&\; d(\sigma^*, s) \cap \alpha_i \neq \varnothing) \vee (d(\sigma_i, s) \text{ не опр.} \;\&\; d(\sigma^*, s) \text{ опред.})\}.$$
 
@@ -71,4 +71,7 @@ $$A_i = \alpha_i \cup \{s \in \sigma_i\setminus\rho_i \mid d(\sigma^*, s) \cap \
 
 Отсюда гипотеза:
 $$gen^d(\sigma^*) = \left( \bigcup\limits_{i = 1}^n \bigcup\limits_{s \in Q_i} gen_{d(\sigma_i, s)}(s) \right) \cup \bigcup\limits_{s \in \bigcap\limits_{i = 1}^n A_i} gen_{d(\sigma^*, s)}(s)$$
+
+Идея доказательства, неформально: в первом члене объединения мы перечисляем те входы, для которых можно переиспользовать порождение; те же, для которых нет ни одного порождения, которое можно было бы переиспользовать, попадают во второй член объединения. Таким образом, все порождения из левой части равенства присутствуют так или иначе в правой (либо как переиспользованные, либо как сгенерированные для нового контекста), в то же время в правой части не появится лишних порождений по построению: всё, что генерируется, генерируется по необходимости.
+
 \end{document}
