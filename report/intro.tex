@@ -1,11 +1,11 @@
 \newpage
-\tableofcontents
+% \tableofcontents
 
 \section{Формальная модель}
 
 Пусть $\Sigma$~--- множество входов, $\Omega$~--- множество всех возможных порождений. Выделим специальное множество $ERROR \subset \Omega$\footnote{Здесь и далее $\subset$ означает ``является собственным подмножеством'', а $\subseteq$~--- ``равно или является собственным подмножеством''.}.\\
 Для $\sigma \subset \Sigma$, $s \in \Sigma$ определим $gen_\sigma(s) \subset \Omega$~--- порождения $s$ в контексте $\sigma$. Таким образом, тип функции $gen: 2^\Sigma \times \Sigma \to 2^\Omega$.\\
-Контекст $\sigma$ назовём \textit{необходимым} для входа $s$, если для любого множества $\varphi: \varphi \subset \sigma$ $gen_\varphi(s) \in ERROR$.\\
+Контекст $\sigma$ назовём \textit{необходимым} для входа $s$, если для любого множества $\varphi: \varphi \subset \sigma$ $gen_\varphi(s) \subseteq ERROR$ или $gen_\varphi(s) = \varnothing$.\\
 Контекст $\sigma$ назовём \textit{достаточным} для входа $s$, если для любого множества $\Phi: \sigma \subseteq \Phi$ $gen_\Phi(s) = gen_\sigma(s)$.\\
 Доопределим $gen$ для набора $S \subset \Sigma$: $gen_\sigma(S) \defeq \bigcup\limits_{s \in S} gen_\sigma(s)$.\\
 В частности, $gen_\sigma(\sigma) = \bigcup\limits_{s \in \sigma} gen_\sigma(s)$~--- порождение набора входов в контексте этого же набора.\\
@@ -43,8 +43,9 @@ $\forall v \in [1:s], \forall i \in [1:n]$\\
 $\forall l \in [1:r], \forall i \in [1:n]$\\
 \indent a) $loccont_l(i) = loccont_l^t(i) \in SRC$~--- содержимое файла $i$ в локальной копии $l$ в момент $t$;\\
 \indent b) $locts_l(i) = locts_l^t(i)$~--- timestamp последнего изменения файла $i$ в локальной копии $l$ в момент $t$;\\
-\indent c) $loclv_l(i) = loclv_l^t(i) \in {[1:s]}$~--- последняя на момент $t$ ревизия основного репозитория, с которой был синхронизирован файл $i$ в локальной копии $l$.\\
-В случае Git $\forall i \in [1:n]$ $loclv_l(i)$ одинаковы~--- это последняя на момент $t$ ревизия основного репозитория, с которой была синхронизирована локальная копия $l$.\\
+\indent c) $loclv_l(i) = loclv_l^t(i) \in {[1:s]}$~--- последняя на момент $t$ ревизия основного репозитория, с которой был синхронизирован файл $i$ в локальной копии $l$;\\
+(В случае Git $\forall i \in [1:n]$ $loclv_l(i)$ одинаковы~--- это последняя на момент $t$ ревизия основного репозитория, с которой была синхронизирована локальная копия $l$.)\\
+\indent d) $lochash_l(i) = lochash_l^t(i) = hash(loccont_l^t(i)) $~--- хэш содержимого файла $i$ в локальной копии $l$ в момент $t$.
 
 Таким образом, локальное изменение файла $i$ в копии $l$ (в момент $t$): $$\mathit{diff}(loccont_l(i), cont_{loclv_l(i)}(i)),$$ где $\mathit{diff}$~--- функция вычисления разности двух исходных файлов.\\
 TODO: случай несуществующего файла.
@@ -62,6 +63,13 @@ $\forall l \in [1:r], \forall i \in [1:n]$\\
 \indent a) $loclct_l^t(i) = locts_l^{ct_l^t}(i)$~--- timestamp последнего на момент $ct_l^t$ изменения файла $i$ в локальной копии $l$;\\
 \indent b) $loccache_l^t(i) = compile(..., loccont_l^{ct_l^t}(i))$~--- результат последней компиляции файла $i$ в локальной копии $l$, то есть компиляции его содержимого на момент $ct_l^t$.\\
 
+\subsubsection{Локальный кэш на хэшах}
+
+Рассмотрим теперь локальный кэш на хэшах~--- некоторое хранилище, ассоциированное с локальной копией, в каждый момент времени содержащее результаты некоторых последних компиляций. Опять, пусть $ct_l^t$~--- момент, когда в локальной копии $l$ была произведена компиляция, являющаяся последней на момент $t$.
+$\forall l \in [1:r], \forall i \in [1:n]$\\
+\indent a) $loclh_l^t(i) = lochash_l^{ct_l^t}(i)$~--- хэш содержимого файла $i$ в локальной копии $l$ на момент последней компиляции, то есть $ct_l^t$;\\
+\indent b) $loccache_l^t(i) = compile(..., loccont_l^{ct_l^t}(i))$~--- результат последней компиляции файла $i$ в локальной копии $l$, то есть компиляции его содержимого на момент $ct_l^t$.\\
+
 Пусть есть некоторая локальная копия $l$. Тогда можно описать, что происходит с переменными, описывающими содержащуюся в ней информацию, при некоторых процессах.
 To be continued...\\
 
@@ -70,14 +78,15 @@ To be continued...\\
 function $\mathbf{rebuild}(l)$:
 	for $\forall i \in [1:n]$ do
 		$loclct_l(i) \defeq locts_l(i)$
+		$loclh_l(i) \defeq lochash_l(i)$
 		$loccache_l(i) \defeq compile(..., loccont_l(i))$
 		$result[i] \defeq loccache_l(i)$
 	return $result$
 \end{lstlisting}
 
-\subsubsection{Функция \texttt{make}: инкрементальная компиляция с использованием локального кэша на timestamp}
+\subsubsection{Функция \texttt{make_ts}: инкрементальная компиляция с использованием локального кэша на timestamp}
 \begin{lstlisting}
-function $\mathbf{make}(l)$:
+function $\mathbf{make_ts}(l)$:
 	$tocompile \defeq \varnothing$
 	$result \defeq \varnothing$
 	for $\forall i \in [1:n]$ do
@@ -91,6 +100,28 @@ function $\mathbf{make}(l)$:
 		$result[i] \defeq loccache_l(i)$
 	return $result$
 \end{lstlisting}
+
+\subsubsection{Функция \texttt{make_hash}: инкрементальная компиляция с использованием локального кэша на хэшах}
+\begin{lstlisting}
+function $\mathbf{make_hash}(l)$:
+	$tocompile \defeq \varnothing$
+	$result \defeq \varnothing$
+	for $\forall i \in [1:n]$ do
+		$result[i] \defeq loccache_l(i)$
+	for $\forall i \in [1:n]$ do
+		if $lochash_l(i) \neq loclh_l(i)$ then
+			$tocompile \defeq tocompile \cup \{i\} \cup dependents(i)$
+	for $\forall i \in tocompile$ do
+		$loclh_l(i) \defeq lochash_l(i)$
+		$loccache_l(i) \defeq compile(..., loccont_l(i))$
+		$result[i] \defeq loccache_l(i)$
+	return $result$
+\end{lstlisting}
+
+\subsubsection{Глобальный кэш на хэшах}
+
+Рассмотрим теперь глобальный кэш на хэшах~--- некоторое хранилище, содержащее результаты компиляций для каждой версии в центральном репозитории.
+
 
 \subsection{TODO}
 Далее можно описать процедуры \texttt{commit} и \texttt{checkout}, процедуры добавления, удаления и изменения файлов. Можно ввести понятие кэша на хэшах и глобального кэша.
