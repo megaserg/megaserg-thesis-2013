@@ -84,9 +84,9 @@ function $\mathbf{rebuild}(l)$:
 	return $result$
 \end{lstlisting}
 
-\subsubsection{Функция \texttt{make_ts}: инкрементальная компиляция с использованием локального кэша на timestamp}
+\subsubsection{Функция \texttt{make\_ts}: инкрементальная компиляция с использованием локального кэша на timestamp}
 \begin{lstlisting}
-function $\mathbf{make_ts}(l)$:
+function $\mathbf{make\_ts}(l)$:
 	$tocompile \defeq \varnothing$
 	$result \defeq \varnothing$
 	for $\forall i \in [1:n]$ do
@@ -101,9 +101,9 @@ function $\mathbf{make_ts}(l)$:
 	return $result$
 \end{lstlisting}
 
-\subsubsection{Функция \texttt{make_hash}: инкрементальная компиляция с использованием локального кэша на хэшах}
+\subsubsection{Функция \texttt{make\_hash}: инкрементальная компиляция с использованием локального кэша на хэшах}
 \begin{lstlisting}
-function $\mathbf{make_hash}(l)$:
+function $\mathbf{make\_hash}(l)$:
 	$tocompile \defeq \varnothing$
 	$result \defeq \varnothing$
 	for $\forall i \in [1:n]$ do
@@ -120,8 +120,11 @@ function $\mathbf{make_hash}(l)$:
 
 \subsubsection{Глобальный кэш на хэшах}
 
-Рассмотрим теперь глобальный кэш на хэшах~--- некоторое хранилище, содержащее результаты компиляций для каждой версии в центральном репозитории.
-
+Рассмотрим теперь глобальный кэш на хэшах~--- некоторое хранилище, содержащее результаты компиляций для каждой ревизии в центральном репозитории.
+$\forall v \in [1:s], \forall i \in [1:n]$\\
+\indent a) $cont_v(i) \in SRC$~--- содержимое файла $i$ в ревизии $v$;\\
+\indent b) $hash_v(i)$~--- хэш содержимого файла $i$ в ревизии $v$;\\
+\indent c) $cache_v(i) = compile(..., cont_v(i))$~--- результат компиляции файла $i$ в ревизии $v$.\\
 
 \subsection{TODO}
-Далее можно описать процедуры \texttt{commit} и \texttt{checkout}, процедуры добавления, удаления и изменения файлов. Можно ввести понятие кэша на хэшах и глобального кэша.
+Далее можно описать процедуры \texttt{commit} и \texttt{checkout}, процедуры добавления, удаления и изменения файлов.
