@@ -1,7 +1,7 @@
 \newpage
-% \tableofcontents
+\tableofcontents
 
-\section{Формальная модель}
+\chapter{Формальная модель}
 
 Пусть $\Sigma$~--- множество входов, $\Omega$~--- множество всех возможных порождений. Выделим специальное множество $ERROR \subset \Omega$\footnote{Здесь и далее $\subset$ означает ``является собственным подмножеством'', а $\subseteq$~--- ``равно или является собственным подмножеством''.}.\\
 Для $\sigma \subset \Sigma$, $s \in \Sigma$ определим $gen_\sigma(s) \subset \Omega$~--- порождения $s$ в контексте $\sigma$. Таким образом, тип функции $gen: 2^\Sigma \times \Sigma \to 2^\Omega$.\\
@@ -16,7 +16,7 @@
 
 \input{reuse_outputs_problem.tex}
 
-\subsection{Случай компиляции}
+\section{Случай компиляции}
 
 Пусть у нас есть основной репозиторий, в котором лежат исходные файлы. Содержимое основного репозитория меняется от ревизии к ревизии. Также есть несколько локальных копий репозитория, каждая из которых была синхронизирована с репозиторием в какой-то момент времени и, возможно, имеет какие-то локальные изменения.\\
 
@@ -50,30 +50,29 @@ $\forall l \in [1:r], \forall i \in [1:n]$\\
 Таким образом, локальное изменение файла $i$ в копии $l$ (в момент $t$): $$\mathit{diff}(loccont_l(i), cont_{loclv_l(i)}(i)),$$ где $\mathit{diff}$~--- функция вычисления разности двух исходных файлов.\\
 TODO: случай несуществующего файла.
 
-\subsubsection{Зависимости}
+\subsection{Зависимости}
 
 Пусть $V = \{v_1, \dots, v_n\}$~--- набор файлов в состоянии некоторого репозитория (основного или локальной копии) в некоторый момент времени, где каждое $v_i$ является парой $(path_i, cont_i)$, которая означает, что в файле по пути $path_i$ в этом репозитории в этот момент времени записано содержимое $cont_i \in SRC$. Пусть мы умеем считать зависимости для файлов; тогда можно построить набор зависимостей $E(V) = \{e_1, \dots, e_m\}$, где каждое $e_j$ является тройкой $(\textit{type}_j, \textit{src}_j, \textit{dst}_j)$, которая означает, что файл $\textit{src}_j$ зависит от файла $\textit{dst}_j$, при этом тип зависимости $\textit{type}_j$.\\
 
 Тогда рассмотрим $\Sigma = V, \Omega = CF \cup ERR$. $\forall \sigma \subseteq V$, $\forall s \in V$ можем задать функцию $gen_\sigma(s) = \textit{compile}(\sigma, s) \subset CF \cup ERR$~--- результат компиляции файла $s$ при условии, что рядом в SOURCEPATH лежат файлы $\sigma$. Можем определить функцию $d(V,s) \subseteq V$~--- набор файлов из $V$, необходимый для безошибочной компиляции файла $s$ и при этом достаточный в том смысле, что от добавления в него других файлов результат компиляции не меняется. (TODO: верно ли, что при фиксированных $V$ и $s \in V$ $\forall \sigma \subseteq V$ либо $\textit{compile}(\sigma, s) \subset ERR$, либо $\textit{compile}(\sigma, s) = FILES_s \subset CF$, то есть для любого контекста компиляция выдаёт либо один и тот же результат, либо ошибку?) Эта функция может быть определена как транзитивное замыкание функции $dependencies$, возвращающей непосредственные зависимости и определяемой как $dependencies(V,s) \defeq \{v \mid \exists e_j \in E(V): src_j = s, dst_j = v\}$. (TODO: зависимости надо считать с учётом контекста?)
 
-\subsubsection{Локальный кэш на timestamp}
+\subsection{Локальный кэш на timestamp}
 
 Пусть $ct_l^t$~--- момент, когда в локальной копии $l$ была произведена компиляция, являющаяся последней на момент $t$. Например, пусть компиляция была произведена в некоторый момент $x$, тогда $ct_l^t$ будет равно $x$ для всех $t \geqslant x$, пока не будет произведена следующая компиляция.\\
 $\forall l \in [1:r], \forall i \in [1:n]$\\
 \indent a) $loclct_l^t(i) = locts_l^{ct_l^t}(i)$~--- timestamp последнего на момент $ct_l^t$ изменения файла $i$ в локальной копии $l$;\\
 \indent b) $loccache_l^t(i) = compile(..., loccont_l^{ct_l^t}(i))$~--- результат последней компиляции файла $i$ в локальной копии $l$, то есть компиляции его содержимого на момент $ct_l^t$.\\
 
-\subsubsection{Локальный кэш на хэшах}
+\subsection{Локальный кэш на хэшах}
 
 Рассмотрим теперь локальный кэш на хэшах~--- некоторое хранилище, ассоциированное с локальной копией, в каждый момент времени содержащее результаты некоторых последних компиляций. Опять, пусть $ct_l^t$~--- момент, когда в локальной копии $l$ была произведена компиляция, являющаяся последней на момент $t$.
 $\forall l \in [1:r], \forall i \in [1:n]$\\
 \indent a) $loclh_l^t(i) = lochash_l^{ct_l^t}(i)$~--- хэш содержимого файла $i$ в локальной копии $l$ на момент последней компиляции, то есть $ct_l^t$;\\
 \indent b) $loccache_l^t(i) = compile(..., loccont_l^{ct_l^t}(i))$~--- результат последней компиляции файла $i$ в локальной копии $l$, то есть компиляции его содержимого на момент $ct_l^t$.\\
 
-Пусть есть некоторая локальная копия $l$. Тогда можно описать, что происходит с переменными, описывающими содержащуюся в ней информацию, при некоторых процессах.
-To be continued...\\
+Пусть есть некоторая локальная копия $l$. Тогда можно описать, что происходит с переменными, описывающими содержащуюся в ней информацию, при некоторых процессах.\\
 
-\subsubsection{Функция \texttt{rebuild}: полная компиляция}
+\subsubsection[Функция \texttt{rebuild}]{Функция \texttt{rebuild}: полная компиляция}
 \begin{lstlisting}
 function $\mathbf{rebuild}(l)$:
 	for $\forall i \in [1:n]$ do
@@ -84,7 +83,7 @@ function $\mathbf{rebuild}(l)$:
 	return $result$
 \end{lstlisting}
 
-\subsubsection{Функция \texttt{make\_ts}: инкрементальная компиляция с использованием локального кэша на timestamp}
+\subsubsection[Функция \texttt{make\_ts}]{Функция \texttt{make\_ts}: инкрементальная компиляция с использованием локального кэша на timestamp}
 \begin{lstlisting}
 function $\mathbf{make\_ts}(l)$:
 	$tocompile \defeq \varnothing$
@@ -101,7 +100,7 @@ function $\mathbf{make\_ts}(l)$:
 	return $result$
 \end{lstlisting}
 
-\subsubsection{Функция \texttt{make\_hash}: инкрементальная компиляция с использованием локального кэша на хэшах}
+\subsubsection[Функция \texttt{make\_hash}]{Функция \texttt{make\_hash}: инкрементальная компиляция с использованием локального кэша на хэшах}
 \begin{lstlisting}
 function $\mathbf{make\_hash}(l)$:
 	$tocompile \defeq \varnothing$
@@ -118,13 +117,85 @@ function $\mathbf{make\_hash}(l)$:
 	return $result$
 \end{lstlisting}
 
-\subsubsection{Глобальный кэш на хэшах}
+\subsection{Глобальный кэш на хэшах}
 
-Рассмотрим теперь глобальный кэш на хэшах~--- некоторое хранилище, содержащее результаты компиляций для каждой ревизии в центральном репозитории.
+Рассмотрим теперь глобальный, или удалённый, кэш на хэшах~--- некоторое хранилище, содержащее результаты компиляций для каждой ревизии в центральном репозитории.
 $\forall v \in [1:s], \forall i \in [1:n]$\\
 \indent a) $cont_v(i) \in SRC$~--- содержимое файла $i$ в ревизии $v$;\\
 \indent b) $hash_v(i)$~--- хэш содержимого файла $i$ в ревизии $v$;\\
 \indent c) $cache_v(i) = compile(..., cont_v(i))$~--- результат компиляции файла $i$ в ревизии $v$.\\
+
+\subsubsection[Функция \texttt{make\_glob\_hash}]{Функция \texttt{make\_glob\_hash}: инкрементальная компиляция с использованием локального и глобального кэшей на хэшах}
+Пусть есть локальная копия репозитория, локальный кэш на хэшах и глобальный (удалённый) кэш на хэшах. Рассмотрим ситуацию отсутствия зависимостей, тогда для каждого файла можно независимо считать хэш и порождения.
+Зафиксируем некоторый файл. Пусть $hash$~--- хэш текущей локальной копии файла, $h1$~--- хэш файла на момент последнего вызова функции порождения, $c1$~--- результат последнего вызова функции порождения, $h2$~--- хэш в удалённом кэше, $c2$~--- результат компиляции, хранящийся в удалённом кэше.
+
+\begin{lstlisting}
+// $\text{Вызов функции порождения на текущей локальной копии (и обновление локального кэша).}$
+function $\mathbf{regenerate}$:
+	$h1 \defeq hash$
+	$c1 \defeq gen(src)$
+\end{lstlisting}
+\begin{lstlisting}
+// $\text{Обновление удалённого кэша.}$
+function $\mathbf{upload}$:
+	$h2 \defeq h1$
+	$c2 \defeq c1$
+\end{lstlisting}
+\begin{lstlisting}
+// $\text{Копирование удалённого кэша в локальный.}$
+function $\mathbf{download}$:
+	$h1 \defeq h2$
+	$c1 \defeq c2$
+\end{lstlisting}
+
+Тогда можем описать функцию, которая использует кэши и не вызывает функцию порождения, если это не необходимо.
+
+\begin{lstlisting}
+// $\text{Версия 1}$
+function $\mathbf{make\_glob\_hash}$:
+	if $\exists h2$ then
+		if $\exists h1$ then
+			if $hash = h1$ then
+				if $hash = h2$ then
+					// nothing to do
+				else
+					upload
+			else
+				if $hash = h2$ then
+					download (or regenerate)
+				else
+					regenerate
+					upload
+		else
+			if $hash = h2$ then
+				download (or regenerate)
+			else
+				regenerate
+				upload
+	else
+		if $\exists h1$ then
+			if $hash = h1$ then
+				upload
+			else
+				regenerate
+				upload
+		else
+			regenerate
+			upload
+\end{lstlisting}
+
+Её можно переписать в более коротком виде:
+\begin{lstlisting}
+// $\text{Версия 2}$
+function $\mathbf{make\_glob\_hash}$:
+	if $\exists h2 \wedge hash = h2$ then
+		if $\nexists h1 \vee hash \neq h1$ then
+			download (or regenerate)
+	else
+		if $\nexists h1 \vee hash \neq h1$ then
+			regenerate
+		upload
+\end{lstlisting}
 
 \subsection{TODO}
 Далее можно описать процедуры \texttt{commit} и \texttt{checkout}, процедуры добавления, удаления и изменения файлов.
