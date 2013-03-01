@@ -1,0 +1,14 @@
+\input{preamble.tex}
+
+\begin{document}
+
+\newcommand{\Deltasigma}{\Delta_\alpha^\rho\sigma}
+
+Пусть дано: $\sigma$, $\forall s \in \sigma$ $d(s) \subset 2^\Omega$, $\omega = gen(\varnothing, \sigma)$. Предположим, что $\forall \sigma' \subseteq \sigma$ также известно $\omega_{\sigma'}$~--- множество порождений, которые были сгенерированы из элементов $\sigma'$ во время вычисления $gen(\varnothing, \sigma)$ (можем ли такое предположить? я написал бы $\omega_{\sigma'} = gen(\omega_{\sigma\setminus\sigma'}, \sigma')$, где $\omega_{\sigma\setminus\sigma'} = gen(\omega_{\sigma'}, \sigma\setminus\sigma')$, но меня смущает эта непрямая рекурсивность, к тому же это не совсем то --- например, если $\sigma'=\{s_1\}$ и $s_1$ взаимозависим с $s_2$ и больше они ни от чего не зависят, то $\omega_{\sigma'}$ при таком определении получится пустым, хотя не должно).\\
+
+Пусть есть $\Deltasigma = \sigma\setminus\rho\cup\alpha$. Хотим понять, как посчитать $gen(\varnothing, \Deltasigma)$ на основе $gen(\varnothing, \sigma)$. Определим $\xi = \{s \in \sigma\setminus\rho \mid d(s) \cap \omega_\rho \neq \varnothing\}$ (зависимые от $\rho$ элементы). Обозначим также $A = gen(\omega_{\sigma\setminus\rho}, \alpha)$. Также возможно, что в $\alpha$ содержатся необходимые зависимости для каких-то элементов из $\sigma$: пусть $\chi = \{s \in \sigma\setminus\rho \mid \omega_{\{s\}} = \varnothing\}$. Тогда
+$$gen(\varnothing, \Deltasigma) = \omega \setminus \omega_\rho \setminus \omega_\xi \cup A \cup gen(\omega \setminus \omega_\rho \setminus \omega_\xi \cup A, \xi) \cup gen(A \cup \omega_{\sigma\setminus\rho}, \chi)$$
+
+Теперь возникает такая ситуация: что если в последнем члене --- $gen(A \cup \omega_{\sigma\setminus\rho}, \chi)$ --- есть какие-то порождения, которых не хватало при вызове генерации для $\alpha$ или $\xi$? Пусть $\chi'$ --- те входы из $\alpha$ и $\xi$, для которых из-за этого не сгенерировалось никаких порождений. Нужно вызвать генерацию для них. Это означает, что могли удовлетвориться зависимости ещё каких-то элементов из $\sigma\setminus\rho$, которые теперь нужно перекомпилировать и так далее. Видимо, здесь и возникает итеративность?
+
+\end{document}
