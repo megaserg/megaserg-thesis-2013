@@ -1,0 +1,31 @@
+\input{preamble.tex}
+
+\begin{document}
+
+\subsection{Задача инкрементальной компиляции}
+
+\newcommand{\Deltasigma}{\Delta_\alpha^\rho\sigma}
+
+Пусть дано: $\sigma$, $\forall s \in \sigma$ $d(s) \subset 2^\Omega$, $\omega = gen(\varnothing, \sigma)$. Предположим, что $\forall \sigma' \subseteq \sigma$ также известно $\omega_{\sigma'}$~--- множество порождений, которые были сгенерированы из элементов $\sigma'$ во время вычисления $gen(\varnothing, \sigma)$.\\
+
+Пусть есть $\Delta = \Deltasigma = \sigma\setminus\rho\cup\alpha$. Хотим понять, как посчитать $gen(\varnothing, \Deltasigma)$ на основе $gen(\varnothing, \sigma)$. Определим $\xi = \{s \in \sigma\setminus\rho \mid d(s) \cap \omega_\rho \neq \varnothing\}$ (зависимые от $\rho$ элементы). Введём $\partial_{\sigma, \rho}\dfrac{\omega'}{\omega} \subset 2^\Sigma$~--- те $s \in \xi$, для которых требуется перекомпиляция, если в контексте (первом аргументе $gen$) заменить $\omega$ на $\omega'$. Это множество обладает таким свойством, что для $s \in \sigma\setminus\partial$ образы в старом и новом контекстах совпадают: $\omega_{\{s\}}^\sigma = \omega_{\{s\}}^{\Delta}$. Здесь в качестве $\omega$ выступает $\omega_\rho$, а в качестве $\omega'$ должны быть порождения, которые добавились (а это $gen(..., \alpha)$, только неясно, в каком контексте~--- что, если что-то из $\alpha$ взаимозависимо с чем-то из этого $\partial$?). Тогда обозначим
+
+$$\partial = \partial_{\sigma, \rho}\dfrac{gen(..., \alpha)}{\omega_\rho}$$
+
+и
+
+$$gen(\varnothing, \Delta) = \omega \setminus \omega_\rho \setminus \omega_\partial \cup gen(\omega \setminus \omega_\rho \setminus \omega_\partial, \alpha \cup \partial)$$
+
+\subsection{Задача переиспользования входов}
+
+Пусть $\forall i$ есть $\sigma_i$~--- состояния проекта, $\omega_i = gen(\varnothing, \sigma_i)$~--- соответствующие им порождения, $\sigma_i^\prime \subseteq \sigma_i$~--- выделенные подмножества ($\sigma_i^\prime \cap \sigma_j^\prime = \varnothing$ при $i \neq j$). Обозначим $\omega_i^\prime = gen_i(\sigma_i^\prime)$~--- множество порождений, которые были сгенерированы из элементов $\sigma_i^\prime$ во время вычисления $\omega_i$. Обозначим $\gamma_i = \bigcup\limits_{s \in \sigma_i^\prime} d(s)$~--- все зависимости для нашего $i$-го подмножества.
+
+Нам не придётся ничего перекомпилировать, если $\gamma_i \subseteq \omega_i^\prime$. В противном случае для каждого $i$ нам придётся перекомпилировать только
+
+$$\partial_i = \partial_{\sigma_i, \sigma_i\setminus\sigma_i^\prime} \dfrac{\bigcup\limits_{j \neq i} \omega_j^\prime}{\omega_i \setminus \omega_i^\prime}$$
+
+Тогда
+
+$$gen(\varnothing, \bigcup\limits_i \sigma_i^\prime) = \left( \bigcup\limits_i (\omega_i^\prime \setminus gen_i(\partial_i)) \right) \cup gen(\bigcup\limits_i (\omega_i^\prime \setminus gen_i(\partial_i)), \bigcup\limits_i \partial_i)$$
+
+\end{document}
