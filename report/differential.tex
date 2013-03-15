@@ -5,6 +5,7 @@
 \subsection{Задача инкрементальной компиляции}
 
 \newcommand{\Deltasigma}{\Delta_\alpha^\rho\sigma}
+\newcommand{\oomega}{\overline{\omega}}
 
 Пусть дано: $\sigma$, $\forall s \in \sigma$ $d(s) \subset 2^\Omega$, $\omega = gen(\varnothing, \sigma)$. Предположим, что $\forall \sigma' \subseteq \sigma$ также известно $\omega_{\sigma'}$~--- множество порождений, которые были сгенерированы из элементов $\sigma'$ во время вычисления $gen(\varnothing, \sigma)$.\\
 
@@ -12,9 +13,17 @@
 
 $$\partial = \partial_{\sigma, \rho}\dfrac{gen(..., \alpha)}{\omega_\rho}$$
 
-и
+и тогда
 
 $$gen(\varnothing, \Delta) = \omega \setminus \omega_\rho \setminus \omega_\partial \cup gen(\omega \setminus \omega_\rho \setminus \omega_\partial, \alpha \cup \partial)$$
+
+\textbf{Доказательство:} рассмотрим порождение $x$, принадлежащее правой части. Тогда $\exists ! s_x : x \in gen(\{s_x\})$ (для какого-то хорошего контекста). Рассмотрим случаи:
+
+a) $s_x \in \sigma\setminus\rho\setminus\partial$: тогда по свойству $\partial$ $\omega_{\{s_x\}}^\sigma = \omega_{\{s_x\}}^{\Delta}$, и $x$ принадлежит также и левой части.
+
+b) $s_x \in \alpha \cup \partial$: тогда рассмотрим, какой контекст доступен при компиляции этого входа. По определению $gen$, если два произвольных контекста являются надмножествами $d(s_x)$, то результат компиляции в этих контекстах одинаковый и равен $gen(d(s_x), s_x)$ (с точностью до взаимозависимости входов). В данном случае мы рассматриваем контексты компиляции слева и справа. Из того, что $x$ лежит в правой части, можно заключить, что компиляция справа была успешна, а для этого необходимо, чтобы контекст компиляции справа для $s_x$ являлся надмножеством $d(s_x)$. Докажем, что $d(s_x)$ входит и в левый контекст для $s_x$; тогда результат компиляции слева будет равен результату справа и, следовательно, $x$ будет принадлежать также и левой части. На самом деле можно попробовать доказать, что контексты справа и слева просто равны; действительно, контекст слева~--- это порождения $\Delta\setminus\{s_x\} = (\sigma\setminus\rho\cup\alpha)\setminus\{s_x\}$, а справа~--- порождения $(\sigma\setminus\rho\setminus\partial\cup\alpha\cup\partial) \setminus \{s_x\} = (\sigma\setminus\rho\cup\alpha) \setminus \{s_x\}$. (TODO: получилось не очень-то строго)
+
+Обратно: пусть теперь $x$ принадлежит левой части. Опять $\exists ! s_x : x \in \omega^Delta_{\{s_x\}}$. Если $s_x \notin \alpha\cup\partial$, то $s_x \in \sigma\setminus\rho\setminus\partial$ и можно воспользоваться пунктом a) (симметрично). Иначе можно воспользоваться пунктом b) (симметрично).
 
 \subsection{Задача переиспользования входов}
 
