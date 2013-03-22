@@ -1,0 +1,29 @@
+\section{Основные определения}
+
+$\Sigma$ --- множество входов, $\Omega$ --- множество выходов (н.б.ч.с.). Функция порождения
+выходов по входам (частичная):
+
+$$
+gen : 2^\Omega\to 2^\Sigma\to 2^\Omega
+$$
+
+Аксиомы функции порождения:
+
+\begin{itemize}
+	\item если $gen(\omega,\sigma)$ --- определена, то $\omega\cap gen(\omega,\sigma)=\varnothing$;
+	\item если $gen(\omega,\sigma)=\omega^\prime$, то существует единственное дизъюнктное разбиение $\omega^\prime=\bigcup^\varnothing_{s\in\sigma}\omega^\prime_s$, 
+	удовлетворяющее свойству 
+
+	$$\forall s\in\sigma : gen(\omega\cup\omega^\prime\setminus\omega^\prime_s,\{s\})=\omega^\prime_s$$
+
+	\item $\forall s\in\Sigma,\; \forall\omega,\:\omega^\prime\subseteq\Omega:$ если $gen(\omega,\{s\})$ и $gen(\omega^\prime,\{s\})$ ---
+	определены, то $gen(\omega,\{s\})=gen(\omega^\prime,\{s\})$;
+
+	\item если $gen(\omega,\{s\})$ --- определена, то в $\omega$ существует наименьшее по включению подмножество $d_\omega(s)$, такое, что
+	$gen(d_\omega(s), \{s\})$ --- определена;
+
+	\item если $gen(\omega,\sigma)=\omega^\prime$ и для какого-то $s\in\sigma$ существует $s_1\in\sigma$, такой, что $d_\omega(s)\cap \omega^\prime_{s_1}\ne\varnothing$, 
+	то $gen(\omega,\sigma\setminus s_1)$ --- не определена;
+
+	\item если $gen(\omega,\sigma_1)\cap gen(\omega,\sigma_2)\ne\varnothing$, то $gen(\omega,\sigma_1\cup\sigma_2)$ --- не определена.
+\end{itemize}

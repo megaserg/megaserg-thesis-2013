@@ -1,0 +1,61 @@
+\input{preamble.tex}
+
+\begin{document}
+
+\input{basic_axioms.tex}
+
+\hrulefill
+
+Кажется, четвёртая аксиома несовместима с пятой: $d_\omega(s)$, о котором идёт речь в (5), существует (по (4)) в предположении, что определено $gen(\omega, \{s\})$; но по утверждению (5), $gen(\omega, \sigma\setminus s_1)$ может быть не определено; ясно, что в таком случае не может быть определено и $gen(\omega, \{s\})$. Предлагаю следующую формулировку (4):
+
+\begin{itemize}
+	\item если $gen(\omega,\sigma)=\omega^\prime$ --- определена, то $\forall s \in \sigma$ в $\omega \cup \omega^\prime \setminus \omega^\prime_s$ существует наименьшее по включению подмножество $d_{\omega,\omega^\prime}(s)$, такое, что $gen(d_{\omega,\omega^\prime}(s), \{s\})$ --- определена.
+\end{itemize}
+
+В любом случае, получается, мы переходим к определению $d$, которое зависит не только от входа $s$, но и от конкретных порождений-атрибутов?
+\\
+
+О шестой аксиоме: 1) без дополнительных условий она верна только для $\sigma_1\cap\sigma_2 = \varnothing$; 2) похоже, она выводится из остальных:
+
+Пусть $gen(\omega,\sigma_1) = \omega_1$, $gen(\omega,\sigma_2) = \omega_2$, $\omega_1\cap\omega_2\ne\varnothing$. Предположим, что $gen(\omega,\sigma_1\cup\sigma_2)$ определена и равна $\omega^\prime$. Тогда по аксиоме о дизъюнктном разбиении можно (объединяя порождения для соответствующих $s$ и учитывая, что $\sigma_1\cap\sigma_2 = \varnothing$) разделить $\omega^\prime$ на $\omega^\prime_1$ и $\omega^\prime_2$, где $\omega^\prime_1 = gen(\omega\cup\omega^\prime_2,\sigma_1)$, $\omega^\prime_2 = gen(\omega\cup\omega^\prime_1,\sigma_2)$, $\omega^\prime_1 \cap \omega^\prime_2 = \varnothing$. Но по аксиоме ``определены-значит-равны'' $\omega_1 = \omega^\prime_1$ и $\omega_2 = \omega^\prime_2$; таким образом, $\omega_1$ и $\omega_2$ одновременно пересекаются и не пересекаются, значит, предположение об определённости $gen(\omega,\sigma_1\cup\sigma_2)$ неверно.
+\\
+
+Наконец, очевидное следствие из аксиомы о дизъюнктном разбиении:
+
+\begin{itemize}
+	\item если $gen(\omega,\sigma)=\omega^\prime$, то для любого $\tau \subseteq \sigma$ можно определить $\omega^\prime_\tau =\bigcup\limits_{s\in\tau}\omega^\prime_s$, при этом $\tau_1 \cap \tau_2 = \varnothing \Leftrightarrow \omega^\prime_{\tau_1} \cap \omega^\prime_{\tau_2} = \varnothing$.
+\end{itemize}
+
+\hrulefill
+
+\textbf{Теорема 1.} 
+
+Пусть дано: $\sigma \subset \Sigma$, $gen(\varnothing, \sigma) = \omega^\sigma$, $\forall s \in \sigma$ $d_{\varnothing,\omega}(s) \subset 2^\Omega$. Пусть $\rho, \alpha \subset \Sigma$, при этом $\rho \subseteq \sigma$, $\sigma \cap \alpha = \varnothing$; $\Delta = \Delta^\rho_\alpha\sigma = \sigma\setminus\rho\cup\alpha$, $gen(\varnothing, \Delta) = \omega^\Delta$. Определим $\xi = \{s \in \sigma\setminus\rho \mid d_{\varnothing,\omega}(s) \cap \omega_\rho \neq \varnothing\}$ (зависимые от $\rho$ элементы). 
+Тогда:
+
+$$gen(\varnothing, \Delta) = \omega^\sigma \setminus \omega^\sigma_\rho \setminus \omega^\sigma_\xi \cup gen(\omega^\sigma \setminus \omega^\sigma_\rho \setminus \omega^\sigma_\xi, \alpha \cup \xi)$$
+
+\textbf{Доказательство:}
+
+Сначала докажем равенство не для $\xi$, а для произвольного $\tau \subset \sigma\setminus\rho$, для которого определено $gen(\omega^\sigma \setminus \omega^\sigma_\rho \setminus \omega^\sigma_\tau, \alpha\cup\tau)$. Смысл этого такой, что равенство выполнится не только при перекомпиляции $\xi$, но и при перекомпиляции, например, множества, большего $\xi$.
+\\
+
+Слева направо: пусть $x \in gen(\varnothing, \Delta) = \omega^\Delta$. Докажем, что $x$ принадлежит правой части. По аксиоме о дизъюнктном разбиении существует единственное разбиение $\omega^\Delta = \bigcup^\varnothing_{s\in\Delta}\omega^\Delta_s$: $\forall s \in \Delta$ $\omega^\Delta_s = gen(\omega^\Delta\setminus\omega^\Delta_s, \{s\})$, следовательно, $\exists ! s_x \in \Delta$: $x \in \omega^\Delta_{s_x}$. Докажем теперь, что $gen(..., \{s_x\})$ для какого-то контекста определено и лежит в правой части; тогда по аксиоме ``определены-значит-равны'' $gen(..., \{s_x\}) = gen(\omega^\Delta\setminus\omega^\Delta_{s_x}, \{s_x\}) = \omega^\Delta_{s_x}$ и, следовательно, содержит $x$; значит, $x$ принадлежит правой части. Поскольку $s_x \in \Delta$, то рассмотрим два случая: a) $s_x \in \sigma\setminus\rho\setminus\tau$; b) $s_x \in \alpha\cup\tau$.
+
+В случае (a): по аксиоме о дизъюнктном разбиении существует единственное разбиение для $gen(\varnothing, \sigma) = \omega^\sigma = \bigcup^\varnothing_{s\in\sigma}\omega^\sigma_s$: $\forall s \in \sigma$ $\omega^\sigma_s = gen(\omega^\sigma\setminus\omega^\sigma_s, \{s\})$. Поскольку $s_x \in \sigma$, то $\exists ! \omega^\sigma_{s_x} \subseteq \omega^\sigma$. Так как $s_x \notin \rho$, $s_x \notin \tau$, то $\omega^\sigma_{s_x} \cap \omega^\sigma_\rho = \varnothing$, $\omega^\sigma_{s_x} \cap \omega^\sigma_\tau = \varnothing$. Следовательно, $gen(\omega^\sigma\setminus\omega^\sigma_{s_x}, \{s_x\}) = \omega^\sigma_{s_x} \subseteq \omega^\sigma \setminus \omega^\sigma_\rho \setminus \omega^\sigma_\tau$, то есть определено и лежит в правой части. Для случая (a) включение левой части в правую доказано.
+
+В случае (b): мы считали, что $gen(\omega^\sigma \setminus \omega^\sigma_\rho \setminus \omega^\sigma_\tau, \alpha\cup\tau)$ определено; пусть оно равно $\omega^{\alpha\cup\tau}$; по аксиоме о дизъюнктном разбиении определено и $gen((\omega^\sigma \setminus \omega^\sigma_\rho \setminus \omega^\sigma_\tau) \cup (\omega^{\alpha\cup\tau} \setminus \omega^{\alpha\cup\tau}_{s_x}), \{s_x\})$; кроме того, оно лежит в правой части как составная часть $gen(\omega \setminus \omega_\rho \setminus \omega_\tau, \alpha\cup\tau)$. Для случая (b) включение левой части в правую доказано.
+\\
+
+Справа налево: пусть $x$ принадлежит правой части; это означает, что либо a) $x \in \omega^\sigma \setminus \omega^\sigma_\rho \setminus \omega^\sigma_\tau$, либо b) $x \in gen(\omega^\sigma \setminus \omega^\sigma_\rho \setminus \omega^\sigma_\tau, \alpha \cup \tau)$.
+
+В случае (a): рассмотрим $\omega^\sigma \setminus \omega^\sigma_\rho \setminus \omega^\sigma_\tau = \bigcup^\varnothing_{s \in \sigma} \omega^\sigma_s \setminus \bigcup^\varnothing_{s \in \rho} \omega^\sigma_s \setminus \bigcup^\varnothing_{s \in \tau} \omega^\sigma_s = \bigcup^\varnothing_{s \in \sigma\setminus\rho\setminus\tau} \omega^\sigma_s$ (равенства верны по аксиоме о дизъюнктном разбиении). Тогда ясно, что $\exists ! s_x \in \sigma\setminus\rho\setminus\tau$: $x \in \omega^\sigma_{s_x} = gen(\omega^\sigma \setminus \omega^\sigma_{s_x}, \{s_x\})$.
+
+В случае (b): по аксиоме о дизъюнктном разбиении $\exists ! s_x \in \alpha\cup\tau$: $x \in \omega^{\alpha\cup\tau}_{s_x} = gen((\omega^\sigma \setminus \omega^\sigma_\rho \setminus \omega^\sigma_\tau) \cup (\omega^{\alpha\cup\tau} \setminus \omega^{\alpha\cup\tau}_{s_x}), \{s_x\})$.
+
+В обоих случаях мы указали $gen(..., \{s_x\})$ для некоторого контекста, лежащее в правой части и содержащее $x$; также в обоих случаях $s_x \in \Delta$ и, следовательно, в левой части определено $\omega^\Delta_{s_x} = gen(\omega^\Delta\setminus\omega^\Delta_{s_x}, \{s_x\})$, лежащее в левой части. По аксиоме ``определены-значит-равны''  $\omega^\Delta_{s_x}$ равен $gen(..., \{s_x\})$ и, значит, также содержит $x$; следовательно, $x$ принадлежит левой части. Равенство для $\tau$ доказано.
+\\
+
+Теперь нужно доказать, что определено $gen(\omega^\sigma \setminus \omega^\sigma_\rho \setminus \omega^\sigma_\xi, \alpha\cup\xi)$. Проблема здесь в том, что среди наших аксиом нет критерия определённости $gen$, а есть только список ситуаций, когда она не определена. Можно считать этот список исчерпывающим, тогда для определённости $gen(..., \alpha\cup\xi)$ достаточно проверить, что $\alpha$ и $\xi$ не имеют общих порождений (аксиома 6), что порождения $\alpha$ и $\xi$ не пересекаются с $\omega^\sigma \setminus \omega^\sigma_\rho \setminus \omega^\sigma_\xi$ (аксиома 1), а также что $\omega^\sigma \setminus \omega^\sigma_\rho \setminus \omega^\sigma_\xi$ действительно содержит все необходимые зависимости для $\alpha$ и $\xi$ с учётом взаимозависимостей (аксиома 5). Тогда получим ЧТД.
+
+\end{document}
