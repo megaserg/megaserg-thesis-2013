@@ -12,9 +12,6 @@
 	\item если $gen(\omega,\sigma)=\omega^\prime$ --- определена, то $\forall s \in \sigma$ в $\omega \cup \omega^\prime \setminus \omega^\prime_s$ существует наименьшее по включению подмножество $d_{\omega,\omega^\prime}(s)$, такое, что $gen(d_{\omega,\omega^\prime}(s), \{s\})$ --- определена.
 \end{itemize}
 
-В любом случае, получается, мы переходим к определению $d$, которое зависит не только от входа $s$, но и от конкретных порождений-атрибутов?
-\\
-
 О шестой аксиоме: 1) без дополнительных условий она верна только для $\sigma_1\cap\sigma_2 = \varnothing$; 2) похоже, она выводится из остальных:
 
 Пусть $gen(\omega,\sigma_1) = \omega_1$, $gen(\omega,\sigma_2) = \omega_2$, $\omega_1\cap\omega_2\ne\varnothing$. Предположим, что $gen(\omega,\sigma_1\cup\sigma_2)$ определена и равна $\omega^\prime$. Тогда по аксиоме о дизъюнктном разбиении можно (объединяя порождения для соответствующих $s$ и учитывая, что $\sigma_1\cap\sigma_2 = \varnothing$) разделить $\omega^\prime$ на $\omega^\prime_1$ и $\omega^\prime_2$, где $\omega^\prime_1 = gen(\omega\cup\omega^\prime_2,\sigma_1)$, $\omega^\prime_2 = gen(\omega\cup\omega^\prime_1,\sigma_2)$, $\omega^\prime_1 \cap \omega^\prime_2 = \varnothing$. Но по аксиоме ``определены-значит-равны'' $\omega_1 = \omega^\prime_1$ и $\omega_2 = \omega^\prime_2$; таким образом, $\omega_1$ и $\omega_2$ одновременно пересекаются и не пересекаются, значит, предположение об определённости $gen(\omega,\sigma_1\cup\sigma_2)$ неверно.
@@ -57,5 +54,30 @@ $$gen(\varnothing, \Delta) = \omega^\sigma \setminus \omega^\sigma_\rho \setminu
 \\
 
 Теперь нужно доказать, что определено $gen(\omega^\sigma \setminus \omega^\sigma_\rho \setminus \omega^\sigma_\xi, \alpha\cup\xi)$. Проблема здесь в том, что среди наших аксиом нет критерия определённости $gen$, а есть только список ситуаций, когда она не определена. Можно считать этот список исчерпывающим, тогда для определённости $gen(..., \alpha\cup\xi)$ достаточно проверить, что $\alpha$ и $\xi$ не имеют общих порождений (аксиома 6), что порождения $\alpha$ и $\xi$ не пересекаются с $\omega^\sigma \setminus \omega^\sigma_\rho \setminus \omega^\sigma_\xi$ (аксиома 1), а также что $\omega^\sigma \setminus \omega^\sigma_\rho \setminus \omega^\sigma_\xi$ действительно содержит все необходимые зависимости для $\alpha$ и $\xi$ с учётом взаимозависимостей (аксиома 5). Тогда получим ЧТД.
+
+\begin{comment}
+	Можно ввести ещё одну аксиому: значение $gen(\omega, \sigma)$ не определено, если a) $\exists \sigma_1, \sigma_2 \subset \sigma$: $\sigma_1 \cap \sigma_2 = \varnothing$, $\exists \omega_1, \omega_2 \in 2^\Omega$: $gen(\omega_1, s_1) \cap gen(\omega_2, s_2) \neq \varnothing$, или b) $\exists \sigma^\prime \subset \sigma$, $\exists \omega^\prime \in 2^\Omega$: $gen(\omega^\prime, \sigma^\prime) \cap \omega \neq \varnothing$, или c) $\exists s \in \sigma$, $\exists \omega^\prime,\omega^{\prime\prime} \in 2^\Omega$: $d_{\omega^\prime,\omega^{\prime\prime}}(s) \nsubseteq \omega$; иначе оно определено.
+\end{comment}
+
+Короткое: понятно, что равенство имеет смысл только в случае определённости $gen(\varnothing, \Delta)$ и $gen(\varnothing, \sigma)$. По второй аксиоме ясно, что левая часть раскладывается на два множества $\omega^\Delta_{\sigma\setminus\rho\setminus\xi}$ и $\omega^\Delta_{\xi\cup\alpha}$. Первое из них по третьей аксиоме равно первому члену объединения из правой части (определённость которого следует из определённости $gen(\varnothing, \sigma))$. Второе из них равно второму члену объединения из правой части потому, что они являются результатами двух значений gen с одним и тем же множеством в качестве входа и равными контекстами (контексты --- это соответствующие первые члены частей). Более строго: 
+
+Пусть $gen(\varnothing, \Delta)$ и $gen(\varnothing, \sigma)$ определены. По аксиоме о дизъюнктном разбиении определены и $\omega^\Delta_{\sigma \setminus \rho \setminus \xi}$ и $\omega^\sigma_{\sigma \setminus \rho \setminus \xi}$; и по аксиоме (3) $\omega^\Delta_{\sigma \setminus \rho \setminus \xi} = \omega^\sigma_{\sigma \setminus \rho \setminus \xi}$. Поскольку $\Delta = (\sigma \setminus \rho \setminus \xi) \cup (\xi \cup \alpha)$, то $gen(\varnothing, \Delta) = \omega^\Delta = \omega^\Delta_{\sigma \setminus \rho \setminus \xi} \cup \omega^\Delta_{\xi \cup \alpha}$. Но $\omega^\Delta_{\xi \cup \alpha} = gen(\omega^\Delta \setminus \omega^\Delta_{\xi \cup \alpha}, \xi \cup \alpha) = gen(\omega^\Delta_{\sigma \setminus \rho \setminus \xi}, \xi \cup \alpha) = gen(\omega^\sigma_{\sigma \setminus \rho \setminus \xi}, \xi \cup \alpha) = gen(\omega^\sigma \setminus \omega^\sigma_\rho \setminus \omega^\sigma_\xi, \alpha\cup\xi)$ из правой части.
+\\
+
+1. Пусть $\omega$, $\tilde{\omega}$ --- множества выходов, $\sigma$ --- множество входов.
+	Тогда $\partial\frac{\omega}{\tilde{\omega}}\sigma$ --- это наименьшее подмножество $\sigma$, удовлетворяющее свойству $gen(\omega,\sigma\setminus\partial\frac{\omega}{\tilde{\omega}}\sigma)$ определено тогда и только тогда, когда $gen(\tilde{\omega},\sigma\setminus\partial\frac{\omega}{\tilde{\omega}}\sigma)$ определено.
+\\
+
+2. Свойство: $\partial$ всегда определен и (на худой конец) равен $\sigma$.
+\\
+
+3. Свойство: $\partial\frac{\omega}{\omega}\sigma=\varnothing$.
+\\
+
+Вопрос: верно ли, что в условиях инкрементального случая (там, где $\Delta^\rho_\alpha\sigma$)
+
+$$\partial\frac{\omega}{\omega\setminus\omega_\rho\cup\omega_\alpha}(\sigma\setminus\rho)\subseteq\xi$$ ? 
+
+\newpage
 
 \end{document}
