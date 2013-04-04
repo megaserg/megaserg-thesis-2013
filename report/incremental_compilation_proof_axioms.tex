@@ -6,13 +6,7 @@
 
 \hrulefill
 
-Кажется, четвёртая аксиома несовместима с пятой: $d_\omega(s)$, о котором идёт речь в (5), существует (по (4)) в предположении, что определено $gen(\omega, \{s\})$; но по утверждению (5), $gen(\omega, \sigma\setminus s_1)$ может быть не определено; ясно, что в таком случае не может быть определено и $gen(\omega, \{s\})$. Предлагаю следующую формулировку (4):
-
-\begin{itemize}
-	\item если $gen(\omega,\sigma)=\omega^\prime$ --- определена, то $\forall s \in \sigma$ в $\omega \cup \omega^\prime \setminus \omega^\prime_s$ существует наименьшее по включению подмножество $d_{\omega,\omega^\prime}(s)$, такое, что $gen(d_{\omega,\omega^\prime}(s), \{s\})$ --- определена.
-\end{itemize}
-
-О шестой аксиоме: 1) без дополнительных условий она верна только для $\sigma_1\cap\sigma_2 = \varnothing$; 2) похоже, она выводится из остальных:
+О шестой аксиоме: похоже, она выводится из остальных:
 
 Пусть $gen(\omega,\sigma_1) = \omega_1$, $gen(\omega,\sigma_2) = \omega_2$, $\omega_1\cap\omega_2\ne\varnothing$. Предположим, что $gen(\omega,\sigma_1\cup\sigma_2)$ определена и равна $\omega^\prime$. Тогда по аксиоме о дизъюнктном разбиении можно (объединяя порождения для соответствующих $s$ и учитывая, что $\sigma_1\cap\sigma_2 = \varnothing$) разделить $\omega^\prime$ на $\omega^\prime_1$ и $\omega^\prime_2$, где $\omega^\prime_1 = gen(\omega\cup\omega^\prime_2,\sigma_1)$, $\omega^\prime_2 = gen(\omega\cup\omega^\prime_1,\sigma_2)$, $\omega^\prime_1 \cap \omega^\prime_2 = \varnothing$. Но по аксиоме ``определены-значит-равны'' $\omega_1 = \omega^\prime_1$ и $\omega_2 = \omega^\prime_2$; таким образом, $\omega_1$ и $\omega_2$ одновременно пересекаются и не пересекаются, значит, предположение об определённости $gen(\omega,\sigma_1\cup\sigma_2)$ неверно.
 \\
@@ -23,61 +17,25 @@
 	\item если $gen(\omega,\sigma)=\omega^\prime$, то для любого $\tau \subseteq \sigma$ можно определить $\omega^\prime_\tau =\bigcup\limits_{s\in\tau}\omega^\prime_s$, при этом $\tau_1 \cap \tau_2 = \varnothing \Leftrightarrow \omega^\prime_{\tau_1} \cap \omega^\prime_{\tau_2} = \varnothing$.
 \end{itemize}
 
-\hrulefill
-
-\textbf{Теорема 1.} 
-
-Пусть дано: $\sigma \subset \Sigma$, $gen(\varnothing, \sigma) = \omega^\sigma$, $\forall s \in \sigma$ $d_{\varnothing,\omega}(s) \subset 2^\Omega$. Пусть $\rho, \alpha \subset \Sigma$, при этом $\rho \subseteq \sigma$, $\sigma \cap \alpha = \varnothing$; $\Delta = \Delta^\rho_\alpha\sigma = \sigma\setminus\rho\cup\alpha$, $gen(\varnothing, \Delta) = \omega^\Delta$. Определим $\xi = \{s \in \sigma\setminus\rho \mid d_{\varnothing,\omega}(s) \cap \omega_\rho \neq \varnothing\}$ (зависимые от $\rho$ элементы). 
-Тогда:
-
-$$gen(\varnothing, \Delta) = \omega^\sigma \setminus \omega^\sigma_\rho \setminus \omega^\sigma_\xi \cup gen(\omega^\sigma \setminus \omega^\sigma_\rho \setminus \omega^\sigma_\xi, \alpha \cup \xi)$$
-
-\textbf{Доказательство:}
-
-Сначала докажем равенство не для $\xi$, а для произвольного $\tau \subset \sigma\setminus\rho$, для которого определено $gen(\omega^\sigma \setminus \omega^\sigma_\rho \setminus \omega^\sigma_\tau, \alpha\cup\tau)$. Смысл этого такой, что равенство выполнится не только при перекомпиляции $\xi$, но и при перекомпиляции, например, множества, большего $\xi$.
-\\
-
-Слева направо: пусть $x \in gen(\varnothing, \Delta) = \omega^\Delta$. Докажем, что $x$ принадлежит правой части. По аксиоме о дизъюнктном разбиении существует единственное разбиение $\omega^\Delta = \bigcup^\varnothing_{s\in\Delta}\omega^\Delta_s$: $\forall s \in \Delta$ $\omega^\Delta_s = gen(\omega^\Delta\setminus\omega^\Delta_s, \{s\})$, следовательно, $\exists ! s_x \in \Delta$: $x \in \omega^\Delta_{s_x}$. Докажем теперь, что $gen(..., \{s_x\})$ для какого-то контекста определено и лежит в правой части; тогда по аксиоме ``определены-значит-равны'' $gen(..., \{s_x\}) = gen(\omega^\Delta\setminus\omega^\Delta_{s_x}, \{s_x\}) = \omega^\Delta_{s_x}$ и, следовательно, содержит $x$; значит, $x$ принадлежит правой части. Поскольку $s_x \in \Delta$, то рассмотрим два случая: a) $s_x \in \sigma\setminus\rho\setminus\tau$; b) $s_x \in \alpha\cup\tau$.
-
-В случае (a): по аксиоме о дизъюнктном разбиении существует единственное разбиение для $gen(\varnothing, \sigma) = \omega^\sigma = \bigcup^\varnothing_{s\in\sigma}\omega^\sigma_s$: $\forall s \in \sigma$ $\omega^\sigma_s = gen(\omega^\sigma\setminus\omega^\sigma_s, \{s\})$. Поскольку $s_x \in \sigma$, то $\exists ! \omega^\sigma_{s_x} \subseteq \omega^\sigma$. Так как $s_x \notin \rho$, $s_x \notin \tau$, то $\omega^\sigma_{s_x} \cap \omega^\sigma_\rho = \varnothing$, $\omega^\sigma_{s_x} \cap \omega^\sigma_\tau = \varnothing$. Следовательно, $gen(\omega^\sigma\setminus\omega^\sigma_{s_x}, \{s_x\}) = \omega^\sigma_{s_x} \subseteq \omega^\sigma \setminus \omega^\sigma_\rho \setminus \omega^\sigma_\tau$, то есть определено и лежит в правой части. Для случая (a) включение левой части в правую доказано.
-
-В случае (b): мы считали, что $gen(\omega^\sigma \setminus \omega^\sigma_\rho \setminus \omega^\sigma_\tau, \alpha\cup\tau)$ определено; пусть оно равно $\omega^{\alpha\cup\tau}$; по аксиоме о дизъюнктном разбиении определено и $gen((\omega^\sigma \setminus \omega^\sigma_\rho \setminus \omega^\sigma_\tau) \cup (\omega^{\alpha\cup\tau} \setminus \omega^{\alpha\cup\tau}_{s_x}), \{s_x\})$; кроме того, оно лежит в правой части как составная часть $gen(\omega \setminus \omega_\rho \setminus \omega_\tau, \alpha\cup\tau)$. Для случая (b) включение левой части в правую доказано.
-\\
-
-Справа налево: пусть $x$ принадлежит правой части; это означает, что либо a) $x \in \omega^\sigma \setminus \omega^\sigma_\rho \setminus \omega^\sigma_\tau$, либо b) $x \in gen(\omega^\sigma \setminus \omega^\sigma_\rho \setminus \omega^\sigma_\tau, \alpha \cup \tau)$.
-
-В случае (a): рассмотрим $\omega^\sigma \setminus \omega^\sigma_\rho \setminus \omega^\sigma_\tau = \bigcup^\varnothing_{s \in \sigma} \omega^\sigma_s \setminus \bigcup^\varnothing_{s \in \rho} \omega^\sigma_s \setminus \bigcup^\varnothing_{s \in \tau} \omega^\sigma_s = \bigcup^\varnothing_{s \in \sigma\setminus\rho\setminus\tau} \omega^\sigma_s$ (равенства верны по аксиоме о дизъюнктном разбиении). Тогда ясно, что $\exists ! s_x \in \sigma\setminus\rho\setminus\tau$: $x \in \omega^\sigma_{s_x} = gen(\omega^\sigma \setminus \omega^\sigma_{s_x}, \{s_x\})$.
-
-В случае (b): по аксиоме о дизъюнктном разбиении $\exists ! s_x \in \alpha\cup\tau$: $x \in \omega^{\alpha\cup\tau}_{s_x} = gen((\omega^\sigma \setminus \omega^\sigma_\rho \setminus \omega^\sigma_\tau) \cup (\omega^{\alpha\cup\tau} \setminus \omega^{\alpha\cup\tau}_{s_x}), \{s_x\})$.
-
-В обоих случаях мы указали $gen(..., \{s_x\})$ для некоторого контекста, лежащее в правой части и содержащее $x$; также в обоих случаях $s_x \in \Delta$ и, следовательно, в левой части определено $\omega^\Delta_{s_x} = gen(\omega^\Delta\setminus\omega^\Delta_{s_x}, \{s_x\})$, лежащее в левой части. По аксиоме ``определены-значит-равны''  $\omega^\Delta_{s_x}$ равен $gen(..., \{s_x\})$ и, значит, также содержит $x$; следовательно, $x$ принадлежит левой части. Равенство для $\tau$ доказано.
-\\
-
-Теперь нужно доказать, что определено $gen(\omega^\sigma \setminus \omega^\sigma_\rho \setminus \omega^\sigma_\xi, \alpha\cup\xi)$. Проблема здесь в том, что среди наших аксиом нет критерия определённости $gen$, а есть только список ситуаций, когда она не определена. Можно считать этот список исчерпывающим, тогда для определённости $gen(..., \alpha\cup\xi)$ достаточно проверить, что $\alpha$ и $\xi$ не имеют общих порождений (аксиома 6), что порождения $\alpha$ и $\xi$ не пересекаются с $\omega^\sigma \setminus \omega^\sigma_\rho \setminus \omega^\sigma_\xi$ (аксиома 1), а также что $\omega^\sigma \setminus \omega^\sigma_\rho \setminus \omega^\sigma_\xi$ действительно содержит все необходимые зависимости для $\alpha$ и $\xi$ с учётом взаимозависимостей (аксиома 5). Тогда получим ЧТД.
-
-\begin{comment}
-	Можно ввести ещё одну аксиому: значение $gen(\omega, \sigma)$ не определено, если a) $\exists \sigma_1, \sigma_2 \subset \sigma$: $\sigma_1 \cap \sigma_2 = \varnothing$, $\exists \omega_1, \omega_2 \in 2^\Omega$: $gen(\omega_1, s_1) \cap gen(\omega_2, s_2) \neq \varnothing$, или b) $\exists \sigma^\prime \subset \sigma$, $\exists \omega^\prime \in 2^\Omega$: $gen(\omega^\prime, \sigma^\prime) \cap \omega \neq \varnothing$, или c) $\exists s \in \sigma$, $\exists \omega^\prime,\omega^{\prime\prime} \in 2^\Omega$: $d_{\omega^\prime,\omega^{\prime\prime}}(s) \nsubseteq \omega$; иначе оно определено.
-\end{comment}
-
-Короткое: понятно, что равенство имеет смысл только в случае определённости $gen(\varnothing, \Delta)$ и $gen(\varnothing, \sigma)$. По второй аксиоме ясно, что левая часть раскладывается на два множества $\omega^\Delta_{\sigma\setminus\rho\setminus\xi}$ и $\omega^\Delta_{\xi\cup\alpha}$. Первое из них по третьей аксиоме равно первому члену объединения из правой части (определённость которого следует из определённости $gen(\varnothing, \sigma))$. Второе из них равно второму члену объединения из правой части потому, что они являются результатами двух значений gen с одним и тем же множеством в качестве входа и равными контекстами (контексты --- это соответствующие первые члены частей). Более строго: 
-
-Пусть $gen(\varnothing, \Delta)$ и $gen(\varnothing, \sigma)$ определены. По аксиоме о дизъюнктном разбиении определены и $\omega^\Delta_{\sigma \setminus \rho \setminus \xi}$ и $\omega^\sigma_{\sigma \setminus \rho \setminus \xi}$; и по аксиоме (3) $\omega^\Delta_{\sigma \setminus \rho \setminus \xi} = \omega^\sigma_{\sigma \setminus \rho \setminus \xi}$. Поскольку $\Delta = (\sigma \setminus \rho \setminus \xi) \cup (\xi \cup \alpha)$, то $gen(\varnothing, \Delta) = \omega^\Delta = \omega^\Delta_{\sigma \setminus \rho \setminus \xi} \cup \omega^\Delta_{\xi \cup \alpha}$. Но $\omega^\Delta_{\xi \cup \alpha} = gen(\omega^\Delta \setminus \omega^\Delta_{\xi \cup \alpha}, \xi \cup \alpha) = gen(\omega^\Delta_{\sigma \setminus \rho \setminus \xi}, \xi \cup \alpha) = gen(\omega^\sigma_{\sigma \setminus \rho \setminus \xi}, \xi \cup \alpha) = gen(\omega^\sigma \setminus \omega^\sigma_\rho \setminus \omega^\sigma_\xi, \alpha\cup\xi)$ из правой части.
-\\
-
-1. Пусть $\omega$, $\tilde{\omega}$ --- множества выходов, $\sigma$ --- множество входов.
-	Тогда $\partial\frac{\omega}{\tilde{\omega}}\sigma$ --- это наименьшее подмножество $\sigma$, удовлетворяющее свойству $gen(\omega,\sigma\setminus\partial\frac{\omega}{\tilde{\omega}}\sigma)$ определено тогда и только тогда, когда $gen(\tilde{\omega},\sigma\setminus\partial\frac{\omega}{\tilde{\omega}}\sigma)$ определено.
-\\
-
-2. Свойство: $\partial$ всегда определен и (на худой конец) равен $\sigma$.
-\\
-
-3. Свойство: $\partial\frac{\omega}{\omega}\sigma=\varnothing$.
-\\
-
-Вопрос: верно ли, что в условиях инкрементального случая (там, где $\Delta^\rho_\alpha\sigma$)
-
-$$\partial\frac{\omega}{\omega\setminus\omega_\rho\cup\omega_\alpha}(\sigma\setminus\rho)\subseteq\xi$$ ? 
+Если для множества входов $\sigma$ в каком-то контексте определено $gen(..., \sigma)$, то по третьей аксиоме значения $gen(..., \sigma)$ для всех контекстов, где такое значение определено, равны; будем говорить, что они равны $\omega_\sigma$ (без верхнего индекса).
 
 \newpage
+
+\newcommand{\ssrsx}{{\sigma\setminus\rho\setminus\xi}}
+
+Пусть каждый набор порождений для входа $\sigma$, полученный вызовом $gen$, состоит из двух частей $A_\sigma$ и $B^{...}_\sigma$. $A_\sigma$ не зависит от контекста, в котором вызывался $gen$, а $B^{...}_\sigma$ зависит; в верхнем индексе у него будем указывать зависимости в виде списка пар вида (вход; символ, определяющий тот вызов $gen$, которым были сгенерированы зависимости).
+
+Обозначим $\tau = \ssrsx$. Хотим получить:
+
+$$gen(\varnothing, \Delta) = gen(\varnothing, \alpha \cup \xi \cup \tau) = A_\alpha \cup B^{\xi,\Delta;\tau,\Delta}_{\alpha,\Delta} \cup A_\xi \cup B^{\alpha,\Delta;\tau,\Delta}_{\xi,\Delta} \cup A_\tau \cup B^{\xi,\Delta}_{\tau,\Delta}$$
+
+Хотим получить $B_\xi$ без зависимостей от $\rho$ и какие-нибудь $A_\alpha$ и $B_\alpha$.
+
+$$gen(\varnothing, \sigma) = \omega_{\sigma,0} = A_\rho \cup B^{\xi,0;\tau,0}_{\rho,0} \cup A_\xi \cup B^{\rho,0;\tau,0}_{\xi,0} \cup A_\tau \cup B^{\xi,0}_{\tau,0}$$
+$$gen(A_\xi \cup B^{\rho,0;\tau,0}_{\xi,0} \cup A_\tau \cup B^{\rho,0;\xi,0}_{\tau,0}, \alpha) = \omega_{\alpha,1} = A_\alpha \cup B^{\xi,0;\tau,0}_{\alpha,1}$$
+$$gen(A_\alpha \cup B^{\xi,0;\tau,0}_{\alpha,1} \cup A_\tau \cup B^{\rho,0;\xi,0}_{\tau,0}, \xi) = \omega_{\xi,2} = A_\xi \cup B^{\alpha,1;\tau,0}_{\xi,2}$$
+$$gen(A_\xi \cup B^{\alpha,1;\tau,0}_{\xi,2}, \tau) = \omega_{\tau,3} = A_\tau \cup B^{\xi,2}_{\tau,3}$$
+
+Рассмотрим $\omega_{\tau,3} = A_\tau \cup B^{\xi,2}_{\tau,3}$. Равно ли оно $A_\tau \cup B^{\xi,0}_{\tau,0}$?
 
 \end{document}
