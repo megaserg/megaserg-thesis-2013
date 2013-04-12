@@ -7,17 +7,19 @@ $$
 gen : 2^\Omega\to 2^\Sigma\to 2^\Omega
 $$
 
+Введём разбиение результата $gen(\omega, \sigma) = \omega^\prime$ на классы. Класс $B^0_{\omega^\prime}$ - это те порождения или части порождений, которые зависят только от входа $\sigma$. Класс $B^1_{\omega^\prime}$ - те порождения или части порождений, которые зависят только от входа и порождений класса $B^1_{\omega}$. По индукции, класс $B^i_{\omega^\prime}$ - те порождения или части порождений, которые зависят только от входа и порождений классов $B^j_{\omega}$, где $j < i$.\\
+
 Аксиомы функции порождения:
 
 \begin{enumerate}
 	\item если $gen(\omega,\sigma)$ --- определена, то $\omega\cap gen(\omega,\sigma)=\varnothing$;
+	
 	\item если $gen(\omega,\sigma)=\omega^\prime$, то существует единственное дизъюнктное разбиение $\omega^\prime=\bigcup^\varnothing_{s\in\sigma}\omega^\prime_s$, 
 	удовлетворяющее свойству 
 
 	$$\forall s\in\sigma : gen(\omega\cup\omega^\prime\setminus\omega^\prime_s,\{s\})=\omega^\prime_s$$
 
-	\item \sout{$\forall s\in\Sigma,\; \forall\omega,\:\omega^\prime\subseteq\Omega:$ если $gen(\omega,\{s\})$ и $gen(\omega^\prime,\{s\})$ ---
-	определены, то $gen(\omega,\{s\})=gen(\omega^\prime,\{s\})$;}
+	\item $\forall s\in\Sigma,\; \forall\omega,\:\omega^\prime\subseteq\Omega:$ если $gen(\omega,\{s\})$ и $gen(\omega^\prime,\{s\})$ определены и $B^0_{\omega} = B^0_{\omega^\prime}$, то $gen(\omega,\{s\}) = gen(\omega^\prime,\{s\})$;
 
 	\item если $gen(\omega,\{s\})$ --- определена, то в $\omega$ существует наименьшее по включению подмножество $d_\omega(s)$, такое, что
 	$gen(d_\omega(s), \{s\})$ --- определена;
@@ -26,8 +28,6 @@ $$
 	% $d_\omega(s)\cap \omega^\prime_{s_1}\ne\varnothing$, 
 	$d_{\omega\cup\omega^\prime\setminus\omega^\prime_s}(s) \cap \omega^\prime_{s_1}\ne\varnothing$, 
 	то $gen(\omega,\sigma\setminus s_1)$ --- не определена;
-
-	\item если $\sigma_1\cap\sigma_2 = \varnothing$ и $gen(\omega,\sigma_1)\cap gen(\omega,\sigma_2)\ne\varnothing$, то $gen(\omega,\sigma_1\cup\sigma_2)$ --- не определена;
 	
 	\item если $gen(\omega,\{s\})$ --- определено, то для произвольного $\omega^\prime\subseteq\omega$, такого, что $d_\omega(s)\subseteq\omega^\prime$, $gen(\omega^\prime, \{s\})$ тоже определено и равно $gen(\omega,\{s\})$.
 \end{enumerate}
