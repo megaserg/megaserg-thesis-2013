@@ -1,0 +1,72 @@
+\input{preamble.tex}
+
+\input{titlepage_spisok.tex}
+% \input{titlepage_chair.tex}
+
+\begin{document}
+
+{
+	\setbeamertemplate{footline}{} 
+	\begin{frame}
+		\titlepage
+	\end{frame}
+}
+\addtocounter{framenumber}{-1}
+
+\begin{frame}{Введение}
+\begin{itemize}
+	\item Сборка программного проекта
+	\item Инкрементальная компиляция
+	\item Кэш компиляции
+	\item Переиспользование кэшей в большом проекте
+	\item (картинка)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Постановка задачи}
+\begin{itemize}
+	\item Построить формальную модель предметной области
+	\item Сформулировать в терминах этой модели и доказать теоремы об~инкрементальной компиляции и~переиспользовании порождений
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Основные определения}
+
+$\Sigma$ --- множество входов, $\Omega$ --- множество выходов\\
+Функция порождения выходов по входам (частичная):
+$$gen : 2^\Omega \times 2^\Sigma \to 2^\Omega$$
+
+\end{frame}
+
+\begin{frame}{Дифференциал}
+Пусть $\omega$, $\tilde{\omega}$ --- множества выходов, $\sigma$ --- множество входов. Известно, что определено $gen(\omega, \sigma) = \omega^\prime$, $gen(\tilde{\omega}, \sigma) = \tilde{\omega}^\prime$.
+
+Тогда $\partial\dfrac{\omega}{\tilde{\omega}}\sigma = \partial$ --- это наименьшее подмножество $\sigma$, удовлетворяющее свойству: 
+$gen(\omega \cup \omega^\prime_{\partial}, \sigma\setminus\partial)$ и
+$gen(\tilde{\omega} \cup \tilde{\omega}^\prime_{\partial}, \sigma\setminus\partial)$ либо одновременно не определены, либо одновременно определены и равны. 
+\end{frame}
+
+\begin{frame}{Теорема об~инкрементальной компиляции}
+
+Пусть дано: $\sigma \subset \Sigma$, $gen(\varnothing, \sigma) = \omega^\sigma$. Пусть $\rho, \alpha \subset \Sigma$, при этом $\rho \subseteq \sigma$, $\sigma \cap \alpha = \varnothing$; $\Delta = \Delta^\rho_\alpha\sigma = \sigma\setminus\rho\cup\alpha$. Известно, что определено $gen(\omega^\sigma_{\sigma\setminus\rho}, \alpha) = \omega_\alpha$ и $gen(\varnothing, \Delta) = \omega^\Delta$.
+
+\pause
+
+Тогда:
+$$gen(\varnothing, \Delta) = \omega^\sigma_{\sigma\setminus\rho\setminus\partial} \cup \omega_\alpha \cup gen(\omega^\sigma_{\sigma\setminus\rho\setminus\partial} \cup \omega_\alpha, \partial)$$
+
+\end{frame}
+
+\begin{frame}{Теорема о~переиспользовании порождений}
+\end{frame}
+
+
+\begin{frame}{Результаты}
+\begin{itemize}
+	\item Построена формальная модель
+	\item Сформулированы и доказаны теоремы об~инкрементальной компиляции и~переиспользовании порождений
+	\item Доказана корректность инкрементальной компиляции в IntelliJ IDEA
+\end{itemize}
+\end{frame}
+
+\end{document}

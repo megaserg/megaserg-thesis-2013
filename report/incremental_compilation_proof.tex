@@ -21,10 +21,18 @@ $gen(\tilde{\omega} \cup \tilde{\omega}^\prime_{\partial}, \sigma\setminus\parti
 
 $$\partial\dfrac{\omega_\rho}{\omega_\alpha}(\sigma\setminus\rho)\subseteq\xi$$ ?
 
-\textbf{Доказательство:}
+\begin{comment}
+	\textbf{Доказательство:}
 
-\newcommand{\mypart}{\partial\dfrac{\omega_\rho}{\omega_\alpha}(\sigma\setminus\rho)}
+	\newcommand{\mypart}{\partial\dfrac{\omega_\rho}{\omega_\alpha}(\sigma\setminus\rho)}
 
-Докажем, что если $s \in \sigma\setminus\rho$, $s \notin \xi$, то $s \notin \mypart$. Обозначим $\tau = (\sigma\setminus\rho)\setminus\mypart$, тогда $\tau$ --- наибольшее подмножество $\sigma\setminus\rho$, такое, что $gen(\omega_\rho, \tau)$ определено $\Leftrightarrow$ $gen(\omega_\alpha, \tau)$ определено. Предположим, $s \in \mypart$, тогда $s \notin \tau$. Рассмотрим $gen(\omega_\rho, \tau)$.
+	Докажем, что если $s \in \sigma\setminus\rho$, $s \notin \xi$, то $s \notin \mypart$. Обозначим $\tau = (\sigma\setminus\rho)\setminus\mypart$, тогда $\tau$ --- наибольшее подмножество $\sigma\setminus\rho$, такое, что $gen(\omega_\rho, \tau)$ определено $\Leftrightarrow$ $gen(\omega_\alpha, \tau)$ определено. Предположим, $s \in \mypart$, тогда $s \notin \tau$. Рассмотрим $gen(\omega_\rho, \tau)$.
+\end{comment}
 
+\newpage
+
+\textbf{Теорема 1.} Пусть дано: $\sigma \subset \Sigma$, $gen(\varnothing, \sigma) = \omega^\sigma$. Пусть $\rho, \alpha \subset \Sigma$, при этом $\rho \subseteq \sigma$, $\sigma \cap \alpha = \varnothing$; $\Delta = \Delta^\rho_\alpha\sigma = \sigma\setminus\rho\cup\alpha$. Известно, что определено $gen(\omega^\sigma_{\sigma\setminus\rho}, \alpha) = \omega_\alpha$ и $gen(\varnothing, \Delta) = \omega^\Delta$.
+Тогда:
+
+$$gen(\varnothing, \Delta) = \omega^\sigma_{\sigma\setminus\rho\setminus\partial} \cup \omega_\alpha \cup gen(\omega^\sigma_{\sigma\setminus\rho\setminus\partial} \cup \omega_\alpha, \partial)$$
 \end{document}

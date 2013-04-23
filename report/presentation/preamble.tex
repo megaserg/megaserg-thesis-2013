@@ -1,0 +1,74 @@
+\documentclass[14pt]{beamer}
+
+\usepackage{cmap} % searchable PDFs
+\usepackage[T2A]{fontenc} % scalable fonts
+\usepackage[utf8]{inputenc} % input in UTF8
+
+\usepackage{listings}
+\usepackage{color}
+\usepackage{amssymb, amsmath}
+\usepackage[all]{xy}
+% \usepackage{pslatex}
+\usepackage{epigraph}
+\usepackage{verbatim}
+\usepackage{graphicx}
+
+\definecolor{shadecolor}{gray}{1.00}
+\definecolor{darkgray}{gray}{0.30}
+
+\newcommand{\set}[1]{\{#1\}}
+\newcommand{\angled}[1]{\langle {#1} \rangle}
+\newcommand{\fib}{\rightarrow_{\mathit{fib}}}
+\newcommand{\fibm}{\Rightarrow_{\mathit{fib}}}
+
+\setlength{\epigraphwidth}{.55\textwidth}
+
+\definecolor{light-gray}{gray}{0.90}
+\newcommand{\graybox}[1]{\colorbox{light-gray}{\texttt{#1}}}
+
+\newcommand{\nredrule}[3]{
+  \begin{array}{cl}
+    \textsf{[{#1}]}& 
+    \begin{array}{c}
+      #2 \\
+      \hline
+      \raisebox{-1pt}{\ensuremath{#3}}
+    \end{array}
+  \end{array}}
+
+\newcommand{\naxiom}[2]{
+  \begin{array}{cl}
+    \textsf{[{#1}]} & \raisebox{-1pt}{\ensuremath{#2}}
+  \end{array}}
+
+\lstdefinelanguage{ocaml}{
+keywords={let, begin, end, in, match, type, and, fun, function, try, with, class, object, method, of, rec, repeat, until,
+          while, not, do, done, as, val, inherit, module, sig, deriving, datatype, struct, if, then, else, datatype},
+sensitive=true,
+morecomment=[l]{--}
+}
+
+\lstset{
+basicstyle=\small\ttfamily,
+identifierstyle=\ttfamily,
+keywordstyle=\bfseries,
+commentstyle=\scriptsize\rmfamily,
+basewidth={0.5em,0.5em},
+fontadjust=true,
+escapechar=~,
+language=ocaml
+}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{blocks}[rounded][shadow=true] 
+\setbeamertemplate{footline}{
+	\makebox[.99\paperwidth]{\hfill\insertframenumber/\inserttotalframenumber}
+}
+
+\beamertemplateballitem
+
+\mode<presentation>{
+  \usetheme{default}
+}
+
+\theoremstyle{definition}

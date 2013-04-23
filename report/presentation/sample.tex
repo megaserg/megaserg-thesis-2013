@@ -1,0 +1,479 @@
+\input{preamble.tex}
+
+\title{Efficiently Scrapping Boilerplate Code in OCaml}
+
+\author[Dmitry Boulytchev]{Dmitry Boulytchev and Sergey Mechtaev}
+\date{14 September 2011}
+
+\date{
+   \textbf{ACM SIGPLAN Workshop on ML, 2011}\\
+   18 September 2011 \\
+   Tokyo, Japan
+}
+
+\institute[Software Engineering Chair]{
+\textbf{Software Engineering Chair}\\ 
+\textbf{Saint-Petersburg State University} \\
+\texttt{\{dboulytchev, mechtaev\}@gmail.com}
+}
+
+\begin{document}
+\begin{frame} 
+  \titlepage
+\end{frame}
+
+\begin{frame}[fragile]{``Scrap Your Boilerplate'' --- Motivation}
+\begin{lstlisting}
+type expr = Add of expr * expr | Const of int | Var of string
+
+let rec increment = function
+  Add  (x, y) -> Add   (increment x, increment y)
+| Const x     -> Const (x + 1)
+| Var   v     -> Var v
+
+let rec suffixize = function
+  Add  (x, y) -> Add (suffixize x, suffixize y)
+| Const x     -> Const x
+| Var   v     -> Var (v ^ "_suffix")
+\end{lstlisting}
+
+\pause
+
+\begin{itemize}
+\item ``Interesting function'' --- 
+  \begin{itemize}
+     \item \lstinline{(fun x -> x+1)}
+     \item \lstinline{(fun s -> s ^ "_suffix")}
+  \end{itemize}
+\pause
+\item Generic transformation.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{``Scrap Your Boilerplate'' --- Generic Transformation}
+
+$$
+\mbox{gmapT}^t : (\forall \alpha.\alpha\to\alpha)\to t\to t
+$$
+\pause
+
+$$
+\begin{array}{rcl}
+  \mbox{gmapT}^{\mbox{expr}} f = \mbox{\lstinline{function}} &   & \mbox{\lstinline{Add (x, y) -> Add (f x, f y)}} \\
+                                                          & | & \mbox{\lstinline{Const i -> Const (f i)}}   \\
+                                                          & | & \mbox{\lstinline{Var n -> Var (f i)}}
+\end{array}
+$$
+\end{frame}
+
+\begin{frame}[fragile]{``Scrap Your Boilerplate'' --- Lifting}
+
+$$
+\mbox{lift} : (t\to t)\to\forall\alpha.\alpha\to\alpha
+$$
+
+\pause
+
+$$
+\mbox{lift}\: (f : t \to t)=\lambda x:\alpha\:.\:\left\{
+  \begin{array}{rcl}
+    f\; x&,&\alpha=t\\
+    x  &,&otherwise
+  \end{array}
+\right.
+$$
+
+\end{frame}
+
+\begin{frame}[fragile]{``Scrap Your Boilerplate'' --- \texttt{everywhere}}
+$$
+\mbox{everywhere}\:f\:(x\::\:t)\:=\:f\:(\mbox{gmapT}^t\:(\mbox{everywhere}\:f)\:x)
+$$
+
+\pause
+
+$$
+\mbox{increment = everywhere} (\mbox{lift} (\lambda x : \mbox{int}\:.\: x+1))
+$$
+
+\pause
+
+$$
+\mbox{suffixize = everywhere} (\mbox{lift} (\lambda x : \mbox{string}\:.\: x + \mbox{"\_suffix"}))
+$$
+
+\end{frame}
+
+\begin{frame}[fragile]{Weak Type Equality}
+
+\begin{itemize}
+\item Encoding of type equality relation:
+
+\begin{lstlisting}
+type ('a, 'b) eq
+
+val refl    : unit -> ('a, 'a) eq
+val symm    : ('a, 'b) eq -> ('b, 'a) eq
+val trans   : ('a, 'b) eq -> ('b, 'c) eq -> ('a, 'c) eq
+val coerce  : ('a, 'b) eq -> 'a -> 'b
+\end{lstlisting}
+
+\pause
+\item Implementation:
+
+\begin{lstlisting}
+type ('a, 'b) eq = ('a -> 'b) * ('b -> 'a)
+
+let refl   ()            = id, id
+let symm   (j, l)        = (l, j)
+let trans  (f, g) (j, k) = compose j f, compose g k
+let coerce               = fst
+\end{lstlisting}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Type Markers}
+
+\begin{itemize}
+\item Representing types by values:
+\begin{lstlisting}
+type 'a marker
+
+val make: unit -> 'a marker
+val compare : 'a marker -> 'b marker -> ('a, 'b) eq option
+\end{lstlisting}
+\pause
+\item Sample implementation:
+\begin{lstlisting}
+type 'a marker = unit ref
+
+let make () = ref ()
+let compare x y = 
+  if x == y then Some (~\graybox{Obj.magic (refl ())}~) else None
+\end{lstlisting}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Lifting}
+\begin{itemize}
+\item Type of ``interesting function'':
+\begin{lstlisting}
+type lifted = {f : 'a . 'a marker -> 'a -> 'a}
+\end{lstlisting}
+\pause
+\item Lifting primitive:
+\begin{lstlisting}
+let lift (m : 'a marker) (f' : 'a -> 'a) =  {
+  f = fun n x ->
+        match compare m n with
+        | None -> x
+        | Some e ->        
+            coerce e (f' (coerce (symm e) x))
+}
+\end{lstlisting}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Lifting Example}
+\begin{verbatim}
+# let int_m : int marker = make ();;     
+val int_m : int Type_marker.marker = <abstr>
+# let inc = lift int_m (fun x -> x+1);;
+val inc : Syb.lifted = {f = <fun>}
+# inc.f string_m "abc";;
+- : string = "abc"
+# inc.f int_m 1;;
+- : int = 2
+# inc.f int_m "abc";;
+Characters 12-17:
+  inc.f int_m "abc";;
+              ^^^^^
+Error: This expression has type string but an expression 
+       was expected of type int 
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Type Information}
+\begin{lstlisting}
+type 'a typeinfo = {
+  marker : 'a marker;
+  gmapT  : transform -> 'a -> 'a
+}
+\end{lstlisting}
+\pause
+\begin{lstlisting}
+and transform =  {
+  transform : 'a . 'a typeinfo -> 'a -> 'a
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Specifying Type Information (I)}
+\begin{itemize}
+\item Shallow case:
+\begin{lstlisting}
+let int = {
+  marker = int_m; 
+  gmapT  = fun _ x -> x
+}
+\end{lstlisting}
+\pause
+\item Non-recursive case:
+\begin{lstlisting}
+type t = A of a | B of b
+let t = {
+  marker = t_m; 
+  gmapT  = fun t -> 
+    function 
+    | A x -> A (t.transform a x)
+    | B x -> B (t.transform b y)
+}
+\end{lstlisting}
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Specifying Type Information (II)}
+\begin{itemize}
+\item Recursive case:
+\begin{lstlisting}
+let expr = 
+  let rec inner () = {
+    marker = expr_m; 
+    gmapT  = fun t -> 
+      function 
+      | Add  (x, y) -> Add (t.transform (inner ()) x, 
+                            t.transform (inner ()) y
+                           )
+      | Var   s     -> Var (t.transform string s)
+      | Const i     -> Const (t.tansform int i)
+  }
+  in inner ()
+\end{lstlisting}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Implementing \texttt{everywhere}}
+
+\begin{lstlisting}
+let everywhere ti f =
+  let rec transform : 'a . 'a typeinfo -> 'a -> 'a = 
+    fun ti x -> f.f ti.marker (ti.gmapT {transform} x)
+  in
+  transform ti
+\end{lstlisting}
+\pause
+\begin{lstlisting}
+let increment = everywhere expr 
+  (lift int_m (fun i -> i+1))
+
+let suffixize = everywhere expr 
+  (lift string_m (fun s -> s ^ "_suffix"))
+\end{lstlisting}
+\pause
+\begin{verbatim}
+# suffixize (Add (Var "a", Const 1));;
+- : expr = Add (Var "a_suffix", Const 1)
+# increment (Add (Var "a", Const 1));;
+- : expr = Add (Var "a", Const 2)
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Canonical Example}
+\begin{lstlisting}
+datatype company = C of dept list
+and dept         = D of name * manager * subunit list
+and subunit      = PU of employee | DU of dept
+and employee     = E of person * salary
+and person       = P of name * address
+and salary       = S of float
+and manager      = employee
+and name         = string
+and address      = string
+
+let increase = 
+  everywhere company (lift salary (function S x -> x *. 1.5))
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Performance Issue}
+\begin{figure}
+\includegraphics[width=10cm]{increase2.pdf}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Specialization on Data Type: Lifting}
+\begin{lstlisting}
+let lift (m : 'a marker) (f' : 'a -> 'a) =  {
+  f = fun n ~\graybox{x}~ ->
+        match compare m n with
+        | None -> ~\graybox{x}~
+        | Some e ->        
+            ~\graybox{coerce e (f' (coerce (symm e) x))}~
+}
+\end{lstlisting}
+\vskip8mm
+\end{frame}
+
+\begin{frame}[fragile]{Specialization on Data Type: Lifting}
+\begin{lstlisting}
+let lift (m : 'a marker) (f' : 'a -> 'a) =  {
+  f = fun n ->
+        match compare m n with
+        | None -> ~\graybox{\textbf{fun} x -> x}~
+        | Some e ->        
+            ~\graybox{\textbf{fun} x -> coerce e (f' (coerce (symm e) x))}~
+}
+\end{lstlisting}
+\vskip8mm
+\end{frame}
+
+\begin{frame}[fragile]{Specialization on Data Type: Lifting}
+\begin{lstlisting}
+let lift (m : 'a marker) (f' : 'a -> 'a) =  {
+  f = fun n ->
+        match compare m n with
+        | None -> ~\graybox{\textbf{fun} x -> x}~
+        | Some e ->        
+            let back = coerce e in
+            let from = coerce (symm e) in
+            ~\graybox{\textbf{fun} x -> back (f' (from x))}~
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Specialization of Data Type: Type Information}
+\begin{lstlisting}
+type expr = Add of expr * expr | Var of string | Const of int
+let expr = 
+  let rec inner () = {
+    marker = expr_m; 
+    gmapT  = fun t -> 
+      function 
+      | Add  (x, y) -> Add (~\graybox{t.transform (inner ())}~ x, 
+                            ~\graybox{t.transform (inner ())}~ y
+                           )
+      | Var   s     -> Var (~\graybox{t.transform string}~ s)
+      | Const i     -> Const (~\graybox{t.tansform int}~ i)
+  }
+  in inner ()
+\end{lstlisting}
+\vskip6mm
+\end{frame}
+
+\begin{frame}[fragile]{Specialization of Data Type: Type Information}
+\begin{lstlisting}
+type expr = Add of expr * expr | Var of string | Const of int
+let expr = 
+  let rec inner () = {
+    marker = expr_m; 
+    gmapT  = fun t -> 
+      ~\graybox{\textbf{let} t\_expr = t.transform (inner ()) \textbf{in}}~
+      ~\graybox{\textbf{let} t\_int = t.transform int \textbf{in}}~
+      ~\graybox{\textbf{let} t\_string = t.transform string \textbf{in}}~
+      function 
+      | Add  (x, y) -> Add (~\graybox{t\_expr}~ x, ~\graybox{t\_expr}~ y)
+      | Var   s     -> Var (~\graybox{t\_string}~ s)
+      | Const i     -> Const (~\graybox{t\_int}~ i)
+  }
+  in inner ()
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Specialization of Data Type: \texttt{everywhere}}
+\begin{lstlisting}
+let everywhere ti f =
+  let rec transform : 'a . 'a typeinfo -> 'a -> 'a = 
+    fun ti ~\graybox{x}~ -> ~\graybox{f.f ti.marker (ti.gmapT \{transform\} x)}~
+  in
+  transform ti
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Specialization of Data Type: \texttt{everywhere} Loops}
+\begin{lstlisting}
+let everywhere ti f =
+  let rec transform : 'a . 'a typeinfo -> 'a -> 'a = 
+    fun ti -> ~\graybox{compose (f.f ti.marker) (ti.gmapT \{transform\})}~
+  in
+  transform ti
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Specialization of Data Type: \texttt{everywhere} Revised}
+\begin{lstlisting}
+let everywhere ti f =
+  let context = M.create () in
+  let rec transform : 'a . 'a typeinfo -> 'a -> 'a =
+    fun ti ->
+      let m = ti.marker in
+      let f = f.f m in
+      try 
+        let tr = M.find context m in
+        compose f (fun x -> !tr x)
+      with Not_found ->
+        let tr = M.stub () in
+        M.add context m tr;
+        tr := ti.gmapT {transform};
+        M.remove context m;
+        compose f !tr
+  in
+  transform ti
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Performance Comparison}
+\begin{figure}
+\includegraphics[width=10cm]{increase3.pdf}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Specialization on Interesting Function}
+
+\begin{tabular}{p{7cm}p{3cm}}
+  \small{
+  \begin{itemize}  
+    \item Idea --- prune the traversal of ``non-interesting data''.
+    \item Trivial analysis over the type graph.
+    \item Cumbersome to implement due to the lack of explicit type representation.
+    \item Can be integrated in the implementation of \texttt{everywhere}.
+  \end{itemize}
+  } & 
+  \begin{figure}  
+     \includegraphics[width=3cm,height=5cm]{company.pdf} 
+  \end{figure}
+\end{tabular}
+
+\end{frame}
+
+\begin{frame}{Performance Comparison}
+\begin{figure}
+\includegraphics[width=10cm]{increase.pdf}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Drawbacks and Limitations}
+\begin{itemize}
+   \item Data structures with cycles and sharing;
+   \pause
+   \item Type marker equality vs. true type equality:
+\begin{lstlisting}
+module F (X : sig type t end) =
+  struct
+    datatype t = A of X.t | B
+  end
+module A = F (struct type t = int end)
+module B = F (struct type t = int end)
+\end{lstlisting}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Thank you!}
+\begin{itemize}
+\item Source code and supporting materials: \texttt{http://oops.math.spbu.ru/syb-ocaml}
+\end{itemize}
+\end{frame}
+
+\end{document}
