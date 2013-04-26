@@ -31,8 +31,27 @@ $$\partial\dfrac{\omega_\rho}{\omega_\alpha}(\sigma\setminus\rho)\subseteq\xi$$ 
 
 \newpage
 
-\textbf{Теорема 1.} Пусть дано: $\sigma \subset \Sigma$, $gen(\varnothing, \sigma) = \omega^\sigma$. Пусть $\rho, \alpha \subset \Sigma$, при этом $\rho \subseteq \sigma$, $\sigma \cap \alpha = \varnothing$; $\Delta = \Delta^\rho_\alpha\sigma = \sigma\setminus\rho\cup\alpha$. Известно, что определено $gen(\omega^\sigma_{\sigma\setminus\rho}, \alpha) = \omega_\alpha$ и $gen(\varnothing, \Delta) = \omega^\Delta$.
+% ------------------------------------------------------
+\newcommand{\butpartial}{\sigma\setminus\rho\setminus\partial}
+
+\textbf{Теорема 1 (об инкрементальной компиляции).} Пусть дано: $\sigma \subset \Sigma$, $gen(\varnothing, \sigma) = \omega^\sigma$. Пусть $\rho, \alpha \subset \Sigma$, при этом $\rho \subseteq \sigma$, $\sigma \cap \alpha = \varnothing$; $\Delta = \Delta^\rho_\alpha\sigma = \sigma\setminus\rho\cup\alpha$. Известно, что определено $gen(\omega^\sigma_{\sigma\setminus\rho}, \alpha) = \omega_\alpha$ и $gen(\varnothing, \Delta) = \omega^\Delta$. Обозначим $\partial = \partial\dfrac{\omega^\sigma_\rho}{\omega_\alpha}(\sigma\setminus\rho)$.
 Тогда:
 
-$$gen(\varnothing, \Delta) = \omega^\sigma_{\sigma\setminus\rho\setminus\partial} \cup \omega_\alpha \cup gen(\omega^\sigma_{\sigma\setminus\rho\setminus\partial} \cup \omega_\alpha, \partial)$$
+$$gen(\varnothing, \Delta) = \omega^\sigma_{\butpartial} \cup \omega_\alpha \cup gen(\omega^\sigma_{\butpartial} \cup \omega_\alpha, \partial)$$
+
+\textbf{Доказательство:}
+Рассмотрим $\omega^\Delta_\alpha = gen(\omega^\Delta_{\sigma\setminus\rho}, \alpha)$ и $\omega_\alpha = gen(\omega^\sigma_{\sigma\setminus\rho}, \alpha)$. Поскольку $B^0_{\omega^\Delta_{\sigma\setminus\rho}} = B^0_{\omega^\sigma_{\sigma\setminus\rho}}$, то $\omega^\Delta_\alpha = \omega_\alpha$. В частности, из этого следует, что $\omega^\Delta_{\sigma\setminus\rho} = gen(\omega^\Delta_\alpha, \sigma\setminus\rho) = gen(\omega_\alpha, \sigma\setminus\rho)$.
+
+Докажем, что дифференциал в нашем случае имеет смысл. Для этого проверим, что определены $gen(\omega^\sigma_\rho, \sigma\setminus\rho)$ и $gen(\omega_\alpha, \sigma\setminus\rho)$. Первое выражение равно $\omega^\sigma_\$
+
+Рассмотрим $\butpartial$. По свойству дифференциала известно, что, поскольку \omega^\Delta определено, то имеет место равенство $gen(\omega^\sigma_\rho \cup \omega^\sigma_\partial, \butpartial) = gen(\omega_\alpha \cup \omega^\Delta_\partial, \butpartial)$. Понятно, что левая часть этого равенства равна $\omega^\sigma_{\butpartial}$, а правая~---
+
+Рассмотрим $x \in \omega^\Delta$. Так как $\Delta = \sigma\setminus\rho\cup\alpha$, то по аксиоме о дизъюнктном разбиении верно, что $x$ принадлежит одному из трёх множеств: a) $\omega^\Delta_\alpha$; b) $\omega^\Delta_{\sigma\setminus\rho\setminus\partial}$; c) $\omega^\Delta_\partial$. 
+
+% ------------------------------------------------------
+
+\textbf{Теорема 2 (о переиспользовании порождений).} Пусть $\forall i \in [1:n]$ дано: $\sigma_i$, $\omega_i = gen(\varnothing, \sigma_i)$, $\sigma_i^\prime \subseteq \sigma_i$ ($\sigma_i^\prime \cap \sigma_j^\prime = \varnothing$ при $i \neq j$). Обозначим $\omega_i^\prime = gen_i(\sigma_i^\prime)$. Обозначим 
+$$\partial_i = \partial\dfrac{\omega_i \setminus \omega_i^\prime}{\bigcup\limits_{j \neq i} \omega_j^\prime} \sigma_i^\prime$$
+Тогда:
+$$gen(\varnothing, \bigcup\limits_i \sigma_i^\prime) = \left( \bigcup\limits_i \omega_i^\prime \setminus \omega_{\partial_i} \right) \cup gen(\bigcup\limits_i \omega_i^\prime \setminus \omega_{\partial_i}, \bigcup\limits_i \partial_i)$$
 \end{document}
