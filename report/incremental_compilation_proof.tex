@@ -67,4 +67,14 @@ $$gen(\varnothing, \Delta) = \omega^\sigma_{\butpartial} \cup \omega_\alpha \cup
 $$\partial_i = \partial\dfrac{\omega_i \setminus \omega_i^\prime}{\bigcup\limits_{j \neq i} \omega_j^\prime} \sigma_i^\prime$$
 Тогда:
 $$gen(\varnothing, \bigcup\limits_i \sigma_i^\prime) = \left( \bigcup\limits_i \omega_i^\prime \setminus \omega_{\partial_i} \right) \cup gen(\bigcup\limits_i \omega_i^\prime \setminus \omega_{\partial_i}, \bigcup\limits_i \partial_i)$$
+
+\newcommand{\sigi}{\sigma_i}
+\newcommand{\sigpi}{\sigma^\prime_i}
+\newcommand{\alloth}{\bigcup\limits_{j \neq i}\omega^\prime_j}
+
+\textbf{Доказательство:}
+Докажем, что дифференциал $\partial_i = \partial\dfrac{\omega_i \setminus \omega_i^\prime}{\bigcup\limits_{j \neq i} \omega_j^\prime} \sigma_i^\prime$ имеет смысл. Для этого проверим, что определены $gen(\omega_{\sigi} \setminus \omega_{\sigpi}, \sigpi)$ и $gen(\alloth, \sigpi)$. Поскольку определено $gen(\varnothing, \sigi)$, то по аксиоме о дизъюнктном разбиении определено и $gen(\omega_{\sigi} \setminus \omega_{\sigpi}, \sigpi)$. TODO: почему определено $gen(\alloth, \sigpi)$?
+
+
+
 \end{document}
