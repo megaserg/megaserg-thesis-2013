@@ -68,13 +68,26 @@ $$\partial_i = \partial\dfrac{\omega_i \setminus \omega_i^\prime}{\bigcup\limits
 Тогда:
 $$gen(\varnothing, \bigcup\limits_i \sigma_i^\prime) = \left( \bigcup\limits_i \omega_i^\prime \setminus \omega_{\partial_i} \right) \cup gen(\bigcup\limits_i \omega_i^\prime \setminus \omega_{\partial_i}, \bigcup\limits_i \partial_i)$$
 
-\newcommand{\sigi}{\sigma_i}
-\newcommand{\sigpi}{\sigma^\prime_i}
+\newcommand{\sigi}{{\sigma_i}}
+\newcommand{\sigpi}{{\sigma^\prime_i}}
+\newcommand{\sigpj}{{\sigma^\prime_j}}
+\newcommand{\parti}{{\partial_i}}
 \newcommand{\alloth}{\bigcup\limits_{j \neq i}\omega^\prime_j}
+\newcommand{\rprt}{{\text{п.ч.}}}
 
 \textbf{Доказательство:}
+Обозначим $\Delta = \bigcup\limits_i \sigma_i^\prime$.
+
 Докажем, что дифференциал $\partial_i = \partial\dfrac{\omega_i \setminus \omega_i^\prime}{\bigcup\limits_{j \neq i} \omega_j^\prime} \sigma_i^\prime$ имеет смысл. Для этого проверим, что определены $gen(\omega_{\sigi} \setminus \omega_{\sigpi}, \sigpi)$ и $gen(\alloth, \sigpi)$. Поскольку определено $gen(\varnothing, \sigi)$, то по аксиоме о дизъюнктном разбиении определено и $gen(\omega_{\sigi} \setminus \omega_{\sigpi}, \sigpi)$. TODO: почему определено $gen(\alloth, \sigpi)$?
 
+Рассмотрим множество $\sigpi \setminus \parti$ для произвольного $i$. По определению дифференциала $gen(\omega_\sigi \setminus \omega_\sigpi \cup \omega_\parti, \sigpi\setminus\parti) = gen(\alloth \cup \omega_\parti, \sigpi\setminus\parti)$ (левая часть равенства по аксиоме по аксиоме о дизъюнктном разбиении определена и равна $\omega^\sigi_{\sigpi\setminus\parti}$, поэтому обе части равенства определены). Поскольку и $gen(\bigcup\limits_{j \neq i}\omega^\Delta_\sigpj \cup \omega^\Delta_\parti, \sigpi \setminus \parti)$ определено по аксиоме о дизъюнктном разбиении как $\omega^\Delta_{\sigpi\setminus\parti}$, а $B^0_{\bigcup\limits_{j \neq i}\omega^\Delta_\sigpj \cup \omega^\Delta_\parti} = B^0_{\alloth \cup \omega_\parti}$, то по третьей аксиоме $gen(\bigcup\limits_{j \neq i}\omega^\Delta_\sigpj \cup \omega^\Delta_\parti, \sigpi \setminus \parti) = gen(\alloth \cup \omega_\parti, \sigpi\setminus\parti)$. Следовательно, $\omega^\Delta_{\sigpi\setminus\parti} = \omega^\sigi_{\sigpi\setminus\parti}$.
 
+Рассмотрим множество $\parti$ для произвольного $i$. Поскольку определено $gen(\bigcup\limits_k \omega_k^\prime \setminus \omega_{\partial_k}, \bigcup\limits_k \partial_k)$ (TODO: почему?), то по аксиоме о дизъюнктном разбиении определено и $gen(\bigcup\limits_k \omega_k^\prime \setminus \omega_{\partial_k} \cup \bigcup\limits_{j \neq i} \omega^\rprt_{\partial_j}, \parti)$ как $\omega^\rprt_{\parti}$. Поскольку $gen(\bigcup\limits_{j \neq i}\omega^\Delta_\sigpj \cup \omega^\Delta_{\sigpi \setminus \parti}, \parti)$ определено по аксиоме о дизъюнктном разбиении как $\omega^\Delta_{\parti}$, а $B^0_{\bigcup\limits_{j \neq i}\omega^\Delta_\sigpj \cup \omega^\Delta_{\sigpi \setminus \parti}} = B^0_{\bigcup\limits_k \omega_k^\prime \setminus \omega_{\partial_k} \cup \bigcup\limits_{j \neq i} \omega^\rprt_{\partial_j}}$, то по третьей аксиоме $gen(\bigcup\limits_{j \neq i}\omega^\Delta_\sigpj \cup \omega^\Delta_{\sigpi \setminus \parti}, \parti) = gen(\bigcup\limits_k \omega_k^\prime \setminus \omega_{\partial_k} \cup \bigcup\limits_{j \neq i} \omega^\rprt_{\partial_j}, \parti)$. Следовательно, $\omega^\Delta_\parti = \omega^\rprt_\parti$.
+
+Рассмотрим элемент $x$ из левой части утверждения. Так как $\Delta = \bigcup\limits_i \sigma_i^\prime$, то по аксиоме о дизъюнктном разбиении верно, что $x$ принадлежит либо $\omega^\Delta_\parti$, либо $\omega^\Delta_{\sigpi\setminus\parti}$ для некоторого $i$. В первом случае из равенства $\omega^\Delta_\parti = \omega^\rprt_\parti$ следует, что $x$ принадлежит и правой части. Во втором случае из равенства $\omega^\Delta_{\sigpi\setminus\parti} = \omega^\sigi_{\sigpi\setminus\parti}$ следует, что $x$ принадлежит и правой части.
+
+Аналогично можно рассмотреть элемент $x$ из правой части утверждения и показать, что он принадлежит и левой части.
+
+Таким образом, правая и левая части утверждения совпадают и равенство действительно имеет место.
 
 \end{document}
