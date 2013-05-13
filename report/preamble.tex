@@ -1,17 +1,19 @@
-\documentclass[a4paper,12pt]{report} %%%{article}
+\documentclass[a4paper,14pt]{article} %%%{article}
 
+\usepackage{extsizes} % all font sizes
 \usepackage{cmap} % searchable PDFs
 \usepackage[T2A]{fontenc} % scalable fonts
 \usepackage[utf8]{inputenc} % input in UTF8
 \usepackage[english,russian]{babel} % dashes on linebreaks
 \usepackage{indentfirst} % indents in paragraphs
 \usepackage{amstext,amssymb,amsfonts,amsmath,mathtext,enumerate,float}
-\usepackage[left=25mm,right=2cm,top=2cm,bottom=2cm,bindingoffset=0cm]{geometry}
+\usepackage[left=30mm,right=15mm,top=20mm,bottom=20mm,bindingoffset=0cm]{geometry}
 \usepackage[unicode]{hyperref}
 \usepackage{graphicx}
 \usepackage{ulem} % strikethrough
 \usepackage{verbatim} % multiline comments
 \usepackage{hhline}
+\usepackage{ifthen}
 
 \input{deflistings.tex}
 \input{newcommands.tex}
@@ -20,5 +22,10 @@
 \setcounter{secnumdepth}{0}
 \setcounter{tocdepth}{3}
 
-% \linespread{1.3}
+% bad way of line stretching:
+%\linespread{1.3} % as 1,5-spacing in Word
+% true way of line stretching:
+\usepackage[nodisplayskipstretch]{setspace}
+\onehalfspacing
+
 \sloppy % align=justify
