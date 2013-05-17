@@ -14,6 +14,7 @@
 \usepackage{verbatim} % multiline comments
 \usepackage{hhline}
 \usepackage{ifthen}
+\usepackage{url}
 
 \input{deflistings.tex}
 \input{newcommands.tex}
@@ -28,5 +29,8 @@
 \usepackage[nodisplayskipstretch]{setspace}
 \singlespacing
 %\onehalfspacing
+
+%% Переименование "содержания" в "оглавление"
+\addto\captionsrussian{\renewcommand{\contentsname}{Оглавление}}
 
 \sloppy % align=justify

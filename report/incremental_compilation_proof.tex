@@ -1,12 +1,13 @@
-\input{preamble.tex}
-
-\begin{document}
+%\input{preamble.tex}
+%\begin{document}
 
 \input{basic_axioms_3rd_fixed.tex}
 
 \hrulefill
 
-TODO: следствие из второй аксиомы
+TODO: следствие из второй аксиомы\\
+
+\section{Дифференциал}
 
 \textbf{Определение.} Пусть $\omega$, $\tilde{\omega}$ --- множества выходов, $\sigma$ --- множество входов. Известно, что определено $gen(\omega, \sigma) = \omega^\prime$, $gen(\tilde{\omega}, \sigma) = \tilde{\omega}^\prime$. Тогда $\partial\dfrac{\omega}{\tilde{\omega}}\sigma = \partial$ --- это наименьшее подмножество $\sigma$, удовлетворяющее свойству: 
 $gen(\omega \cup \omega^\prime_{\partial}, \sigma\setminus\partial)$ и
@@ -31,9 +32,10 @@ $$\partial\dfrac{\omega_\rho}{\omega_\alpha}(\sigma\setminus\rho)\subseteq\xi$$ 
 	Докажем, что если $s \in \sigma\setminus\rho$, $s \notin \xi$, то $s \notin \mypart$. Обозначим $\tau = (\sigma\setminus\rho)\setminus\mypart$, тогда $\tau$ --- наибольшее подмножество $\sigma\setminus\rho$, такое, что $gen(\omega_\rho, \tau)$ определено $\Leftrightarrow$ $gen(\omega_\alpha, \tau)$ определено. Предположим, $s \in \mypart$, тогда $s \notin \tau$. Рассмотрим $gen(\omega_\rho, \tau)$.
 \end{comment}
 
-\newpage
-
 % ------------------------------------------------------
+\newpage
+\section{Теорема об инкрементальной компиляции}
+
 \newcommand{\butpartial}{\sigma\setminus\rho\setminus\partial}
 
 \textbf{Теорема 1 (об инкрементальной компиляции).}
@@ -62,6 +64,7 @@ $$gen(\varnothing, \Delta) = \omega^\sigma_{\butpartial} \cup \omega_\alpha \cup
 
 % ------------------------------------------------------
 \newpage
+\section{Теорема о переиспользовании порождений}
 
 \textbf{Теорема 2 (о переиспользовании порождений).}
 
@@ -92,4 +95,4 @@ $$gen(\varnothing, \bigcup\limits_k \sigma^\prime_k) = \left( \bigcup\limits_k \
 
 Таким образом, правая и левая части утверждения совпадают и равенство действительно имеет место.
 
-\end{document}
+%\end{document}
