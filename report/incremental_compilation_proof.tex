@@ -3,35 +3,6 @@
 
 \input{basic_axioms_3rd_fixed.tex}
 
-\hrulefill
-
-TODO: следствие из второй аксиомы\\
-
-\section{Дифференциал}
-
-\textbf{Определение.} Пусть $\omega$, $\tilde{\omega}$ --- множества выходов, $\sigma$ --- множество входов. Известно, что определено $gen(\omega, \sigma) = \omega^\prime$, $gen(\tilde{\omega}, \sigma) = \tilde{\omega}^\prime$. Тогда $\partial\dfrac{\omega}{\tilde{\omega}}\sigma = \partial$ --- это наименьшее подмножество $\sigma$, удовлетворяющее свойству: 
-$gen(\omega \cup \omega^\prime_{\partial}, \sigma\setminus\partial)$ и
-$gen(\tilde{\omega} \cup \tilde{\omega}^\prime_{\partial}, \sigma\setminus\partial)$ либо одновременно не определены, либо одновременно определены и равны. 
-\\
-
-2. Свойство: $\partial$ всегда определен и (на худой конец) равен $\sigma$.
-\\
-
-3. Свойство: $\partial\dfrac{\omega}{\omega}\sigma = \varnothing$.
-\\
-
-Вопрос: верно ли, что в условиях инкрементального случая (там, где $\Delta^\rho_\alpha\sigma$)
-
-$$\partial\dfrac{\omega_\rho}{\omega_\alpha}(\sigma\setminus\rho)\subseteq\xi$$ ?
-
-\begin{comment}
-	\textbf{Доказательство:}
-
-	\newcommand{\mypart}{\partial\dfrac{\omega_\rho}{\omega_\alpha}(\sigma\setminus\rho)}
-
-	Докажем, что если $s \in \sigma\setminus\rho$, $s \notin \xi$, то $s \notin \mypart$. Обозначим $\tau = (\sigma\setminus\rho)\setminus\mypart$, тогда $\tau$ --- наибольшее подмножество $\sigma\setminus\rho$, такое, что $gen(\omega_\rho, \tau)$ определено $\Leftrightarrow$ $gen(\omega_\alpha, \tau)$ определено. Предположим, $s \in \mypart$, тогда $s \notin \tau$. Рассмотрим $gen(\omega_\rho, \tau)$.
-\end{comment}
-
 % ------------------------------------------------------
 \newpage
 \section{Теорема об инкрементальной компиляции}

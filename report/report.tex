@@ -19,6 +19,11 @@
 \input{incremental_compilation_proof.tex}
 \newpage
 \input{results.tex}
+\newpage
+\bibliographystyle{ugost2008ls}
+\bibliography{bibliography}
+
+\end{document}
 
 \begin{comment}
 \newpage
@@ -162,7 +167,3 @@ $$gen^d(\sigma^*) = \left( \bigcup\limits_{i = 1}^n \bigcup\limits_{s \in Q_i} g
 Идея доказательства, неформально: в первом члене объединения мы перечисляем те входы, для которых можно переиспользовать порождение; те же, для которых нет ни одного порождения, которое можно было бы переиспользовать, попадают во второй член объединения. Таким образом, все порождения из левой части равенства присутствуют так или иначе в правой (либо как переиспользованные, либо как сгенерированные для нового контекста), в то же время в правой части не появится лишних порождений по построению: всё, что генерируется, генерируется по необходимости.
 
 \end{comment}
-
-\bibliographystyle{ugost2008ls}
-\bibliography{bibliography}
-\end{document}
