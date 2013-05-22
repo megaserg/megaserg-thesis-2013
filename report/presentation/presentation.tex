@@ -6,7 +6,7 @@
 \begin{document}
 
 {
-	\setbeamertemplate{footline}{} 
+	\setbeamertemplate{footline}{}
 	\begin{frame}
 		\titlepage
 	\end{frame}
@@ -40,10 +40,35 @@ $\Sigma$ --- множество входов, $\Omega$ --- множество в
 Функция порождения выходов по входам (частичная):
 $$gen : 2^\Omega \times 2^\Sigma \to 2^\Omega$$
 
-\pause
+\end{frame}
 
-Набор аксиом функции порождения: о переопределённости, о дизъюнктном разбиении, о необходимом контексте
+\begin{frame}{Аксиомы}
+\begin{enumerate}
+	\item Аксиома о переопределённости: если $gen(\omega,\sigma)$~--- определена, то $\omega\cap gen(\omega,\sigma) = \varnothing$
+	
+	\item Аксиома о дизъюнктном разбиении: если $gen(\omega,\sigma) = \omega^\prime$, то существует единственное дизъюнктное разбиение $\omega^\prime=\bigcup^\varnothing_{s\in\sigma}\omega^\prime_s$, 
+	удовлетворяющее свойству 
 
+	$$\forall s\in\sigma : gen(\omega\cup\omega^\prime\setminus\omega^\prime_s,\{s\})=\omega^\prime_s$$
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Аксиомы}
+\begin{enumerate}
+	\setcounter{\enumi}{2}
+	\item Аксиома об эквивалентных контекстах: $\forall s\in\Sigma,\; \forall\omega,\:\omega^\prime\subseteq\Omega:$ если $s$ невырожденное, $gen(\omega,\{s\})$ определено и $B^0_{\omega} = B^0_{\omega^\prime}$, то и $gen(\omega^\prime,\{s\})$ определено, более того, $gen(\omega,\{s\}) = gen(\omega^\prime,\{s\})$
+
+	\item Аксиома о минимально необходимом контексте: если $gen(\omega,\{s\})$~--- определена, то в $\omega$ существует наименьшее по включению подмножество $d_\omega(s)$, такое, что $gen(d_\omega(s), \{s\})$~--- определена
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Аксиомы}
+\begin{enumerate}
+	\setcounter{\enumi}{4}
+	\item Аксиома о недоопределённости: если $gen(\omega, \sigma) = \omega^\prime$ и для какого-то $s\in\sigma$ существует $s_1\in\sigma$, такой, что $d_{\omega\cup\omega^\prime\setminus\omega^\prime_s}(s) \cap \omega^\prime_{s_1}\ne\varnothing$, то $gen(\omega, \sigma\setminus s_1)$ не определена
+	
+	\item Аксиома о сужении контекста: если $gen(\omega,\{s\})$~--- определено, то для произвольного $\omega^\prime\subseteq\omega$, такого, что $d_\omega(s)\subseteq\omega^\prime$, $gen(\omega^\prime, \{s\})$ тоже определено и равно $gen(\omega,\{s\})$
+\end{enumerate}
 \end{frame}
 
 \begin{frame}{Дифференциал}
