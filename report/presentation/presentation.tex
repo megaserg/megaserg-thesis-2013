@@ -30,6 +30,7 @@
 \begin{frame}{Постановка задачи}
 \begin{itemize}
 	\item Построить формальную модель предметной области
+	\item Построить аксиоматику, описывающую свойства модели, позволяющую доказывать нетривиальные утверждения и вместе с тем отражающую ограничения реального мира
 	\item Сформулировать в терминах этой модели и решить задачу инкрементальной компиляции и задачу переиспользования порождений
 \end{itemize}
 \end{frame}
@@ -43,32 +44,33 @@ $$gen : 2^\Omega \times 2^\Sigma \to 2^\Omega$$
 \end{frame}
 
 \begin{frame}{Аксиомы}
-\begin{enumerate}
-	\item Аксиома о переопределённости: если $gen(\omega,\sigma)$~--- определена, то $\omega\cap gen(\omega,\sigma) = \varnothing$
+\begin{itemize}
+	\item О переопределённости: если $gen(\omega,\sigma)$~--- определена, то $\omega\cap gen(\omega,\sigma) = \varnothing$
 	
-	\item Аксиома о дизъюнктном разбиении: если $gen(\omega,\sigma) = \omega^\prime$, то существует единственное дизъюнктное разбиение $\omega^\prime=\bigcup^\varnothing_{s\in\sigma}\omega^\prime_s$, 
+	\item О дизъюнктном разбиении: если $gen(\omega,\sigma) = \omega^\prime$, то существует единственное дизъюнктное разбиение $\omega^\prime=\bigcup^\varnothing_{s\in\sigma}\omega^\prime_s$, 
 	удовлетворяющее свойству 
 
 	$$\forall s\in\sigma : gen(\omega\cup\omega^\prime\setminus\omega^\prime_s,\{s\})=\omega^\prime_s$$
-\end{enumerate}
+\end{itemize}
 \end{frame}
 
 \begin{frame}{Аксиомы}
-\begin{enumerate}
-	\setcounter{enumi}{2}
-	\item Аксиома об эквивалентных контекстах: $\forall s\in\Sigma,\; \forall\omega,\:\omega^\prime\subseteq\Omega:$ если $s$ невырожденное, $gen(\omega,\{s\})$ определено и $B^0_{\omega} = B^0_{\omega^\prime}$, то и $gen(\omega^\prime,\{s\})$ определено, более того, $gen(\omega,\{s\}) = gen(\omega^\prime,\{s\})$
-
-	\item Аксиома о минимально необходимом контексте: если $gen(\omega,\{s\})$~--- определена, то в $\omega$ существует наименьшее по включению подмножество $d_\omega(s)$, такое, что $gen(d_\omega(s), \{s\})$~--- определена
-\end{enumerate}
-\end{frame}
-
-\begin{frame}{Аксиомы}
-\begin{enumerate}
-	\setcounter{enumi}{4}
-	\item Аксиома о недоопределённости: если $gen(\omega, \sigma) = \omega^\prime$ и для какого-то $s\in\sigma$ существует $s_1\in\sigma$, такой, что $d_{\omega\cup\omega^\prime\setminus\omega^\prime_s}(s) \cap \omega^\prime_{s_1}\ne\varnothing$, то $gen(\omega, \sigma\setminus s_1)$ не определена
+\begin{itemize}
+	\item О минимально необходимом контексте: если $gen(\omega,\{s\})$~--- определена, то в $\omega$ существует наименьшее по включению подмножество $d_\omega(s)$, такое, что $gen(d_\omega(s), \{s\})$~--- определена
 	
-	\item Аксиома о сужении контекста: если $gen(\omega,\{s\})$~--- определено, то для произвольного $\omega^\prime\subseteq\omega$, такого, что $d_\omega(s)\subseteq\omega^\prime$, $gen(\omega^\prime, \{s\})$ тоже определено и равно $gen(\omega,\{s\})$
-\end{enumerate}
+	\item О недоопределённости: если $gen(\omega, \sigma) = \omega^\prime$ и для какого-то $s\in\sigma$ существует $s_1\in\sigma$, такой, что $d_{\omega\cup\omega^\prime\setminus\omega^\prime_s}(s) \cap \omega^\prime_{s_1}\ne\varnothing$, то $gen(\omega, \sigma\setminus s_1)$ не определена
+	
+	\item О сужении контекста: если $gen(\omega,\{s\})$~--- определено, то для произвольного $\omega^\prime\subseteq\omega$, такого, что $d_\omega(s)\subseteq\omega^\prime$, $gen(\omega^\prime, \{s\})$ тоже определено и равно $gen(\omega,\{s\})$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Аксиомы}
+
+Введём разбиение $gen(\omega, \sigma) = \omega^\prime$: $\omega^\prime = B^0_{\omega^\prime} \cup B^1_{\omega^\prime} \cup B^2_{\omega^\prime} \cup ...$
+	
+\begin{itemize}	
+	\item Об эквивалентных контекстах: $\forall s\in\Sigma,\; \forall\omega,\:\omega^\prime\subseteq\Omega:$ если $s$ невырожденное, $gen(\omega,\{s\})$ определено и $B^0_{\omega} = B^0_{\omega^\prime}$, то и $gen(\omega^\prime,\{s\})$ определено, более того, $gen(\omega,\{s\}) = gen(\omega^\prime,\{s\})$
+\end{itemize}
 \end{frame}
 
 \begin{frame}{Дифференциал}
@@ -82,7 +84,8 @@ $gen(\tilde{\omega} \cup \tilde{\omega}^\prime_{\partial}, \sigma\setminus\parti
 
 \begin{frame}{Теорема об~инкрементальной компиляции}
 
-Пусть дано: $\sigma \subset \Sigma$, $gen(\varnothing, \sigma) = \omega^\sigma$. Пусть $\rho, \alpha \subset \Sigma$, при этом $\rho \subseteq \sigma$, $\sigma \cap \alpha = \varnothing$; $\Delta = \Delta^\rho_\alpha\sigma = \sigma\setminus\rho\cup\alpha$. Известно, что определено $gen(\omega^\sigma_{\sigma\setminus\rho}, \alpha) = \omega_\alpha$ и $gen(\varnothing, \Delta) = \omega^\Delta$.\\
+Пусть дано: $\sigma \subset \Sigma$, $gen(\varnothing, \sigma) = \omega^\sigma$. Пусть $\rho, \alpha \subset \Sigma$, при этом $\rho \subseteq \sigma$, $\sigma \cap \alpha = \varnothing$; $\Delta = \Delta^\rho_\alpha\sigma = \sigma\setminus\rho\cup\alpha$. Известно, что определено $gen(\omega^\sigma_{\sigma\setminus\rho}, \alpha) = \omega_\alpha$ и $gen(\varnothing, \Delta) = \omega^\Delta$. Обозначим
+$$\partial = \partial\dfrac{\omega^\sigma_\rho}{\omega_\alpha}(\sigma\setminus\rho)$$
 
 \pause
 
@@ -103,10 +106,17 @@ $$gen(\varnothing, \bigcup\limits_i \sigma_i^\prime) = \left( \bigcup\limits_i \
 
 \end{frame}
 
+\begin{frame}{Дальнейшее развитие}
+\begin{itemize}
+	\item Доказанная теорема конструктивна: предъявляется множество файлов, для~которых следует переиспользовать кэши, множество файлов, которые следует перекомпилировать, а~также контекст компиляции
+	\item На~основе теоремы планируется реализовать поддержку переиспользования кэшей в~IntelliJ~IDEA
+\end{itemize}
+\end{frame}
 
 \begin{frame}{Результаты}
 \begin{itemize}
 	\item Построена формальная модель предметной области
+	\item Построена аксиоматика, отражающая свойства и~ограничения реального мира и~позволяющая доказывать нетривиальные утверждения
 	\item Сформулированы и доказаны теоремы об~инкрементальной компиляции и~переиспользовании порождений
 \end{itemize}
 \end{frame}
