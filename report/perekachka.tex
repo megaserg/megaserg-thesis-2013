@@ -1,0 +1,12 @@
+\input{preamble.tex}
+
+\begin{document}
+
+\textbf{Утверждение о перекачке.} Пусть для некоторых $\omega \subset \Omega$, $\sigma \subset \Sigma$ $gen(\omega, \sigma)$ определено и равно $\omega_\sigma$. Тогда $\exists \tau:$ $\tau \cap \sigma = \varnothing$ и $gen(\varnothing, \tau \cup \sigma) = \omega \cup \omega_\sigma$.
+
+\textbf{Доказательство:} Поскольку все атрибуты из $\Omega$ получаются путём вызова $gen$ на каких-то входах, то $\omega$ можно представить как $\bigcup\limits_{i} \omega_{\tau_i}$, где $\omega_{\tau_i} = gen(\omega_i, \tau_i)$ для некоторых $\omega_i \subset \Omega$, $\tau_i \subset \Sigma$. Рассмотрим случай, когда все $\omega_i = \varnothing$, если это не так, то рассмотрим (по индукции) докажем утверждение сначала про них и воспользуемся им. Предъявим $\tau = \bigcup\limits_{i} \tau_i$. почему не пересекается?
+
+Рассмотрим $\omega \cup \omega_\sigma = \bigcup\limits_{i} gen(\varnothing, \tau_i) \cup gen(\omega, \sigma)$.
+$gen(\varnothing, \sigma \cup \tau) = \omega^\cup_\sigma \cup \omega^\cup_\tau$.
+
+\end{document}

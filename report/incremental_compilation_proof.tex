@@ -4,33 +4,54 @@
 
 Состояниям проекта соответствуют наборы входов функции компиляции; изменению файлов, содержащихся в проекте, соответствует вычитание из набора входов одного множества и добавление другого. Для выражения части, подлежащей перекомпиляции, используется понятие дифференциала.\\
 
-\newcommand{\butpartial}{\sigma\setminus\rho\setminus\partial}
+\newcommand{\butpartial}{{\sigma\setminus\rho\setminus\partial_1}}
+\newcommand{\butpartialA}{{\alpha\setminus{\partial_2}}}
+\newcommand{\sigmanoro}{{\sigma\setminus\rho}}
 
 \textbf{Теорема 1 (об инкрементальной компиляции).}
 
-Пусть дано: $\sigma \subset \Sigma$, $gen(\varnothing, \sigma) = \omega^\sigma$. Пусть $\rho, \alpha \subset \Sigma$, при этом $\rho \subseteq \sigma$, $\sigma \cap \alpha = \varnothing$; $\Delta = \Delta^\rho_\alpha\sigma = \sigma\setminus\rho\cup\alpha$. Известно, что определено $gen(\omega^\sigma_{\sigma\setminus\rho}, \alpha) = \omega_\alpha$ и $gen(\varnothing, \Delta) = \omega^\Delta$. Обозначим $\partial = \partial\dfrac{\omega^\sigma_\rho}{\omega_\alpha}(\sigma\setminus\rho)$.
+Пусть дано: $\sigma \subset \Sigma$, $gen(\varnothing, \sigma) = \omega^\sigma$.
+Пусть $\rho, \alpha \subset \Sigma$, при этом $\rho \subseteq \sigma$, $\sigma \cap \alpha = \varnothing$; $\Delta = \Delta^\rho_\alpha\sigma = \sigma\setminus\rho\cup\alpha$.
+Известно, что определено $gen(\omega^\sigma_{\sigma\setminus\rho}, \alpha) = \omega_\alpha$ и $gen(\varnothing, \Delta) = \omega^\Delta$.
+Обозначим 
+$$\partial_1 = \partial\dfrac{\omega^\sigma_\rho}{\omega_\alpha}(\sigma\setminus\rho),$$
+$$\omega^1_{\partial_1} = gen(\omega^\sigma_{\butpartial} \cup \omega_\alpha, \partial_1),$$
+$$\partial_2 = \partial\dfrac{\omega^\sigma_{\sigma\setminus\rho}}{\omega^\sigma_{\butpartial} \cup \omega^1_{\partial_1}}(\alpha),$$
+$$\omega^2_{\partial_2} = gen(\omega^\sigma_{\butpartial} \cup \omega_{\butpartialA} \cup \omega^1_{\partial_1}, \partial_2).$$
 Тогда:
 
-$$gen(\varnothing, \Delta) = \omega^\sigma_{\butpartial} \cup \omega_\alpha \cup gen(\omega^\sigma_{\butpartial} \cup \omega_\alpha, \partial)$$
+$$gen(\varnothing, \Delta) =^2 \omega^\sigma_{\butpartial} \cup \omega_{\butpartialA} \cup \omega^1_{\partial_1} \cup \omega^2_{\partial_2}$$
 
 \textbf{Доказательство:}
-Рассмотрим $\omega^\Delta_\alpha = gen(\omega^\Delta_{\sigma\setminus\rho}, \alpha)$ и $\omega_\alpha = gen(\omega^\sigma_{\sigma\setminus\rho}, \alpha)$. Поскольку $B^0_{\omega^\Delta_{\sigma\setminus\rho}} = B^0_{\omega^\sigma_{\sigma\setminus\rho}}$, то по аксиоме об эквивалентных контекстах $\omega^\Delta_\alpha = \omega_\alpha$.
+Докажем сначала, что $gen(\varnothing, \Delta) =^0 \omega^\sigma_{\sigma\setminus\rho} \cup \omega_\alpha$. По аксиоме о дизъюнктном разбиении $gen(\varnothing, \Delta) = \omega^\Delta_\sigmanoro \cup \omega^\Delta_\alpha$. При этом по аксиоме об эквивалентных контекстах $\omega^\Delta_\sigmanoro =^0 \omega^\sigma_{\sigma\setminus\rho}$. Рассмотрим $$\omega^\Delta_\alpha = gen(\omega^\Delta_{\sigma\setminus\rho}, \alpha)$$ 
+и $$\omega_\alpha = gen(\omega^\sigma_{\sigma\setminus\rho}, \alpha).$$ 
+Поскольку $\omega^\Delta_{\sigma\setminus\rho} =^0 \omega^\sigma_{\sigma\setminus\rho}$, то по аксиоме об эквивалентных контекстах $\omega^\Delta_\alpha =^1 \omega_\alpha$. Тогда, действительно, $$gen(\varnothing, \Delta) =^0 \omega^\sigma_{\sigma\setminus\rho} \cup \omega_\alpha.$$ 
 
-Докажем, что дифференциал $\partial = \partial\dfrac{\omega^\sigma_\rho}{\omega_\alpha}(\sigma\setminus\rho)$ имеет смысл. Для этого проверим, что определены $gen(\omega^\sigma_\rho, \sigma\setminus\rho)$ и $gen(\omega_\alpha, \sigma\setminus\rho)$. Первое выражение~--- это $\omega^\sigma_{\sigma\setminus\rho}$ и определено по аксиоме о дизъюнктном разбиении. Второе выражение равно $gen(\omega^\Delta_\alpha, \sigma\setminus\rho) = \omega^\Delta_{\sigma\setminus\rho}$ (как значения $gen$ для одного и того же входа с равными контекстами) и тоже определено по аксиоме о дизъюнктном разбиении. Тогда дифференциал в нашем случае, действительно, имеет смысл.
+Докажем, что дифференциал $\partial_1 = \partial\dfrac{\omega^\sigma_\rho}{\omega_\alpha}(\sigma\setminus\rho)$ имеет смысл. Для этого проверим, что определены $gen(\omega^\sigma_\rho, \sigma\setminus\rho)$ и $gen(\omega_\alpha, \sigma\setminus\rho)$. Первое выражение~--- это $\omega^\sigma_{\sigma\setminus\rho}$ и определено по аксиоме о дизъюнктном разбиении. Рассмотрим второе выражение: поскольку $\omega^\Delta_\alpha =^1 \omega_\alpha$ и $gen(\omega^\Delta_\alpha, \sigma\setminus\rho)$ определено, то и $gen(\omega_\alpha, \sigma\setminus\rho)$ определено. Тогда дифференциал, действительно, имеет смысл.
 
-Рассмотрим равенство $gen(\omega_\alpha, \sigma\setminus\rho) = gen(\omega^\Delta_\alpha, \sigma\setminus\rho)$ и порождения, получающиеся в левой и в правой частях из $\partial$. В левой части обозначим их $\omega^\prime_\partial = gen(\omega_\alpha \cup \omega^{\sigma\setminus\rho}_{\butpartial}, \partial)$, а в правой части это $\omega^\Delta_\partial = gen(\omega^\Delta_\alpha \cup \omega^\Delta_{\butpartial}, \partial)$. Поскольку $B^0_{\omega_\alpha \cup \omega^{\sigma\setminus\rho}_{\butpartial}} = B^0_{\omega^\Delta_\alpha \cup \omega^\Delta_{\butpartial}}$, то по аксиоме об эквивалентных контекстах $\omega^\prime_\partial = \omega^\Delta_\partial$.
+Докажем, что определено $\omega^1_{\partial_1}$. Поскольку определено $gen(\omega^\Delta_{\butpartial \cup \alpha}, \partial_1)$ и $\omega^\sigma_{\butpartial} \cup \omega_\alpha =^0 \omega^\Delta_{\butpartial \cup \alpha}$, то по аксиоме об эквивалентных контекстах $\omega^1_{\partial_1} = gen(\omega^\sigma_{\butpartial} \cup \omega_\alpha, \partial_1)$ определено.
 
-Рассмотрим $\butpartial$. По свойству дифференциала известно, что имеет место равенство $gen(\omega^\sigma_\rho \cup \omega^\sigma_\partial, \butpartial) = gen(\omega_\alpha \cup \omega^\prime_\partial, \butpartial)$ (в случае, если хотя бы одна из частей равенства определена). Левая часть этого равенства равна $\omega^\sigma_{\butpartial}$ и определена по аксиоме о дизъюнктном разбиении, а правая часть вследствие равенств $\omega_\alpha = \omega^\Delta_\alpha$ и $\omega^\prime_\partial = \omega^\Delta_\partial$ равна $gen(\omega^\Delta_\alpha \cup \omega^\Delta_\partial, \butpartial)$, то есть $\omega^\Delta_{\butpartial}$. Получаем, что $\omega^\sigma_{\butpartial} = \omega^\Delta_{\butpartial}$.
+Докажем теперь, что $$gen(\varnothing, \Delta) =^1 \omega^\sigma_{\butpartial} \cup \omega_\alpha \cup \omega^1_{\partial_1}.$$ 
+По аксиоме о дизъюнктном разбиении $$gen(\varnothing, \Delta) = \omega^\Delta_\butpartial \cup \omega^\Delta_\alpha \cup \omega^\Delta_{\partial_1}.$$ 
+Уже доказано, что $\omega^\Delta_\alpha =^1 \omega_\alpha$. По лемме об эквивалентном дифференциале $$gen(\omega^\sigma_\rho \cup \omega^\sigma_{\partial_1}, \butpartial) =^2 gen(\omega^\Delta_\alpha \cup \omega^\Delta_{\partial_1}, \butpartial),$$ 
+то есть $\omega^\sigma_{\butpartial} =^2 \omega^\Delta_{\butpartial}$. Таким образом, $$\omega^\Delta_\butpartial \cup \omega^\Delta_\alpha =^1 \omega^\sigma_{\butpartial} \cup \omega_\alpha.$$ 
+Поэтому $$\omega^\Delta_{\partial_1} = gen(\omega^\Delta_\butpartial \cup \omega^\Delta_\alpha, \partial_1) =^2 gen(\omega^\sigma_{\butpartial} \cup \omega_\alpha, \partial_1) = \omega^1_{\partial_1}.$$ Тогда, действительно, выполняется равенство с точностью до первого класса.
 
-Рассмотрим $gen(\omega^\sigma_{\butpartial} \cup \omega_\alpha, \partial)$ из нашего утверждения. Вследствие равенств $\omega^\sigma_{\butpartial} = \omega^\Delta_{\butpartial}$ и $\omega_\alpha = \omega^\Delta_\alpha$ оно равно $gen(\omega^\Delta_{\butpartial} \cup \omega^\Delta_\alpha, \partial)$, то есть $\omega^\Delta_\partial$.
+Докажем, что дифференциал $$\partial_2 = \partial\dfrac{\omega^\sigma_{\sigma\setminus\rho}}{\omega^\sigma_{\butpartial} \cup \omega^1_{\partial_1}}(\alpha)$$ 
+имеет смысл. Для этого проверим, что определены $gen(\omega^\sigma_{\sigma\setminus\rho}, \alpha)$ и $gen(\omega^\sigma_{\butpartial} \cup \omega^1_{\partial_1}, \alpha)$. Первое выражение~--- это $\omega_\alpha$, оно определено по условию. Рассмотрим второе выражение: поскольку $$\omega^\sigma_{\butpartial} \cup \omega^1_{\partial_1} =^0 \omega^\Delta_{\sigmanoro}$$ 
+и $gen(\omega^\Delta_{\sigmanoro}, \alpha)$ определено, то и $gen(\omega^\sigma_{\butpartial} \cup \omega^1_{\partial_1}, \alpha)$ определено. Тогда дифференциал, действительно, имеет смысл.
 
-Рассмотрим элемент $x$ из левой части утверждения: $x \in \omega^\Delta$. Так как $\Delta = \sigma\setminus\rho\cup\alpha$, то по аксиоме о дизъюнктном разбиении верно, что $x$ принадлежит одному из трёх множеств: a) $\omega^\Delta_\alpha$; b) $\omega^\Delta_{\butpartial}$; c) $\omega^\Delta_\partial$. В случае a) из равенства $\omega^\Delta_\alpha = \omega_\alpha$ следует, что $x$ принадлежит и правой части. В случае b) из равенства $\omega^\Delta_{\butpartial} = \omega^\sigma_{\butpartial}$ следует, что $x$ принадлежит и правой части. В случае c) из равенства $\omega^\Delta_\partial = gen(\omega^\sigma_{\butpartial} \cup \omega_\alpha, \partial)$ следует, что $x$ принадлежит и правой части.
+Докажем, что определено $\omega^2_{\partial_2}$. Поскольку определено $gen(\omega^\Delta_{\sigmanoro \cup \butpartialA}, \partial_2)$ и $$\omega^\sigma_{\butpartial} \cup \omega_{\butpartialA} \cup \omega^1_{\partial_1} =^0 \omega^\Delta_{\sigmanoro \cup \butpartialA},$$ то по аксиоме об эквивалентных контекстах $$\omega^2_{\partial_2} = gen(\omega^\sigma_{\butpartial} \cup \omega_{\butpartialA} \cup \omega^1_{\partial_1}, \partial_2)$$ 
+определено.
 
-Рассмотрим элемент $x$ из правой части утверждения. Верно, что $x$ принадлежит хотя бы одному из трёх множеств (на самом деле только одному): a) $\omega_\alpha$; b) $\omega^\sigma_{\butpartial}$; c) $gen(\omega^\sigma_{\butpartial} \cup \omega_\alpha, \partial)$. В случае a) из равенства $\omega_\alpha = \omega^\Delta_\alpha$ следует, что $x$ принадлежит и левой части. В случае b) из равенства $\omega^\sigma_{\butpartial} = \omega^\Delta_{\butpartial}$ следует, что $x$ принадлежит и левой части. В случае c) из равенства $gen(\omega^\sigma_{\butpartial} \cup \omega_\alpha, \partial) = \omega^\Delta_\partial$ следует, что $x$ принадлежит и левой части.
+Докажем теперь, что $$gen(\varnothing, \Delta) =^2 \omega^\sigma_{\butpartial} \cup \omega_{\butpartialA} \cup \omega^1_{\partial_1} \cup \omega^2_{\partial_2}.$$ 
+По аксиоме о дизъюнктном разбиении $$gen(\varnothing, \Delta) = \omega^\Delta_\butpartial \cup \omega^\Delta_\butpartialA \cup \omega^\Delta_{\partial_1} \cup \omega^\Delta_{\partial_2}.$$ 
+Уже доказано, что $\omega^\Delta_{\butpartial} =^2 \omega^\sigma_{\butpartial}$, $\omega^\Delta_{\partial_1} =^2 \omega^1_{\partial_1}$. Из этого следует, что $\omega^\Delta_{\sigmanoro} =^2 \omega^\sigma_{\butpartial} \cup \omega^1_{\partial_1}$. По лемме об эквивалентном дифференциале $$gen(\omega^\sigma_{\sigmanoro} \cup \omega^\alpha_{\partial_2}, \butpartialA) =^3 gen(\omega^\Delta_\sigmanoro \cup \omega^\Delta_{\partial_2}, \butpartialA),$$ 
+то есть $\omega_{\butpartialA} =^3 \omega^\Delta_{\butpartialA}$. Таким образом, $$\omega^\Delta_{\sigmanoro} \cup \omega^\Delta_{\butpartialA} =^2 \omega^\sigma_{\butpartial} \cup \omega_{\butpartialA} \cup \omega^1_{\partial_1}.$$ 
+Поэтому $$\omega^\Delta_{\partial_2} = gen(\omega^\Delta_{\sigmanoro} \cup \omega^\Delta_{\butpartialA}, \partial_2) =^3 gen(\omega^\sigma_{\butpartial} \cup \omega_{\butpartialA} \cup \omega^1_{\partial_1}, \partial_2) = \omega^2_{\partial_2}.$$ 
+Тогда, действительно, выполняется равенство с точностью до второго класса. $\Box$\\
 
-Таким образом, правая и левая части утверждения совпадают и равенство действительно имеет место. $\Box$\\
-
-Практическое применение данной теоремы таково: в ситуации, когда сохранён кэш для некоторого состояния проекта, которое впоследствии было изменено, предлагается обоснование подхода, состоящего в переиспользовании кэша и перекомпилировании меньшего количества файлов и, таким образом, позволяющий избежать полной компиляции этого состояния; предъявляется множество файлов, для которых следует переиспользовать кэш, множество файлов, которые следует перекомпилировать, а также контекст, в котором нужно проводить компиляцию, чтобы получившийся результат совпал с результатом полной компиляции нового состояния в пустом контексте.
+Практическое применение данной теоремы таково: в ситуации, когда сохранён кэш для некоторого состояния проекта, которое впоследствии было изменено, предлагается обоснование подхода, состоящего в переиспользовании кэша и перекомпилировании меньшего количества файлов и, таким образом, позволяющего избежать полной компиляции этого состояния; предъявляется множество файлов, для которых следует переиспользовать кэш, множество файлов, которые следует перекомпилировать, а также контекст, в котором нужно проводить компиляцию, чтобы получившийся результат совпал с результатом полной компиляции нового состояния в пустом контексте.
  
 % ------------------------------------------------------
 \newpage
@@ -42,31 +63,52 @@ $$gen(\varnothing, \Delta) = \omega^\sigma_{\butpartial} \cup \omega_\alpha \cup
 
 \textbf{Теорема 2 (о переиспользовании порождений).}
 
-Пусть $\forall i \in [1:n]$ дано: $\sigma_i$, $\omega_i = gen(\varnothing, \sigma_i)$, $\sigma_i^\prime \subseteq \sigma_i$ ($\sigma_i^\prime \cap \sigma_j^\prime = \varnothing$ при $i \neq j$). Обозначим $\omega_i^\prime = gen_i(\sigma_i^\prime)$. Обозначим 
-$$\partial_i = \partial\dfrac{\omega_i \setminus \omega_i^\prime}{\bigcup\limits_{j \neq i} \omega_j^\prime} \sigma_i^\prime$$
-Тогда:
-$$gen(\varnothing, \bigcup\limits_k \sigma^\prime_k) = \left( \bigcup\limits_k \omega_k^\prime \setminus \omega_{\partial_k} \right) \cup gen(\bigcup\limits_k \omega_k^\prime \setminus \omega_{\partial_k}, \bigcup\limits_k \partial_k)$$
-
 \newcommand{\sigi}{{\sigma_i}}
+\newcommand{\sigk}{{\sigma_k}}
 \newcommand{\sigpi}{{\sigma^\prime_i}}
 \newcommand{\sigpj}{{\sigma^\prime_j}}
+\newcommand{\sigpk}{{\sigma^\prime_k}}
 \newcommand{\parti}{{\partial_i}}
+\newcommand{\partj}{{\partial_j}}
+\newcommand{\partk}{{\partial_k}}
+\newcommand{\xii}{{\xi_i}}
+\newcommand{\xij}{{\xi_j}}
+\newcommand{\xik}{{\xi_k}}
+\newcommand{\sms}{{\setminus}}
 \newcommand{\alloth}{\bigcup\limits_{j \neq i}\omega^\prime_j}
+\newcommand{\allothk}{\bigcup\limits_{j \neq k}\omega^\prime_j}
+\newcommand{\allothD}{\bigcup\limits_{j \neq i}\omega^\Delta_{\sigpj}}
 \newcommand{\rprt}{{\text{п.ч.}}}
 
+Пусть $\forall i \in [1:n]$ дано: $\sigma_i$, $\omega_i = gen(\varnothing, \sigma_i)$, $\sigma_i^\prime \subseteq \sigma_i$ ($\sigma_i^\prime \cap \sigma_j^\prime = \varnothing$ при $i \neq j$). Обозначим $\omega_i^\prime = gen_i(\sigma_i^\prime)$. Обозначим 
+$$\partial_i = \partial\dfrac{\omega_i \setminus \omega_i^\prime}{\bigcup\limits_{j \neq i} \omega_j^\prime} \sigma_i^\prime,$$
+$$\omega_{\bigcup\limits_k \partk} = gen(\bigcup\limits_k \omega_{\sigpk\sms\partk}, \bigcup\limits_k \partk),$$
+$$\xi_i = \partial\dfrac{\omega_{\sigi\sms\sigpi \cup \parti}}{\bigcup\limits_{j \neq i} \omega_{\sigpj\sms\partj} \cup \omega_{\bigcup\limits_k \partial_k}} \sigpi\sms\parti.$$
+Тогда:
+$$gen(\varnothing, \bigcup\limits_k \sigpk) =^2 \bigcup\limits_k \omega_{\sigpk\sms\partk\sms\xik} \cup \omega_{\bigcup\limits_k \partial_k} \cup gen(\bigcup\limits_k \omega_{\sigpk\sms\partk\sms\xik} \cup \omega_{\bigcup\limits_k \partial_k}, \bigcup\limits_k \xik)$$
+
 \textbf{Доказательство:}
-Обозначим $\Delta = \bigcup\limits_i \sigma_i^\prime$.
+Обозначим $\Delta = \bigcup\limits_k \sigpk$.
 
-Докажем, что дифференциал $\partial_i = \partial\dfrac{\omega_i \setminus \omega_i^\prime}{\bigcup\limits_{j \neq i} \omega_j^\prime} \sigma_i^\prime$ имеет смысл. Для этого проверим, что определены $gen(\omega_{\sigi} \setminus \omega_{\sigpi}, \sigpi)$ и $gen(\alloth, \sigpi)$. Поскольку определено $gen(\varnothing, \sigi)$, то по аксиоме о дизъюнктном разбиении определено и $gen(\omega_{\sigi} \setminus \omega_{\sigpi}, \sigpi)$. Далее, из определённости $gen(\varnothing, \bigcup\limits_k \sigma^\prime_k)$ по аксиоме о дизъюнктном разбиении следует определённость $gen(\bigcup\limits_{j \neq i}\omega^{\text{л.ч.}}_\sigpj, \sigpi)$; отсюда по аксиоме об эквивалентных контекстах определено $gen(\alloth, \sigpi)$.
+Докажем, что $$gen(\varnothing, \bigcup\limits_k \sigpk) =^0 \bigcup\limits_k \omega_{\sigpk}.$$ 
+Для этого достаточно заметить, что $$gen(\varnothing, \bigcup\limits_k \sigpk) = \bigcup\limits_k \omega^\Delta_{\sigpk} =^0 \bigcup\limits_k \omega_{\sigpk}.$$
 
-Рассмотрим множество $\sigpi \setminus \parti$ для произвольного $i$. По определению дифференциала $gen(\omega_\sigi \setminus \omega_\sigpi \cup \omega_\parti, \sigpi\setminus\parti) = gen(\alloth \cup \omega_\parti, \sigpi\setminus\parti)$ (левая часть равенства по аксиоме по аксиоме о дизъюнктном разбиении определена и равна $\omega^\sigi_{\sigpi\setminus\parti}$, поэтому обе части равенства определены). Поскольку и $gen(\bigcup\limits_{j \neq i}\omega^\Delta_\sigpj \cup \omega^\Delta_\parti, \sigpi \setminus \parti)$ определено по аксиоме о дизъюнктном разбиении как $\omega^\Delta_{\sigpi\setminus\parti}$, а $B^0_{\bigcup\limits_{j \neq i}\omega^\Delta_\sigpj \cup \omega^\Delta_\parti} = B^0_{\alloth \cup \omega_\parti}$, то по аксиоме об эквивалентных контекстах $gen(\bigcup\limits_{j \neq i}\omega^\Delta_\sigpj \cup \omega^\Delta_\parti, \sigpi \setminus \parti) = gen(\alloth \cup \omega_\parti, \sigpi\setminus\parti)$. Следовательно, $\omega^\Delta_{\sigpi\setminus\parti} = \omega^\sigi_{\sigpi\setminus\parti}$.
+Докажем, что дифференциал $$\partial_i = \partial\dfrac{\omega_i \setminus \omega_i^\prime}{\alloth} \sigma_i^\prime$$ имеет смысл. Для этого проверим, что определены $gen(\omega_{\sigi} \setminus \omega_{\sigpi}, \sigpi)$ и $gen(\alloth, \sigpi)$. Поскольку определено $gen(\varnothing, \sigi)$, то по аксиоме о дизъюнктном разбиении определено и $gen(\omega_{\sigi} \setminus \omega_{\sigpi}, \sigpi)$. Далее, из определённости $gen(\varnothing, \bigcup\limits_k \sigma^\prime_k)$ по аксиоме о дизъюнктном разбиении следует определённость $gen(\bigcup\limits_{j \neq i}\omega^\Delta_\sigpj, \sigpi)$; поскольку $\bigcup\limits_{j \neq i}\omega^\Delta_\sigpj =^0 \alloth$, то отсюда по аксиоме об эквивалентных контекстах определено $gen(\alloth, \sigpi)$.
 
-Рассмотрим множество $\parti$ для произвольного $i$. Поскольку определено $gen(\bigcup\limits_k \omega_k^\prime \setminus \omega_{\partial_k}, \bigcup\limits_k \partial_k)$ (это следует из аксиомы об эквивалентных контекстах и определённости $gen(\bigcup\limits_k \omega^{\text{л.ч.}}_k \setminus \omega^{\text{л.ч.}}_{\partial_k}, \bigcup\limits_k \partial_k)$), то по аксиоме о дизъюнктном разбиении определено и $gen(\bigcup\limits_k \omega_k^\prime \setminus \omega_{\partial_k} \cup \bigcup\limits_{j \neq i} \omega^\rprt_{\partial_j}, \parti)$ как $\omega^\rprt_{\parti}$. Поскольку $gen(\bigcup\limits_{j \neq i}\omega^\Delta_\sigpj \cup \omega^\Delta_{\sigpi \setminus \parti}, \parti)$ определено по аксиоме о дизъюнктном разбиении как $\omega^\Delta_{\parti}$, а $B^0_{\bigcup\limits_{j \neq i}\omega^\Delta_\sigpj \cup \omega^\Delta_{\sigpi \setminus \parti}} = B^0_{\bigcup\limits_k \omega_k^\prime \setminus \omega_{\partial_k} \cup \bigcup\limits_{j \neq i} \omega^\rprt_{\partial_j}}$, то по аксиоме об эквивалентных контекстах $gen(\bigcup\limits_{j \neq i}\omega^\Delta_\sigpj \cup \omega^\Delta_{\sigpi \setminus \parti}, \parti) = gen(\bigcup\limits_k \omega_k^\prime \setminus \omega_{\partial_k} \cup \bigcup\limits_{j \neq i} \omega^\rprt_{\partial_j}, \parti)$. Следовательно, $\omega^\Delta_\parti = \omega^\rprt_\parti$.
+Докажем, что $$gen(\varnothing, \bigcup\limits_k \sigpk) =^1 \bigcup\limits_k \omega_{\sigpk\sms\partk} \cup gen(\bigcup\limits_k \omega_{\sigpk\sms\partk}, \bigcup\limits_k \partk).$$ 
+По лемме об эквивалентном дифференциале для каждого $i$ из равенства $\allothD =^0 \bigcup\limits_{j \neq i} \omega_{\sigpj}$ следует $$gen(\omega_{\sigi\sms\sigpi} \cup \omega_\parti, \sigpi\sms\parti) =^1 gen(\allothD \cup \omega^\Delta_\parti, \sigpi\sms\parti),$$ 
+то есть $\omega_{\sigpi\sms\parti} =^1 \omega^\Delta_{\sigpi\sms\parti}$. Значит, $$\omega^\Delta_{\bigcup\limits_k \partk} = gen(\bigcup\limits_k \omega^\Delta_{\sigpk\sms\partk}, \bigcup\limits_k \partk) =^2 gen(\bigcup\limits_k \omega_{\sigpk\sms\partk}, \bigcup\limits_k \partk) = \omega_{\bigcup\limits_k \partk}.$$ 
+Тогда, действительно, выполняется равенство с точностью до первого класса.
 
-Рассмотрим элемент $x$ из левой части утверждения. Так как $\Delta = \bigcup\limits_i \sigma_i^\prime$, то по аксиоме о дизъюнктном разбиении верно, что $x$ принадлежит либо $\omega^\Delta_\parti$, либо $\omega^\Delta_{\sigpi\setminus\parti}$ для некоторого $i$. В первом случае из равенства $\omega^\Delta_\parti = \omega^\rprt_\parti$ следует, что $x$ принадлежит и правой части. Во втором случае из равенства $\omega^\Delta_{\sigpi\setminus\parti} = \omega^\sigi_{\sigpi\setminus\parti}$ следует, что $x$ принадлежит и правой части.
+Докажем, что дифференциал $$\xi_i = \partial\dfrac{\omega_{\sigi\sms\sigpi \cup \parti}}{\bigcup\limits_{j \neq i} \omega_{\sigpj\sms\partj} \cup \omega_{\bigcup\limits_k \partial_k}} \sigpi\sms\parti$$ имеет смысл. Для этого проверим, что определены $gen(\omega_{\sigi\sms\sigpi \cup \parti}, \sigpi\sms\parti)$ и $gen(\bigcup\limits_{j \neq i} \omega_{\sigpj\sms\partj} \cup \omega_{\bigcup\limits_k \partial_k}, \sigpi\sms\parti)$. Первое выражение~--- это $\omega_{\sigpi\sms\parti}$ и определено по аксиоме о дизъюнктном разбиении. Второе выражение определено по аксиоме об эквивалентных контекстах, поскольку определено $$\omega^\Delta_{\sigpi\sms\parti} = gen(\bigcup\limits_{j \neq i} \sigpj \cup \parti, \sigpi\sms\parti),$$ 
+а $\bigcup\limits_{j \neq i} \sigpj \cup \parti =^0 \bigcup\limits_{j \neq i} \omega_{\sigpj\sms\partj} \cup \omega_{\bigcup\limits_k \partial_k}$.
 
-Аналогично можно рассмотреть элемент $x$ из правой части утверждения и показать, что он принадлежит и левой части.
-
-Таким образом, правая и левая части утверждения совпадают и равенство действительно имеет место. $\Box$\\
+Докажем, что $$gen(\varnothing, \bigcup\limits_k \sigpk) =^2 \bigcup\limits_k \omega_{\sigpk\sms\partk\sms\xik} \cup \omega_{\bigcup\limits_k \partial_k} \cup gen(\bigcup\limits_k \omega_{\sigpk\sms\partk\sms\xik} \cup \omega_{\bigcup\limits_k \partial_k}, \bigcup\limits_k \xik).$$ 
+Уже доказано, что $$\omega_{\bigcup\limits_k \partk} =^2 \omega^\Delta_{\bigcup\limits_k \partk},$$ 
+а также, что для любого $i$ $$\bigcup\limits_{j \neq i} \omega_{\sigpj\sms\partj} =^1 \bigcup\limits_{j \neq i} \omega^\Delta_{\sigpj\sms\partj}.$$ 
+Значит, для любого $i$ $$\bigcup\limits_{j \neq i} \omega_{\sigpj\sms\partj} \cup \omega_{\bigcup\limits_k \partk} =^1 \bigcup\limits_{j \neq i} \omega^\Delta_{\sigpj\sms\partj} \cup \omega^\Delta_{\bigcup\limits_k \partk}.$$ 
+По лемме об эквивалентных дифференциалах $$gen(\omega_{\sigi\sms\sigpi \cup \parti \cup \xii}, \sigpi\sms\parti\sms\xii) =^2 gen(\bigcup\limits_{j \neq i} \omega^\Delta_{\sigpj\sms\partj} \cup \omega^\Delta_{\bigcup\limits_k \partk} \cup \omega^\Delta_\xii, \sigpi\sms\parti\sms\xii),$$ 
+то есть $\omega_{\sigpi\sms\parti\sms\xii} =^2 \omega^\Delta_{\sigpi\sms\parti\sms\xii}$. Значит, $$\omega^\Delta_{\bigcup\limits_k \xik} = gen(\bigcup\limits_k \omega^\Delta_{\sigpk\sms\partk\sms\xik} \cup \omega^\Delta_{\bigcup\limits_k \partk}, \bigcup\limits_k \xik) =^3 gen(\bigcup\limits_k \omega_{\sigpk\sms\partk\sms\xik} \cup \omega_{\bigcup\limits_k \partk}, \bigcup\limits_k \xik).$$ 
+Тогда, действительно, выполняется равенство с точностью до второго класса. $\Box$\\
 
 Практическое применение данной теоремы таково: в ситуации, когда для некоторого состояния проекта неизвестен результат компиляции, но оно представимо в виде частей состояний с известными кэшированными результатами, предлагается подход, состоящий в переиспользовании части кэшей и перекомпилировании меньшего количества файлов и, таким образом, позволяющий избежать полной компиляции этого состояния; предъявляется множество файлов, для которых следует переиспользовать кэши, множество файлов, которые следует перекомпилировать, а также контекст, в котором нужно проводить компиляцию, чтобы получившийся результат совпал с результатом полной компиляции этого состояния в пустом контексте.

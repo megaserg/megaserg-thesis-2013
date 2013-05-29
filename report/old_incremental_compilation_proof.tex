@@ -1,0 +1,72 @@
+\section{Теорема об инкрементальной компиляции}
+
+Рассмотрим ситуацию, когда для некоторого состояния проекта, представляемого набором исходных файлов, была проведена успешная полная компиляция в пустом контексте, то есть не использующая ничего, кроме самих исходных файлов; результат этой компиляции был сохранён в некотором кэше; затем разработчик удалил, добавил или изменил некоторые файлы, модифицировав таким образом состояние проекта; затем он собирается скомпилировать это новое состояние. Разумеется, он может провести повторную полную компиляцию нового состояния в пустом контексте. Однако можно воспользоваться тем, что результат повторной компиляции файлов, которые не подверглись изменению и не зависели существенным образом от изменившихся, будет совпадать с результатом первой компиляции. Это значит, что для этих файлов можно взять результат компиляции из кэша, а остальные подвергнуть перекомпиляции, сэкономив таким образом вычислительные ресурсы. Это интуитивное умозаключение формализуется в теореме об инкрементальной компиляции.
+
+Состояниям проекта соответствуют наборы входов функции компиляции; изменению файлов, содержащихся в проекте, соответствует вычитание из набора входов одного множества и добавление другого. Для выражения части, подлежащей перекомпиляции, используется понятие дифференциала.\\
+
+\newcommand{\butpartial}{\sigma\setminus\rho\setminus\partial}
+
+\textbf{Теорема 1 (об инкрементальной компиляции).}
+
+Пусть дано: $\sigma \subset \Sigma$, $gen(\varnothing, \sigma) = \omega^\sigma$. Пусть $\rho, \alpha \subset \Sigma$, при этом $\rho \subseteq \sigma$, $\sigma \cap \alpha = \varnothing$; $\Delta = \Delta^\rho_\alpha\sigma = \sigma\setminus\rho\cup\alpha$. Известно, что определено $gen(\omega^\sigma_{\sigma\setminus\rho}, \alpha) = \omega_\alpha$ и $gen(\varnothing, \Delta) = \omega^\Delta$. Обозначим $\partial = \partial\dfrac{\omega^\sigma_\rho}{\omega_\alpha}(\sigma\setminus\rho)$.
+Тогда:
+
+$$gen(\varnothing, \Delta) = \omega^\sigma_{\butpartial} \cup \omega_\alpha \cup gen(\omega^\sigma_{\butpartial} \cup \omega_\alpha, \partial)$$
+
+\textbf{Доказательство:}
+Рассмотрим $\omega^\Delta_\alpha = gen(\omega^\Delta_{\sigma\setminus\rho}, \alpha)$ и $\omega_\alpha = gen(\omega^\sigma_{\sigma\setminus\rho}, \alpha)$. Поскольку $B^0_{\omega^\Delta_{\sigma\setminus\rho}} = B^0_{\omega^\sigma_{\sigma\setminus\rho}}$, то по аксиоме об эквивалентных контекстах $\omega^\Delta_\alpha = \omega_\alpha$.
+
+Докажем, что дифференциал $\partial = \partial\dfrac{\omega^\sigma_\rho}{\omega_\alpha}(\sigma\setminus\rho)$ имеет смысл. Для этого проверим, что определены $gen(\omega^\sigma_\rho, \sigma\setminus\rho)$ и $gen(\omega_\alpha, \sigma\setminus\rho)$. Первое выражение~--- это $\omega^\sigma_{\sigma\setminus\rho}$ и определено по аксиоме о дизъюнктном разбиении. Второе выражение равно $gen(\omega^\Delta_\alpha, \sigma\setminus\rho) = \omega^\Delta_{\sigma\setminus\rho}$ (как значения $gen$ для одного и того же входа с равными контекстами) и тоже определено по аксиоме о дизъюнктном разбиении. Тогда дифференциал в нашем случае, действительно, имеет смысл.
+
+Рассмотрим равенство $gen(\omega_\alpha, \sigma\setminus\rho) = gen(\omega^\Delta_\alpha, \sigma\setminus\rho)$ и порождения, получающиеся в левой и в правой частях из $\partial$. В левой части обозначим их $\omega^\prime_\partial = gen(\omega_\alpha \cup \omega^{\sigma\setminus\rho}_{\butpartial}, \partial)$, а в правой части это $\omega^\Delta_\partial = gen(\omega^\Delta_\alpha \cup \omega^\Delta_{\butpartial}, \partial)$. Поскольку $B^0_{\omega_\alpha \cup \omega^{\sigma\setminus\rho}_{\butpartial}} = B^0_{\omega^\Delta_\alpha \cup \omega^\Delta_{\butpartial}}$, то по аксиоме об эквивалентных контекстах $\omega^\prime_\partial = \omega^\Delta_\partial$.
+
+Рассмотрим $\butpartial$. По свойству дифференциала известно, что имеет место равенство $gen(\omega^\sigma_\rho \cup \omega^\sigma_\partial, \butpartial) = gen(\omega_\alpha \cup \omega^\prime_\partial, \butpartial)$ (в случае, если хотя бы одна из частей равенства определена). Левая часть этого равенства равна $\omega^\sigma_{\butpartial}$ и определена по аксиоме о дизъюнктном разбиении, а правая часть вследствие равенств $\omega_\alpha = \omega^\Delta_\alpha$ и $\omega^\prime_\partial = \omega^\Delta_\partial$ равна $gen(\omega^\Delta_\alpha \cup \omega^\Delta_\partial, \butpartial)$, то есть $\omega^\Delta_{\butpartial}$. Получаем, что $\omega^\sigma_{\butpartial} = \omega^\Delta_{\butpartial}$.
+
+Рассмотрим $gen(\omega^\sigma_{\butpartial} \cup \omega_\alpha, \partial)$ из нашего утверждения. Вследствие равенств $\omega^\sigma_{\butpartial} = \omega^\Delta_{\butpartial}$ и $\omega_\alpha = \omega^\Delta_\alpha$ оно равно $gen(\omega^\Delta_{\butpartial} \cup \omega^\Delta_\alpha, \partial)$, то есть $\omega^\Delta_\partial$.
+
+Рассмотрим элемент $x$ из левой части утверждения: $x \in \omega^\Delta$. Так как $\Delta = \sigma\setminus\rho\cup\alpha$, то по аксиоме о дизъюнктном разбиении верно, что $x$ принадлежит одному из трёх множеств: a) $\omega^\Delta_\alpha$; b) $\omega^\Delta_{\butpartial}$; c) $\omega^\Delta_\partial$. В случае a) из равенства $\omega^\Delta_\alpha = \omega_\alpha$ следует, что $x$ принадлежит и правой части. В случае b) из равенства $\omega^\Delta_{\butpartial} = \omega^\sigma_{\butpartial}$ следует, что $x$ принадлежит и правой части. В случае c) из равенства $\omega^\Delta_\partial = gen(\omega^\sigma_{\butpartial} \cup \omega_\alpha, \partial)$ следует, что $x$ принадлежит и правой части.
+
+Рассмотрим элемент $x$ из правой части утверждения. Верно, что $x$ принадлежит хотя бы одному из трёх множеств (на самом деле только одному): a) $\omega_\alpha$; b) $\omega^\sigma_{\butpartial}$; c) $gen(\omega^\sigma_{\butpartial} \cup \omega_\alpha, \partial)$. В случае a) из равенства $\omega_\alpha = \omega^\Delta_\alpha$ следует, что $x$ принадлежит и левой части. В случае b) из равенства $\omega^\sigma_{\butpartial} = \omega^\Delta_{\butpartial}$ следует, что $x$ принадлежит и левой части. В случае c) из равенства $gen(\omega^\sigma_{\butpartial} \cup \omega_\alpha, \partial) = \omega^\Delta_\partial$ следует, что $x$ принадлежит и левой части.
+
+Таким образом, правая и левая части утверждения совпадают и равенство действительно имеет место. $\Box$\\
+
+Практическое применение данной теоремы таково: в ситуации, когда сохранён кэш для некоторого состояния проекта, которое впоследствии было изменено, предлагается обоснование подхода, состоящего в переиспользовании кэша и перекомпилировании меньшего количества файлов и, таким образом, позволяющий избежать полной компиляции этого состояния; предъявляется множество файлов, для которых следует переиспользовать кэш, множество файлов, которые следует перекомпилировать, а также контекст, в котором нужно проводить компиляцию, чтобы получившийся результат совпал с результатом полной компиляции нового состояния в пустом контексте.
+ 
+% ------------------------------------------------------
+\newpage
+\section{Теорема о переиспользовании порождений}
+
+Рассмотрим ситуацию, когда несколько разработчиков одновременно работают над одним и тем же проектом. Каждый разработчик редактирует файлы, составляющие его локальную копию проекта, и время от времени инкрементально собирает свою копию на своём же компьютере; таким образом, у каждого разработчика есть локальный кэш компиляции, в котором хранятся результаты последнего сеанса сборки. При условии регулярного обмена изменениями файлов, например, обновления локальных копий проекта из общего репозитория, можно предполагать, что эти локальные копии отличаются друг от друга незначительно. В процессе такой коллективной разработки случаются ситуации, когда состояние проекта в локальной копии разработчика существенно отличается от состояния, для которого был посчитан его локальный кэш компиляции. Тогда инкрементальная компиляция теряет свои преимущества и мало чем отличается от процедуры полной сборки проекта с нуля. Примерами таких случаев могут служить ``cold start''~--- сборка проекта в ситуации отсутствия кэша вообще~--- или переключение между ветками (``branches'')~--- например, основной и релизной ветками. В таких ситуациях может быть разумным при компиляции использовать вместо локального кэша компиляции кэши других разработчиков. Эта задача формализуется и решается в теореме о переиспользовании порождений.
+
+Как и в предыдущей теореме, состояниям проекта соответствуют наборы входов функции компиляции. Рассматривается $n$ состояний, для каждого из которых известен (кэширован) результат его компиляции. Новое состояние представляется как объединение непересекающихся частей имеющихся состояний. Для нахождения результата компиляции этого нового состояния предлагается переиспользовать части известных кэшей, а также докомпилировать некоторое подмножество этого состояния. Для выражения части, подлежащей перекомпиляции, используется понятие дифференциала.\\
+
+\textbf{Теорема 2 (о переиспользовании порождений).}
+
+Пусть $\forall i \in [1:n]$ дано: $\sigma_i$, $\omega_i = gen(\varnothing, \sigma_i)$, $\sigma_i^\prime \subseteq \sigma_i$ ($\sigma_i^\prime \cap \sigma_j^\prime = \varnothing$ при $i \neq j$). Обозначим $\omega_i^\prime = gen_i(\sigma_i^\prime)$. Обозначим 
+$$\partial_i = \partial\dfrac{\omega_i \setminus \omega_i^\prime}{\bigcup\limits_{j \neq i} \omega_j^\prime} \sigma_i^\prime$$
+Тогда:
+$$gen(\varnothing, \bigcup\limits_k \sigma^\prime_k) = \left( \bigcup\limits_k \omega_k^\prime \setminus \omega_{\partial_k} \right) \cup gen(\bigcup\limits_k \omega_k^\prime \setminus \omega_{\partial_k}, \bigcup\limits_k \partial_k)$$
+
+\newcommand{\sigi}{{\sigma_i}}
+\newcommand{\sigpi}{{\sigma^\prime_i}}
+\newcommand{\sigpj}{{\sigma^\prime_j}}
+\newcommand{\parti}{{\partial_i}}
+\newcommand{\alloth}{\bigcup\limits_{j \neq i}\omega^\prime_j}
+\newcommand{\rprt}{{\text{п.ч.}}}
+
+\textbf{Доказательство:}
+Обозначим $\Delta = \bigcup\limits_i \sigma_i^\prime$.
+
+Докажем, что дифференциал $\partial_i = \partial\dfrac{\omega_i \setminus \omega_i^\prime}{\bigcup\limits_{j \neq i} \omega_j^\prime} \sigma_i^\prime$ имеет смысл. Для этого проверим, что определены $gen(\omega_{\sigi} \setminus \omega_{\sigpi}, \sigpi)$ и $gen(\alloth, \sigpi)$. Поскольку определено $gen(\varnothing, \sigi)$, то по аксиоме о дизъюнктном разбиении определено и $gen(\omega_{\sigi} \setminus \omega_{\sigpi}, \sigpi)$. Далее, из определённости $gen(\varnothing, \bigcup\limits_k \sigma^\prime_k)$ по аксиоме о дизъюнктном разбиении следует определённость $gen(\bigcup\limits_{j \neq i}\omega^{\text{л.ч.}}_\sigpj, \sigpi)$; отсюда по аксиоме об эквивалентных контекстах определено $gen(\alloth, \sigpi)$.
+
+Рассмотрим множество $\sigpi \setminus \parti$ для произвольного $i$. По определению дифференциала $gen(\omega_\sigi \setminus \omega_\sigpi \cup \omega_\parti, \sigpi\setminus\parti) = gen(\alloth \cup \omega_\parti, \sigpi\setminus\parti)$ (левая часть равенства по аксиоме по аксиоме о дизъюнктном разбиении определена и равна $\omega^\sigi_{\sigpi\setminus\parti}$, поэтому обе части равенства определены). Поскольку и $gen(\bigcup\limits_{j \neq i}\omega^\Delta_\sigpj \cup \omega^\Delta_\parti, \sigpi \setminus \parti)$ определено по аксиоме о дизъюнктном разбиении как $\omega^\Delta_{\sigpi\setminus\parti}$, а $B^0_{\bigcup\limits_{j \neq i}\omega^\Delta_\sigpj \cup \omega^\Delta_\parti} = B^0_{\alloth \cup \omega_\parti}$, то по аксиоме об эквивалентных контекстах $gen(\bigcup\limits_{j \neq i}\omega^\Delta_\sigpj \cup \omega^\Delta_\parti, \sigpi \setminus \parti) = gen(\alloth \cup \omega_\parti, \sigpi\setminus\parti)$. Следовательно, $\omega^\Delta_{\sigpi\setminus\parti} = \omega^\sigi_{\sigpi\setminus\parti}$.
+
+Рассмотрим множество $\parti$ для произвольного $i$. Поскольку определено $gen(\bigcup\limits_k \omega_k^\prime \setminus \omega_{\partial_k}, \bigcup\limits_k \partial_k)$ (это следует из аксиомы об эквивалентных контекстах и определённости $gen(\bigcup\limits_k \omega^{\text{л.ч.}}_k \setminus \omega^{\text{л.ч.}}_{\partial_k}, \bigcup\limits_k \partial_k)$), то по аксиоме о дизъюнктном разбиении определено и $gen(\bigcup\limits_k \omega_k^\prime \setminus \omega_{\partial_k} \cup \bigcup\limits_{j \neq i} \omega^\rprt_{\partial_j}, \parti)$ как $\omega^\rprt_{\parti}$. Поскольку $gen(\bigcup\limits_{j \neq i}\omega^\Delta_\sigpj \cup \omega^\Delta_{\sigpi \setminus \parti}, \parti)$ определено по аксиоме о дизъюнктном разбиении как $\omega^\Delta_{\parti}$, а $B^0_{\bigcup\limits_{j \neq i}\omega^\Delta_\sigpj \cup \omega^\Delta_{\sigpi \setminus \parti}} = B^0_{\bigcup\limits_k \omega_k^\prime \setminus \omega_{\partial_k} \cup \bigcup\limits_{j \neq i} \omega^\rprt_{\partial_j}}$, то по аксиоме об эквивалентных контекстах $gen(\bigcup\limits_{j \neq i}\omega^\Delta_\sigpj \cup \omega^\Delta_{\sigpi \setminus \parti}, \parti) = gen(\bigcup\limits_k \omega_k^\prime \setminus \omega_{\partial_k} \cup \bigcup\limits_{j \neq i} \omega^\rprt_{\partial_j}, \parti)$. Следовательно, $\omega^\Delta_\parti = \omega^\rprt_\parti$.
+
+Рассмотрим элемент $x$ из левой части утверждения. Так как $\Delta = \bigcup\limits_i \sigma_i^\prime$, то по аксиоме о дизъюнктном разбиении верно, что $x$ принадлежит либо $\omega^\Delta_\parti$, либо $\omega^\Delta_{\sigpi\setminus\parti}$ для некоторого $i$. В первом случае из равенства $\omega^\Delta_\parti = \omega^\rprt_\parti$ следует, что $x$ принадлежит и правой части. Во втором случае из равенства $\omega^\Delta_{\sigpi\setminus\parti} = \omega^\sigi_{\sigpi\setminus\parti}$ следует, что $x$ принадлежит и правой части.
+
+Аналогично можно рассмотреть элемент $x$ из правой части утверждения и показать, что он принадлежит и левой части.
+
+Таким образом, правая и левая части утверждения совпадают и равенство действительно имеет место. $\Box$\\
+
+Практическое применение данной теоремы таково: в ситуации, когда для некоторого состояния проекта неизвестен результат компиляции, но оно представимо в виде частей состояний с известными кэшированными результатами, предлагается подход, состоящий в переиспользовании части кэшей и перекомпилировании меньшего количества файлов и, таким образом, позволяющий избежать полной компиляции этого состояния; предъявляется множество файлов, для которых следует переиспользовать кэши, множество файлов, которые следует перекомпилировать, а также контекст, в котором нужно проводить компиляцию, чтобы получившийся результат совпал с результатом полной компиляции этого состояния в пустом контексте.

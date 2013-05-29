@@ -1,0 +1,30 @@
+\input{preamble.tex}
+
+\begin{document}
+
+Значок $=^k$ означает ``равенство с точностью до $k$-го класса'', т.е. $a =^k b$ означает, что для всех $i$ от $0$ до $k$ верно $B^i_a = B^i_b$.
+
+\textbf{Равенство для нулевого класса:}
+
+$$gen(\varnothing, \Delta) =^0 \omega^\sigma_{\sigma\setminus\rho} \cup gen(\omega^\sigma_{\sigma\setminus\rho}, \alpha) \eqdef \omega^\sigma_{\sigma\setminus\rho} \cup \omega_\alpha$$
+
+\textbf{Равенство для первого класса:}
+
+$$\partial_1 \defeq \partial\dfrac{\omega^\sigma_\rho}{\omega^\Delta_{\Delta\setminus(\sigma\setminus\rho)}}(\sigma\setminus\rho) = \partial\dfrac{\omega^\sigma_\rho}{\omega^\Delta_\alpha}(\sigma\setminus\rho)$$
+$$gen(\varnothing, \Delta) =^1 \omega^\sigma_{\sigma\setminus\rho\setminus{\partial_1}} \cup \omega_\alpha \cup gen(\omega^\sigma_{\sigma\setminus\rho\setminus{\partial_1}} \cup \omega_\alpha, \partial_1) \eqdef \omega^\sigma_{\sigma\setminus\rho\setminus{\partial_1}} \cup \omega_\alpha \cup \omega^1_{\partial_1}$$
+
+\textbf{Равенство для второго класса:}
+
+$$\partial_2 \defeq \partial\dfrac{\omega^\sigma_{\sigma\setminus\rho}}{\omega^\Delta_{\sigma\setminus\rho}}(\alpha) = \partial\dfrac{\omega^\sigma_{\sigma\setminus\rho}}{\omega^\Delta_{\Delta\setminus\alpha}}(\alpha)$$
+$$gen(\varnothing, \Delta) =^2 \omega^\sigma_{\sigma\setminus\rho\setminus{\partial_1}} \cup \omega_{\alpha\setminus\partial_2} \cup \omega^1_{\partial_1} \cup gen(\omega^\sigma_{\sigma\setminus\rho\setminus{\partial_1}} \cup \omega_{\alpha\setminus\partial_2} \cup \omega^1_{\partial_1}, \partial_2) \eqdef$$
+$$\eqdef \omega^\sigma_{\sigma\setminus\rho\setminus{\partial_1}} \cup \omega_{\alpha\setminus\partial_2} \cup \omega^1_{\partial_1} \cup \omega^2_{\partial_2}$$
+
+\textbf{Равенство для третьего класса:}
+
+$$\partial_3 \defeq \partial\dfrac{\omega^\sigma_{\sigma\setminus\rho\setminus{\partial_1}} \cup \omega_\alpha}{\omega^\Delta_{\Delta\setminus\partial_1}}(\partial_1)$$
+$$gen(\varnothing, \Delta) =^3 \omega^\sigma_{\sigma\setminus\rho\setminus{\partial_1}} \cup \omega_{\alpha\setminus\partial_2} \cup \omega^1_{\partial_1\setminus\partial_3} \cup \omega^2_{\partial_2} \cup gen(\omega^\sigma_{\sigma\setminus\rho\setminus{\partial_1}} \cup \omega_{\alpha\setminus\partial_2} \cup \omega^1_{\partial_1\setminus\partial_3} \cup \omega^2_{\partial_2}, \partial_3) \eqdef$$
+$$\eqdef \omega^\sigma_{\sigma\setminus\rho\setminus{\partial_1}} \cup \omega_{\alpha\setminus\partial_2} \cup \omega^1_{\partial_1\setminus\partial_3} \cup \omega^2_{\partial_2} \cup \omega^3_{\partial_3}$$
+
+И так далее: чтобы получить выражение для равенства с точностью до $k$-го класса, берём $$\partial_k \defeq \partial\dfrac{\text{тут контекст для }\partial_{k-2}}{\omega^\Delta_{\Delta\setminus\partial_{k-2}}}(\partial_{k-2})$$ вычитаем его из порождения $\omega^{k-2}_{\partial_{k-2}}$ в выражении для равенства с точностью до $(k-1)$-го класса, используем это как контекст для $\omega^k_{\partial_k} = gen(..., \partial_k)$ и складываем.
+
+\end{document}
