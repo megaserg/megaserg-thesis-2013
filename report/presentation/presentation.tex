@@ -68,8 +68,10 @@ $$gen : 2^\Omega \times 2^\Sigma \to 2^\Omega$$
 
 Введём разбиение $gen(\omega, \sigma) = \omega^\prime$: $\omega^\prime = B^0_{\omega^\prime} \cup B^1_{\omega^\prime} \cup B^2_{\omega^\prime} \cup ...$
 	
-\begin{itemize}	
-	\item Об эквивалентных контекстах: $\forall s\in\Sigma,\; \forall\omega,\:\omega^\prime\subseteq\Omega:$ если $s$ невырожденное, $gen(\omega,\{s\})$ определено и $B^0_{\omega} = B^0_{\omega^\prime}$, то и $gen(\omega^\prime,\{s\})$ определено, более того, $gen(\omega,\{s\}) = gen(\omega^\prime,\{s\})$
+\begin{itemize}
+	\item Об эквивалентных контекстах: $\forall s \in \Sigma,\; \forall \omega,\: \omega^\prime \subseteq \Omega:$ $gen(\omega, \{s\})$ определено:\\
+	a) если $gen(\omega^\prime, \{s\})$ определено, то $$B^0_{gen(\omega, \{s\})} = B^0_{gen(\omega^\prime, \{s\})}$$
+	b) если для $k \in \mathbb{N}$ $\forall i \in [0; k-1]$ $B^i_{\omega} = B^i_{\omega^\prime}$, то $$B^k_{gen(\omega, \{s\})} = B^k_{gen(\omega^\prime, \{s\})}$$
 \end{itemize}
 \end{frame}
 
@@ -82,42 +84,91 @@ $gen(\omega \cup \omega^\prime_{\partial}, \sigma\setminus\partial)$ и
 $gen(\tilde{\omega} \cup \tilde{\omega}^\prime_{\partial}, \sigma\setminus\partial)$ либо одновременно не определены, либо одновременно определены и равны. 
 \end{frame}
 
+\begin{frame}{Инкрементальная компиляция}
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=100mm]{theorem1_src.png}
+\end{figure}
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=100mm]{theorem1_dst.png}
+\end{figure}
+\end{frame}
+
+\newcommand{\butpartial}{{\sigma\setminus\rho\setminus\partial_1}}
+\newcommand{\butpartialA}{{\alpha\setminus{\partial_2}}}
+\newcommand{\sigmanoro}{{\sigma\setminus\rho}}
+
 \begin{frame}{Теорема об~инкрементальной компиляции}
-
-Пусть дано: $\sigma \subset \Sigma$, $gen(\varnothing, \sigma) = \omega^\sigma$. Пусть $\rho, \alpha \subset \Sigma$, при этом $\rho \subseteq \sigma$, $\sigma \cap \alpha = \varnothing$; $\Delta = \Delta^\rho_\alpha\sigma = \sigma\setminus\rho\cup\alpha$. Известно, что определено $gen(\omega^\sigma_{\sigma\setminus\rho}, \alpha) = \omega_\alpha$ и $gen(\varnothing, \Delta) = \omega^\Delta$. Обозначим
-$$\partial = \partial\dfrac{\omega^\sigma_\rho}{\omega_\alpha}(\sigma\setminus\rho)$$
-
-\pause
-
+Пусть дано: $\sigma \subset \Sigma$, $gen(\varnothing, \sigma) = \omega^\sigma$. Пусть $\rho, \alpha \subset \Sigma$, при этом $\rho \subseteq \sigma$, $\sigma \cap \alpha = \varnothing$; $\Delta = \Delta^\rho_\alpha\sigma = \sigma\setminus\rho\cup\alpha$. Известно, что определено $gen(\omega^\sigma_{\sigma\setminus\rho}, \alpha) = \omega_\alpha$ и $gen(\varnothing, \Delta) = \omega^\Delta$.
+Обозначим 
+$$\partial_1 = \partial\dfrac{\omega^\sigma_\rho}{\omega_\alpha}(\sigma\setminus\rho)$$
+$$\omega^1_{\partial_1} = gen(\omega^\sigma_{\butpartial} \cup \omega_\alpha, \partial_1)$$
+$$\partial_2 = \partial\dfrac{\omega^\sigma_{\sigma\setminus\rho}}{\omega^\sigma_{\butpartial} \cup \omega^1_{\partial_1}}(\alpha)$$
+$$\omega^2_{\partial_2} = gen(\omega^\sigma_{\butpartial} \cup \omega_{\butpartialA} \cup \omega^1_{\partial_1}, \partial_2)$$
 Тогда:
-$$gen(\varnothing, \Delta) = \omega^\sigma_{\sigma\setminus\rho\setminus\partial} \cup \omega_\alpha \cup gen(\omega^\sigma_{\sigma\setminus\rho\setminus\partial} \cup \omega_\alpha, \partial)$$
+$$gen(\varnothing, \Delta) =^2 \omega^\sigma_{\butpartial} \cup \omega_{\butpartialA} \cup \omega^1_{\partial_1} \cup \omega^2_{\partial_2}$$
 
 \end{frame}
+
+\begin{frame}{Переиспользование порождений}
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=100mm]{theorem2_src.png}
+\end{figure}
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=100mm]{theorem2_dst.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Переиспользование порождений}
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=100mm]{theorem2_srcn.png}
+\end{figure}
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=100mm]{theorem2_dstn.png}
+\end{figure}
+\end{frame}
+
+\newcommand{\sigi}{{\sigma_i}}
+\newcommand{\sigk}{{\sigma_k}}
+\newcommand{\sigpi}{{\sigma^\prime_i}}
+\newcommand{\sigpj}{{\sigma^\prime_j}}
+\newcommand{\sigpk}{{\sigma^\prime_k}}
+\newcommand{\parti}{{\partial_i}}
+\newcommand{\partj}{{\partial_j}}
+\newcommand{\partk}{{\partial_k}}
+\newcommand{\xii}{{\xi_i}}
+\newcommand{\xij}{{\xi_j}}
+\newcommand{\xik}{{\xi_k}}
+\newcommand{\sms}{{\setminus}}
+\newcommand{\alloth}{\bigcup\limits_{j \neq i}\omega^\prime_j}
+\newcommand{\allothk}{\bigcup\limits_{j \neq k}\omega^\prime_j}
+\newcommand{\allothD}{\bigcup\limits_{j \neq i}\omega^\Delta_{\sigpj}}
+\newcommand{\rprt}{{\text{п.ч.}}}
 
 \begin{frame}{Теорема о~переиспользовании порождений}
-
 Пусть $\forall i \in [1:n]$ дано: $\sigma_i$, $\omega_i = gen(\varnothing, \sigma_i)$, $\sigma_i^\prime \subseteq \sigma_i$ ($\sigma_i^\prime \cap \sigma_j^\prime = \varnothing$ при $i \neq j$). Обозначим $\omega_i^\prime = gen_i(\sigma_i^\prime)$. Обозначим 
-$$\partial_i = \partial\dfrac{\omega_i \setminus \omega_i^\prime}{\bigcup\limits_{j \neq i} \omega_j^\prime} \sigma_i^\prime$$
-
-\pause
-
+$$\partial_i = \partial\dfrac{\omega_i \setminus \omega_i^\prime}{\bigcup\limits_{j \neq i} \omega_j^\prime} \sigma_i^\prime,$$
+$$\omega_{\bigcup\limits_k \partk} = gen(\bigcup\limits_k \omega_{\sigpk\sms\partk}, \bigcup\limits_k \partk),$$
+$$\xi_i = \partial\dfrac{\omega_{\sigi\sms\sigpi \cup \parti}}{\bigcup\limits_{j \neq i} \omega_{\sigpj\sms\partj} \cup \omega_{\bigcup\limits_k \partial_k}} \sigpi\sms\parti.$$
 Тогда:
-$$gen(\varnothing, \bigcup\limits_i \sigma_i^\prime) = \left( \bigcup\limits_i \omega_i^\prime \setminus \omega_{\partial_i} \right) \cup gen(\bigcup\limits_i \omega_i^\prime \setminus \omega_{\partial_i}, \bigcup\limits_i \partial_i)$$
+$$gen(\varnothing, \bigcup\limits_k \sigpk) =^2 \bigcup\limits_k \omega_{\sigpk\sms\partk\sms\xik} \cup \omega_{\bigcup\limits_k \partial_k} \cup gen(\bigcup\limits_k \omega_{\sigpk\sms\partk\sms\xik} \cup \omega_{\bigcup\limits_k \partial_k}, \bigcup\limits_k \xik)$$
 
-\end{frame}
-
-\begin{frame}{Дальнейшее развитие}
-\begin{itemize}
-	\item Доказанная теорема конструктивна: предъявляется множество файлов, для~которых следует переиспользовать кэши, множество файлов, которые следует перекомпилировать, а~также контекст компиляции
-	\item На~основе теоремы планируется реализовать поддержку переиспользования кэшей в~IntelliJ~IDEA
-\end{itemize}
 \end{frame}
 
 \begin{frame}{Результаты}
 \begin{itemize}
 	\item Построена формальная модель предметной области
 	\item Построена аксиоматика, отражающая свойства и~ограничения реального мира и~позволяющая доказывать нетривиальные утверждения
-	\item Сформулированы и доказаны теоремы об~инкрементальной компиляции и~переиспользовании порождений
+	\item Сформулированы и доказаны конструктивные теоремы об~инкрементальной компиляции и~переиспользовании порождений
+	\item На~основе второй теоремы планируется реализовать поддержку переиспользования кэшей в~IntelliJ~IDEA
 \end{itemize}
 \end{frame}
 
