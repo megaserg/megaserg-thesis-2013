@@ -27,6 +27,20 @@
 \end{figure}
 \end{frame}
 
+\begin{frame}{Пример на Java}
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=110mm]{state1.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Пример на Java}
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=110mm]{state2.png}
+\end{figure}
+\end{frame}
+
 \begin{frame}{Постановка задачи}
 \begin{itemize}
 	\item Построить формальную модель предметной области
@@ -37,10 +51,11 @@
 
 \begin{frame}{Основные определения}
 
-$\Sigma$ --- множество входов, $\Omega$ --- множество выходов\\
-Функция порождения выходов по входам (частичная):
-$$gen : 2^\Omega \times 2^\Sigma \to 2^\Omega$$
-
+\begin{itemize}
+	\item $\Sigma$~--- множество входов (исходные файлы)
+	\item $\Omega$~--- множество выходов (атрибуты-порождения)
+	\item Компиляция~--- функция порождения выходов по входам (частичная): $$gen : 2^\Omega \times 2^\Sigma \to 2^\Omega$$
+\end{itemize}
 \end{frame}
 
 \begin{frame}{Аксиомы}
@@ -155,9 +170,9 @@ $$gen(\varnothing, \Delta) =^2 \omega^\sigma_{\butpartial} \cup \omega_{\butpart
 
 \begin{frame}{Теорема о~переиспользовании порождений}
 Пусть $\forall i \in [1:n]$ дано: $\sigma_i$, $\omega_i = gen(\varnothing, \sigma_i)$, $\sigma_i^\prime \subseteq \sigma_i$ ($\sigma_i^\prime \cap \sigma_j^\prime = \varnothing$ при $i \neq j$). Обозначим $\omega_i^\prime = gen_i(\sigma_i^\prime)$. Обозначим 
-$$\partial_i = \partial\dfrac{\omega_i \setminus \omega_i^\prime}{\bigcup\limits_{j \neq i} \omega_j^\prime} \sigma_i^\prime,$$
-$$\omega_{\bigcup\limits_k \partk} = gen(\bigcup\limits_k \omega_{\sigpk\sms\partk}, \bigcup\limits_k \partk),$$
-$$\xi_i = \partial\dfrac{\omega_{\sigi\sms\sigpi \cup \parti}}{\bigcup\limits_{j \neq i} \omega_{\sigpj\sms\partj} \cup \omega_{\bigcup\limits_k \partial_k}} \sigpi\sms\parti.$$
+$$\partial_i = \partial\dfrac{\omega_i \setminus \omega_i^\prime}{\bigcup\limits_{j \neq i} \omega_j^\prime} (\sigma_i^\prime)$$
+$$\omega_{\bigcup\limits_k \partk} = gen(\bigcup\limits_k \omega_{\sigpk\sms\partk}, \bigcup\limits_k \partk)$$
+$$\xi_i = \partial\dfrac{\omega_{\sigi\sms\sigpi \cup \parti}}{\bigcup\limits_{j \neq i} \omega_{\sigpj\sms\partj} \cup \omega_{\bigcup\limits_k \partial_k}} (\sigpi\sms\parti)$$
 Тогда:
 $$gen(\varnothing, \bigcup\limits_k \sigpk) =^2 \bigcup\limits_k \omega_{\sigpk\sms\partk\sms\xik} \cup \omega_{\bigcup\limits_k \partial_k} \cup gen(\bigcup\limits_k \omega_{\sigpk\sms\partk\sms\xik} \cup \omega_{\bigcup\limits_k \partial_k}, \bigcup\limits_k \xik)$$
 
