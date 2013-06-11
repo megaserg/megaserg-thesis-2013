@@ -43,6 +43,7 @@
 
 \begin{frame}{Постановка задачи}
 \begin{itemize}
+	\addtolength{\itemsep}{12pt}
 	\item Построить формальную модель предметной области
 	\item Построить аксиоматику, описывающую свойства модели, позволяющую доказывать нетривиальные утверждения и вместе с тем отражающую ограничения реального мира
 	\item Сформулировать в терминах этой модели и решить задачу инкрементальной компиляции и задачу переиспользования порождений
@@ -52,6 +53,7 @@
 \begin{frame}{Основные определения}
 
 \begin{itemize}
+	\addtolength{\itemsep}{12pt}
 	\item $\Sigma$~--- множество входов (исходные файлы)
 	\item $\Omega$~--- множество выходов (атрибуты-порождения)
 	\item Компиляция~--- функция порождения выходов по входам (частичная): $$gen : 2^\Omega \times 2^\Sigma \to 2^\Omega$$
@@ -60,6 +62,7 @@
 
 \begin{frame}{Аксиомы}
 \begin{itemize}
+	\addtolength{\itemsep}{12pt}
 	\item О переопределённости: если $gen(\omega,\sigma)$~--- определена, то $\omega\cap gen(\omega,\sigma) = \varnothing$
 	
 	\item О дизъюнктном разбиении: если $gen(\omega,\sigma) = \omega^\prime$, то существует единственное дизъюнктное разбиение $\omega^\prime=\bigcup^\varnothing_{s\in\sigma}\omega^\prime_s$, 
@@ -71,6 +74,7 @@
 
 \begin{frame}{Аксиомы}
 \begin{itemize}
+	\addtolength{\itemsep}{12pt}
 	\item О минимально необходимом контексте: если $gen(\omega,\{s\})$~--- определена, то в $\omega$ существует наименьшее по включению подмножество $d_\omega(s)$, такое, что $gen(d_\omega(s), \{s\})$~--- определена
 	
 	\item О недоопределённости: если $gen(\omega, \sigma) = \omega^\prime$ и для какого-то $s\in\sigma$ существует $s_1\in\sigma$, такой, что $d_{\omega\cup\omega^\prime\setminus\omega^\prime_s}(s) \cap \omega^\prime_{s_1}\ne\varnothing$, то $gen(\omega, \sigma\setminus s_1)$ не определена
@@ -91,6 +95,7 @@
 \end{frame}
 
 \begin{frame}{Дифференциал}
+\setlength{\parskip}{12pt plus 1pt minus 1pt}
 Пусть $\omega$, $\tilde{\omega}$ --- множества выходов, $\sigma$ --- множество входов. Известно, что определено $gen(\omega, \sigma) = \omega^\prime$, $gen(\tilde{\omega}, \sigma) = \tilde{\omega}^\prime$.
 
 Тогда $\partial\dfrac{\omega}{\tilde{\omega}}\sigma = \partial$ --- это наименьшее подмножество $\sigma$, удовлетворяющее свойству: 
@@ -180,6 +185,7 @@ $$gen(\varnothing, \bigcup\limits_k \sigpk) =^2 \bigcup\limits_k \omega_{\sigpk\
 
 \begin{frame}{Результаты}
 \begin{itemize}
+	\addtolength{\itemsep}{12pt}
 	\item Построена формальная модель предметной области
 	\item Построена аксиоматика, отражающая свойства и~ограничения реального мира и~позволяющая доказывать нетривиальные утверждения
 	\item Сформулированы и доказаны конструктивные теоремы об~инкрементальной компиляции и~переиспользовании порождений
