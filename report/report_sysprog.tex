@@ -16,7 +16,8 @@
 \usepackage{indentfirst}
 \usepackage{amstext,amssymb,amsfonts,amsmath,mathtext,enumerate,float}
 \usepackage{verbatim} % multiline comments
-\usepackage{url}
+\usepackage{url} % formatting urls
+\usepackage{epstopdf} % allows for eps in pdflatex
 
 \input{newcommands.tex}
 
@@ -36,11 +37,9 @@
 %% **  Место для авторов, их email-адресов и названий институтов            **
 %% **                                                                       **
 %% ***************************************************************************
-\author{С.~Н.~Серебряков\\
+\author{
+С.~Н.~Серебряков\\
 sergey@serebryakov.info\\
-\and
-К.Х.Хунта\\
-khunta@niichavo.ras.ru\\
 \and Санкт-Петербургский государственный университет\\
 математико-механический факультет\\
 198504, Университетский пр., 28\\
@@ -68,7 +67,7 @@ khunta@niichavo.ras.ru\\
 %% ** Авторские права                                                       **
 %% **                                                                       **
 %% ***************************************************************************
-\footnote{\small{\copyright~С.~Н.~Серебряков, К.~Х.~Хунта, 2005.}}
+\footnote{\small{\copyright~С.~Н.~Серебряков, 2013.}}
 \renewcommand{\thefootnote}{\arabic{footnote}}
 \setcounter{footnote}{0}
 \end{quote}
@@ -84,13 +83,6 @@ khunta@niichavo.ras.ru\\
 \input{basic_axioms_3rd_fixed.tex}
 \input{incremental_compilation_proof.tex}
 \input{results.tex}
-
-%% ***************************************************************************
-%% **                                                                       **
-%% ** Список литературы                                                     **
-%% **                                                                       **
-%% ***************************************************************************
-\bibliographystyle{ugost2008ls}
-\bibliography{bibliography}
+\input{plain_bibliography.tex}
 
 \end{document}
